@@ -8,7 +8,7 @@ import (
 
 type Tag struct {
 	Id    string `gorm:"primarykey;size:16" json:"id"`
-	Value string `gorm:"uniqueIndex"`
+	Value string `gorm:"uniqueIndex" json:"-"`
 	Label string `json:"label"`
 }
 
