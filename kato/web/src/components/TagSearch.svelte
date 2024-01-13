@@ -12,6 +12,7 @@
             )
         )
             return;
+            
         if (e.detail.length === 0 && filterText.length > 0) {
             const prev = $tags.filter((i) => !i.created);
             $tags = [
@@ -22,10 +23,15 @@
     }
 
     function handleChange(e) {
-        console.log(e);
         $tags = $tags.map((i) => {
             if (i.created) {
-                //CREATE
+                fetch("http://localhost:5111/tags", {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(i),
+                });
             }
             delete i.created;
             return i;
