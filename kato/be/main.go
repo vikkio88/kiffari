@@ -4,12 +4,14 @@ import (
 	"kato-be/db"
 	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	d := db.NewDb("testing.db")
 	r := gin.Default()
+	r.Use(cors.Default())
 
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
@@ -33,5 +35,5 @@ func main() {
 
 		c.JSON(http.StatusOK, d.Filter(filterValue))
 	})
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	r.Run(":5111") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
