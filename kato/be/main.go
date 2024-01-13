@@ -1,18 +1,31 @@
 package main
 
 import (
-	"fmt"
 	"kato-be/db"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	d := db.NewDb("testing.db")
-	// t := db.TagDto{}
-	// t.Id = ulid.Make().String()
-	// t.Value = "blabla"
-	// d.G.Save(&t)
-	var t []db.TagDto
-	d.G.Model(&db.TagDto{}).Find(&t)
+	r := gin.Default()
 
-	fmt.Println(t)
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "pong",
+		})
+	})
+
+	r.POST("/tags", func(c *gin.Context) {
+		var newTag db.TagCreate
+		if c.Bind(&newTag) == nil {
+			c.JSON(http.StatusOK, gin.H{"result": d.InsertTag(newTag)})
+		}
+	})
+
+	r.GET("/tags", func(c *gin.Context) {
+		c.JSON(http.StatusOK, d.GetAll())
+	})
+	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
