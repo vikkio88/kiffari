@@ -34,7 +34,6 @@ func (d *Db) InsertTag(value TagCreate) bool {
 	}
 
 	return true
-
 }
 
 func (d *Db) GetByValue(value string) Tag {
@@ -47,6 +46,14 @@ func (d *Db) GetByValue(value string) Tag {
 func (d *Db) GetAll() []Tag {
 	var tags []Tag
 	d.g.Model(&Tag{}).Find(&tags)
+
+	return tags
+}
+
+func (d *Db) Filter(value string) []Tag {
+	var tags []Tag
+	value = normaliseTag(value)
+	d.g.Model(&Tag{}).Where("value LIKE ?", fmt.Sprintf("%%%s%%", value)).Find(&tags)
 
 	return tags
 }
