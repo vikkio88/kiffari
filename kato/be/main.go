@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"kato-be/db"
 	"net/http"
 
@@ -29,11 +30,27 @@ func main() {
 	r.GET("/tags", func(c *gin.Context) {
 		filterValue := c.Query("q")
 		if filterValue == "" {
-			c.JSON(http.StatusOK, d.GetAll())
+			c.JSON(http.StatusOK, d.GetAllTags())
 			return
 		}
 
-		c.JSON(http.StatusOK, d.Filter(filterValue))
+		c.JSON(http.StatusOK, d.FilterTags(filterValue))
+	})
+
+	r.GET("/notes", func(c *gin.Context) {
+		c.JSON(http.StatusOK, d.GetAllNotes())
+	})
+
+	r.POST("/notes", func(c *gin.Context) {
+		var newNote db.NoteCreate
+		err := c.Bind(&newNote)
+		if err == nil {
+			c.JSON(http.StatusOK, gin.H{"result": d.InsertNote(newNote)})
+			return
+		}
+
+		fmt.Println(err.Error())
+
 	})
 	r.Run(":5111") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

@@ -1,0 +1,13 @@
+POST http://localhost:5111/notes
+content-type: application/json
+
+{
+    "content": "some stuff blabla",
+    "tags": [
+        {"id":"01HM4YAXJ448TW7T6N1ZMQN3Z9" }
+    ]
+}
+
+###
+
+GET http://localhost:5111/notes
