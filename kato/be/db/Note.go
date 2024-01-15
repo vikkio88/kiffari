@@ -8,22 +8,29 @@ import (
 
 type Note struct {
 	Id        string    `gorm:"primarykey;size:16" json:"id"`
-	Content   string    `json:"content" `
-	Tags      []Tag     `gorm:"many2many:note_tags;"`
+	Body      string    `json:"body"`
+	Tags      []*Tag    `gorm:"many2many:note_tags" json:"tags"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
 type NoteCreate struct {
-	Content string `json:"content" binding:"required"`
-	Tags    []Tag  `json:"tags" binding:"required"`
+	Body string `json:"body" binding:"required"`
+	Tags []*Tag `json:"tags" binding:"required"`
 }
 
 func (n NoteCreate) Note() Note {
+	for _, t := range n.Tags {
+		if t.Id == "" {
+			t.Id = ulid.Make().String()
+			t.Value = normaliseTag(t.Label)
+		}
+	}
+
 	return Note{
-		Id:      ulid.Make().String(),
-		Content: n.Content,
-		Tags:    n.Tags,
+		Id:   ulid.Make().String(),
+		Body: n.Body,
+		Tags: n.Tags,
 	}
 
 }

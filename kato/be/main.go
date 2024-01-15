@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"kato-be/db"
 	"net/http"
 
@@ -23,7 +22,13 @@ func main() {
 	r.POST("/tags", func(c *gin.Context) {
 		var newTag db.TagCreate
 		if c.Bind(&newTag) == nil {
-			c.JSON(http.StatusOK, gin.H{"result": d.InsertTag(newTag)})
+			id := d.InsertTag(newTag)
+			if id != "" {
+				c.JSON(http.StatusOK, gin.H{"id": id})
+				return
+			}
+
+			c.JSON(http.StatusBadRequest, gin.H{"error": "could not create"})
 		}
 	})
 
@@ -41,16 +46,27 @@ func main() {
 		c.JSON(http.StatusOK, d.GetAllNotes())
 	})
 
+	r.GET("/notes/:id", func(c *gin.Context) {
+		id := c.Params.ByName("id")
+		if note, ok := d.GetNoteById(id); ok {
+			c.JSON(http.StatusOK, note)
+			return
+		}
+
+		c.JSON(http.StatusNotFound, gin.H{"error": "not found"})
+	})
+
 	r.POST("/notes", func(c *gin.Context) {
 		var newNote db.NoteCreate
 		err := c.Bind(&newNote)
 		if err == nil {
-			c.JSON(http.StatusOK, gin.H{"result": d.InsertNote(newNote)})
+			c.JSON(http.StatusOK, gin.H{"id": d.InsertNote(newNote)})
 			return
 		}
 
-		fmt.Println(err.Error())
+		c.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
 
 	})
-	r.Run(":5111") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+
+	r.Run(":5111")
 }

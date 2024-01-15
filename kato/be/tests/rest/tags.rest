@@ -1,0 +1,10 @@
+POST http://localhost:5111/tags
+content-type: application/json
+
+{
+    "label": "some-thing"
+}
+
+###
+
+GET http://localhost:5111/tags
