@@ -8,10 +8,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func corsConfig() cors.Config {
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowOrigins = []string{"http://localhost:5173"}
+	corsConfig.AllowCredentials = true
+	corsConfig.AddAllowHeaders("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers", "Content-Type", "X-XSRF-TOKEN", "Accept", "Origin", "X-Requested-With", "Authorization")
+	corsConfig.AddAllowMethods("GET", "POST", "PUT", "DELETE")
+	return corsConfig
+
+}
+
 func main() {
 	d := db.NewDb("testing.db")
 	r := gin.Default()
-	r.Use(cors.Default())
+
+	r.Use(cors.New(corsConfig()))
 
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
@@ -22,9 +33,9 @@ func main() {
 	r.POST("/tags", func(c *gin.Context) {
 		var newTag db.TagCreate
 		if c.Bind(&newTag) == nil {
-			id := d.InsertTag(newTag)
-			if id != "" {
-				c.JSON(http.StatusOK, gin.H{"id": id})
+			t, ok := d.InsertTag(newTag)
+			if ok {
+				c.JSON(http.StatusOK, t)
 				return
 			}
 
