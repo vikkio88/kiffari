@@ -1,59 +1,25 @@
 <script>
-    import Select from "svelte-select";
-    import { tags } from "../store";
-    let filterText = "";
-
-    let value = null;
-
-    function handleFilter(e) {
-        if (
-            value?.find((i) =>
-                i.label.toLowerCase().includes(filterText.toLowerCase()),
-            )
-        )
-            return;
-            
-        if (e.detail.length === 0 && filterText.length > 0) {
-            const prev = $tags.filter((i) => !i.created);
-            $tags = [
-                ...prev,
-                { value: filterText, label: filterText, created: true },
-            ];
-        }
+    import Select from "svelecte";
+    function onChange({ detail: selected }) {
+        console.log("change", selected);
     }
 
-    function handleChange(e) {
-        $tags = $tags.map((i) => {
-            if (i.created) {
-                fetch("http://localhost:5111/tags", {
-                    method: "post",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(i),
-                });
-            }
-            delete i.created;
-            return i;
-        });
+    function onCreate({ detail: created }) {
+        console.log("created", created);
     }
 </script>
 
 <div class="tagSearch">
     <Select
-        on:change={handleChange}
+        name="selection"
+        on:change={onChange}
         multiple
-        on:filter={handleFilter}
-        bind:filterText
-        bind:value
-        items={$tags}
-        on:create
-    >
-        <div slot="item" let:item>
-            {item.created ? "Add new: " : ""}
-            {item.label}
-        </div>
-    </Select>
+        required
+        creatable
+        on:createoption={onCreate}
+        placeholder="Search for color"
+        fetch="http://localhost:5111/tags?q=[query]"
+    />
 </div>
 
 <style>
