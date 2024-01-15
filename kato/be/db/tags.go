@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func (d *Db) InsertTag(value TagCreate) string {
+func (d *Db) InsertTag(value TagCreate) (Tag, bool) {
 	t := value.Tag()
 	tx := d.g.Save(t)
 
@@ -13,14 +13,12 @@ func (d *Db) InsertTag(value TagCreate) string {
 		ot := d.GetTagByValue(t.Value)
 		ot.Label = t.Label
 		tx := d.g.Save(ot)
-		if tx.Error == nil {
-			return ot.Id
-		} else {
-			return ""
-		}
+
+		return ot, tx.Error == nil
+
 	}
 
-	return t.Id
+	return t, true
 }
 
 func (d *Db) GetTagByValue(value string) Tag {
