@@ -1,15 +1,15 @@
 package db
 
-func (d *Db) InsertNote(value NoteCreate) string {
+func (d *Db) InsertNote(value NoteCreate) (Note, bool) {
 	n := value.Note()
-	d.g.Create(&n)
-	return n.Id
+	trx := d.g.Create(&n)
+	return n, trx.RowsAffected == 1
 }
 
-func (d *Db) GetAllNotes() []Note {
-	var notes []Note
+func (d *Db) GetAllNotes() []NoteItem {
+	var notes []NoteItem
 
-	d.g.Model(&Note{}).Preload("Tags").Find(&notes)
+	d.g.Model(&Note{}).Find(&notes)
 
 	return notes
 }
@@ -20,4 +20,10 @@ func (d *Db) GetNoteById(id string) (Note, bool) {
 	trx := d.g.Model(&Note{}).Preload("Tags").Find(&note, "Id = ?", id)
 
 	return note, trx.RowsAffected == 1
+}
+
+func (d *Db) DeleteNote(id string) bool {
+	trx := d.g.Where("id", id).Delete(&Note{})
+
+	return trx.RowsAffected > 0
 }

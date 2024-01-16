@@ -42,3 +42,9 @@ func (d *Db) FilterTags(value string) []Tag {
 
 	return tags
 }
+
+func (d *Db) DeleteTag(id string) bool {
+	trx := d.g.Where("id", id).Delete(&Tag{})
+
+	return trx.RowsAffected > 0
+}
