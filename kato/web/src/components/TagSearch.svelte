@@ -1,11 +1,11 @@
 <script>
     import Select from "svelecte";
-    import { createEventDispatcher } from 'svelte';
-    
+    import { createEventDispatcher } from "svelte";
+
     const d = createEventDispatcher();
 
     function onChange({ detail: selected }) {
-        d('added_tag', {tags:selected})
+        d("added_tag", { tags: selected });
     }
 </script>
 
