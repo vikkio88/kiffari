@@ -9,7 +9,14 @@ import (
 type Note struct {
 	Id        string    `gorm:"primarykey;size:16" json:"id"`
 	Body      string    `json:"body"`
-	Tags      []*Tag    `gorm:"many2many:note_tags" json:"tags"`
+	Tags      []*Tag    `gorm:"many2many:note_tags;constraint:OnDelete:CASCADE" json:"tags"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+}
+
+type NoteItem struct {
+	Id        string    `json:"id"`
+	Body      string    `json:"body"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
