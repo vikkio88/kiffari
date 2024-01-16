@@ -1,11 +1,11 @@
 <script>
     import Select from "svelecte";
-    function onChange({ detail: selected }) {
-        console.log("change", selected);
-    }
+    import { createEventDispatcher } from 'svelte';
+    
+    const d = createEventDispatcher();
 
-    function onCreate({ detail: created }) {
-        console.log("created", created);
+    function onChange({ detail: selected }) {
+        d('added_tag', {tags:selected})
     }
 </script>
 
@@ -16,15 +16,14 @@
         multiple
         required
         creatable
-        on:createoption={onCreate}
-        placeholder="Search for color"
+        placeholder="Search for tags..."
         fetch="http://localhost:5111/tags?q=[query]"
     />
 </div>
 
 <style>
     .tagSearch {
-        width: 100%;
         color: black;
+        padding: 1em;
     }
 </style>

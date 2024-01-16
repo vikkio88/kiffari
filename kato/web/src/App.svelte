@@ -1,17 +1,19 @@
 <script>
-  import Note from "./components/Note.svelte";
+  import { Router, Link, Route } from "svelte-routing";
+  import CreateNote from "./pages/CreateNote.svelte";
+  import Dash from "./pages/Dash.svelte";
+  let url = ""
 </script>
 
-<main>
-  <h1>Kato Web</h1>
 
-  <div class="card">
-    <Note />
-  </div>
-</main>
+  <Router {url}>
+    <nav>
+      <Link to="/">Dash</Link>
+      <Link to="/create-note">Create</Link>
+    </nav>
+    <main>
+      <Route path="/create-note" component={CreateNote} />
+      <Route path="/" component={Dash} />
+    </main>
+  </Router>
 
-<style>
-  main {
-    width: 100%;
-  }
-</style>
