@@ -1,45 +1,58 @@
 <script>
     import SvelteMarkdown from "svelte-markdown";
+    import { tick } from "svelte";
     import TagSearch from "./TagSearch.svelte";
 
     let showPreview = false;
     let text = `a new note`;
 
-    let selectedTags = []
+    let selectedTags = [];
 
-    function handleKeydown(e) {
-        if (event.key !== 'Tab') return;
+    async function handleKeydown(event) {
+        if (event.key !== "Tab") return;
 
         event.preventDefault();
 
-		const { selectionStart, selectionEnd, value } = this;
-        
-        text = value.substring(0, selectionStart) +"  " + value.substring(selectionEnd);
-        this.selectionStart = this.selectionEnd = selectionStart + 1;
+        const { selectionStart: start, selectionEnd: end, value } = this;
+        text = value.substring(0, start) + "  " + value.substring(end);
+        await tick();
+        this.selectionStart = this.selectionEnd = start + 2;
     }
 
     function onTagSelected(e) {
-        selectedTags = e.detail.tags
+        selectedTags = e.detail.tags;
     }
 
     function onSave() {
-        console.log({content: text, tags: selectedTags})
-    }
+        const tags = selectedTags.map((t) => {
+            if (t["$created"]) {
+                return { label: `${t.id}` };
+            }
+            return t;
+        });
 
+        console.log({ tags });
+    }
 </script>
 
 <div class="editor">
     <TagSearch on:added_tag={onTagSelected} />
-    <button on:click={() => showPreview = !showPreview}>Toggle Preview</button>
+    <button on:click={() => (showPreview = !showPreview)}>Toggle Preview</button
+    >
     <div class="note">
         {#if !showPreview}
-        <div>
-        <textarea bind:value={text} rows="10" cols="50" on:keydown={handleKeydown}/>
-        </div>
+            <div>
+                <textarea
+                    bind:value={text}
+                    rows="10"
+                    cols="50"
+                    on:keydown={handleKeydown}
+                />
+            </div>
         {:else}
-        <div class="preview">
-            <SvelteMarkdown source={text} />
-        </div>
+            <div class="preview">
+                <SvelteMarkdown source={text} />
+            </div>
         {/if}
     </div>
     <div class="controls">
@@ -52,7 +65,7 @@
         padding: 2em;
     }
     .note textarea {
-        font-size:16px;
+        font-size: 16px;
     }
 
     .preview {
