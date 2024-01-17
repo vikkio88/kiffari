@@ -1,7 +1,10 @@
 <script>
   import SvelteMarkdown from "svelte-markdown";
-  import { tick } from "svelte";
+  import { onMount, tick } from "svelte";
   import TagSearch from "./TagSearch.svelte";
+
+  export const note = null;
+
 
   let showPreview = false;
   let text = `a new note`;
@@ -26,7 +29,7 @@
   function formatTags() {
     return selectedTags.map((t) => {
       if (t["$created"]) {
-        return { label: `${t.id}` };
+        return { label: `${t.value}` };
       }
       return t;
     });

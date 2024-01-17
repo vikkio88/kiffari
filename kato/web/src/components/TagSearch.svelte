@@ -1,6 +1,7 @@
 <script>
     import Select from "svelecte";
     import { createEventDispatcher } from "svelte";
+    import { KATO_API_URL } from "../const";
 
     const d = createEventDispatcher();
 
@@ -16,8 +17,8 @@
         multiple
         required
         creatable
-        placeholder="Search for tags..."
-        fetch="http://localhost:5111/tags?q=[query]"
+        placeholder="Tags..."
+        fetch={`${KATO_API_URL}/tags?q=[query]`}
     />
 </div>
 
