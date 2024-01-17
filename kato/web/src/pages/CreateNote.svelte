@@ -1,5 +1,5 @@
 <script>
-    import NoteEditor from "../components/NoteEditor.svelte";
+  import NoteEditor from "../components/NoteEditor.svelte";
 </script>
 
-<NoteEditor />
+<NoteEditor onSave={() => console.log("I dont care")} />
