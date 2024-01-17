@@ -17,8 +17,18 @@ GET http://localhost:5111/notes
 
 ###
 
-GET http://localhost:5111/notes/01HM92C75FC1STJHN9PT1W3SZ6
+GET http://localhost:5111/notes/01HMBDV4T4EDEBHC9BTKN5V4X1
+
+###
+PUT http://localhost:5111/notes/01HMBDV4T4EDEBHC9BTKN5V4X1
+content-type: application/json
+
+{
+  "id": "01HMBDV4T4EDEBHC9BTKN5V4X1",
+  "body": "yet a note, maybe a note 1133.",
+  "tags": [{"label": "giulio"}]
+}
 
 
 ###
-DELETE http://localhost:5111/notes/01HM90ZEP2FM332MGTNVGKVXGR
+DELETE http://localhost:5111/notes/01HM92C75FC1STJHN9PT1W3SZ6

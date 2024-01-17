@@ -21,6 +21,27 @@ type NoteItem struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
+type NoteUpdate struct {
+	NoteCreate
+	Id string `json:"id" binding:"required"`
+}
+
+func (n NoteUpdate) Note() Note {
+	for _, t := range n.Tags {
+		if t.Id == "" {
+			t.Id = ulid.Make().String()
+			t.Value = normaliseTag(t.Label)
+		}
+	}
+
+	return Note{
+		Id:   n.Id,
+		Body: n.Body,
+		Tags: n.Tags,
+	}
+
+}
+
 type NoteCreate struct {
 	Body string `json:"body" binding:"required"`
 	Tags []*Tag `json:"tags" binding:"required"`

@@ -29,6 +29,17 @@ func NoteRoutes(r *gin.Engine, d *db.Db) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
 	})
 
+	r.PUT("/notes/:id", func(c *gin.Context) {
+		var updateNote db.NoteUpdate
+		err := c.Bind(&updateNote)
+		if err == nil {
+			id, ok := d.UpdateNote(updateNote)
+			SuccessOr400(c, gin.H{"result": id}, ok)
+			return
+		}
+		c.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
+	})
+
 	r.DELETE("/notes/:id", func(c *gin.Context) {
 		id := c.Params.ByName("id")
 		ok := d.DeleteNote(id)

@@ -10,4 +10,4 @@ content-type: application/json
 GET http://localhost:5111/tags
 
 ###
-DELETE http://localhost:5111/tags/01HM92C75FC1STJHN9PPVCE37Q
+DELETE http://localhost:5111/tags/01HM90Z1RTRF44AYD4D9NYFGBK
