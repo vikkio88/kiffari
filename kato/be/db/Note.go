@@ -8,6 +8,7 @@ import (
 
 type Note struct {
 	Id        string    `gorm:"primarykey;size:16" json:"id"`
+	Title     string    `json:"title"`
 	Body      string    `json:"body"`
 	Tags      []*Tag    `gorm:"many2many:note_tags;constraint:OnDelete:CASCADE" json:"tags"`
 	CreatedAt time.Time `json:"created_at"`
@@ -16,6 +17,7 @@ type Note struct {
 
 type NoteItem struct {
 	Id        string    `json:"id"`
+	Title     string    `json:"title"`
 	Body      string    `json:"body"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -35,16 +37,18 @@ func (n NoteUpdate) Note() Note {
 	}
 
 	return Note{
-		Id:   n.Id,
-		Body: n.Body,
-		Tags: n.Tags,
+		Id:    n.Id,
+		Title: n.Title,
+		Body:  n.Body,
+		Tags:  n.Tags,
 	}
 
 }
 
 type NoteCreate struct {
-	Body string `json:"body" binding:"required"`
-	Tags []*Tag `json:"tags" binding:"required"`
+	Title string `json:"title" binding:"required"`
+	Body  string `json:"body" binding:"required"`
+	Tags  []*Tag `json:"tags" binding:"required"`
 }
 
 func (n NoteCreate) Note() Note {
@@ -56,9 +60,10 @@ func (n NoteCreate) Note() Note {
 	}
 
 	return Note{
-		Id:   ulid.Make().String(),
-		Body: n.Body,
-		Tags: n.Tags,
+		Id:    ulid.Make().String(),
+		Title: n.Title,
+		Body:  n.Body,
+		Tags:  n.Tags,
 	}
 
 }

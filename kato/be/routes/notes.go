@@ -9,6 +9,12 @@ import (
 
 func NoteRoutes(r *gin.Engine, d *db.Db) {
 	r.GET("/notes", func(c *gin.Context) {
+		latest := c.Query("latest")
+		if latest == "true" {
+			c.JSON(http.StatusOK, d.GetLatest())
+			return
+		}
+
 		c.JSON(http.StatusOK, d.GetAllNotes())
 	})
 
@@ -33,6 +39,7 @@ func NoteRoutes(r *gin.Engine, d *db.Db) {
 		var updateNote db.NoteUpdate
 		err := c.Bind(&updateNote)
 		if err == nil {
+			updateNote.Id = c.Params.ByName("id")
 			id, ok := d.UpdateNote(updateNote)
 			SuccessOr400(c, gin.H{"result": id}, ok)
 			return

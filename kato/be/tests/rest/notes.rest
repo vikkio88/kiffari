@@ -2,13 +2,9 @@ POST http://localhost:5111/notes
 content-type: application/json
 
 {
+    "title":"Some title",
     "body": "yet a note, maybe a note",
-    "tags":[
-         {
-    "id": "01HM90Z1RTRF44AYD4D9NYFGBK"
-  },
-  {"label": "mario"}
-    ]
+    "tags":[{"label": "jujujvuj"}]
 }
 
 ###
@@ -17,15 +13,20 @@ GET http://localhost:5111/notes
 
 ###
 
-GET http://localhost:5111/notes/01HMBDV4T4EDEBHC9BTKN5V4X1
+GET http://localhost:5111/notes?latest=true
 
 ###
-PUT http://localhost:5111/notes/01HMBDV4T4EDEBHC9BTKN5V4X1
+
+GET http://localhost:5111/notes/01HMEM1AWS5MRE59QJ5K5VCRP7
+
+###
+PUT http://localhost:5111/notes/01HMEM1AWS5MRE59QJ5K5VCRP7
 content-type: application/json
 
 {
-  "id": "01HMBDV4T4EDEBHC9BTKN5V4X1",
-  "body": "yet a note, maybe a note 1133.",
+  "id": "01HMEM1AWS5MRE59QJ5K5VCRP7",
+  "title": "some updated title",
+  "body": "note updated, I can believe it",
   "tags": [{"label": "giulio"}]
 }
 
