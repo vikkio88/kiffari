@@ -5,9 +5,9 @@
 
   export const note = null;
 
-
   let showPreview = false;
   let text = `a new note`;
+  let title = "a title";
 
   let selectedTags = [];
 
@@ -35,13 +35,13 @@
     });
   }
 
-  export let onSave = (body, tags) => {
-    console.log({ body, tags });
+  export let onSave = (title, body, tags) => {
+    console.log({ title, body, tags });
   };
 
   function onSaveInternal() {
     const tags = formatTags();
-    onSave(text, tags);
+    onSave(title, text, tags);
   }
 </script>
 
@@ -50,7 +50,8 @@
   <button on:click={() => (showPreview = !showPreview)}>Toggle Preview</button>
   <div class="note">
     {#if !showPreview}
-      <div>
+      <div class="form">
+        <input class="title" bind:value={title} type="text" />
         <textarea
           bind:value={text}
           rows="10"
@@ -60,6 +61,7 @@
       </div>
     {:else}
       <div class="preview">
+        <h2>{title}</h2>
         <SvelteMarkdown source={text} />
       </div>
     {/if}
@@ -70,11 +72,20 @@
 </div>
 
 <style>
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  .title {
+    padding: 1em;
+    font-size: 18px;
+  }
   .editor {
     padding: 2em;
   }
   .note textarea {
     font-size: 16px;
+    padding: 1em;
   }
 
   .preview {
