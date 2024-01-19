@@ -21,6 +21,13 @@ func (d *Db) InsertTag(value TagCreate) (Tag, bool) {
 	return t, true
 }
 
+func (d *Db) GetTagWithNotes(id string) Tag {
+	var t Tag
+	d.g.Preload("Notes").Find(&t, "Id = ?", id)
+
+	return t
+}
+
 func (d *Db) GetTagByValue(value string) Tag {
 	var t Tag
 	d.g.Model(&Tag{}).Where("value", value).Find(&t)
