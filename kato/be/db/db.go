@@ -12,7 +12,12 @@ type Db struct {
 }
 
 func NewDb(fileName string) *Db {
-	g, err := gorm.Open(sqlite.Open(fmt.Sprintf("%s?_foreign_keys=on", fileName)), &gorm.Config{})
+	g, err := gorm.Open(
+		sqlite.Open(fmt.Sprintf("%s?_foreign_keys=on", fileName)),
+		&gorm.Config{
+			// Logger: logger.Default.LogMode(logger.Info),
+		},
+	)
 	if err != nil {
 		panic(err)
 	}
