@@ -1,15 +1,15 @@
 <script>
   import SvelteMarkdown from "svelte-markdown";
-  import { onMount, tick } from "svelte";
+  import { tick } from "svelte";
   import TagSearch from "./TagSearch.svelte";
+  import Controls from "./shared/Controls.svelte";
 
   export const note = null;
 
   let showPreview = false;
-  let text = `a new note`;
-  let title = "a title";
-
-  let selectedTags = [];
+  export let title = "new note title";
+  export let text = "a new note body";
+  export let tags = []
 
   async function handleKeydown(event) {
     if (event.key !== "Tab") return;
@@ -23,13 +23,13 @@
   }
 
   function onTagSelected(e) {
-    selectedTags = e.detail.tags;
+    tags = e.detail.tags;
   }
 
   function formatTags() {
-    return selectedTags.map((t) => {
+    return tags.map((t) => {
       if (t["$created"]) {
-        return { label: `${t.value}` };
+        return { label: `${t.value ?? t.id}` };
       }
       return t;
     });
@@ -46,7 +46,7 @@
 </script>
 
 <div class="editor">
-  <TagSearch on:added_tag={onTagSelected} />
+  <TagSearch on:added_tag={onTagSelected} initialTags={tags} />
   <button on:click={() => (showPreview = !showPreview)}>Toggle Preview</button>
   <div class="note">
     {#if !showPreview}
@@ -66,9 +66,9 @@
       </div>
     {/if}
   </div>
-  <div class="controls">
+  <Controls>
     <button on:click={onSaveInternal}>Save</button>
-  </div>
+  </Controls>
 </div>
 
 <style>
@@ -90,12 +90,5 @@
 
   .preview {
     display: block;
-  }
-
-  .controls {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 2em;
   }
 </style>

@@ -3,6 +3,7 @@
   import CreateNote from "./pages/CreateNote.svelte";
   import Dash from "./pages/Dash.svelte";
   import NoteDetail from "./pages/NoteDetail.svelte";
+  import EditNote from "./pages/EditNote.svelte";
   let url = "";
 </script>
 
@@ -13,6 +14,9 @@
   </nav>
   <main>
     <Route path="/create-note" component={CreateNote} />
+    <Route path="/edit-note/:id" let:params>
+      <EditNote id={params.id} />
+    </Route>
     <Route path="/notes/:id" let:params>
       <NoteDetail id={params.id} />
     </Route>
