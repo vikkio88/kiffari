@@ -3,6 +3,8 @@
     import { createEventDispatcher } from "svelte";
     import { KATO_API_URL } from "../const";
 
+    export let initialTags = [];
+
     const d = createEventDispatcher();
 
     function onChange({ detail: selected }) {
@@ -13,6 +15,8 @@
 <div class="tagSearch">
     <Select
         name="selection"
+        valueAsObject
+        value={initialTags}
         on:change={onChange}
         multiple
         required
