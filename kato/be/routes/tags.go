@@ -28,6 +28,11 @@ func TagRoutes(r *gin.Engine, d *db.Db) {
 		c.JSON(http.StatusOK, d.FilterTags(filterValue))
 	})
 
+	r.GET("/tags/:id", func(c *gin.Context) {
+		id := c.Params.ByName("id")
+		c.JSON(http.StatusOK, d.GetTagWithNotes(id))
+	})
+
 	r.DELETE("/tags/:id", func(c *gin.Context) {
 		id := c.Params.ByName("id")
 		ok := d.DeleteTag(id)
