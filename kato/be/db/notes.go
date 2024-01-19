@@ -9,7 +9,7 @@ func (d *Db) InsertNote(value NoteCreate) (Note, bool) {
 func (d *Db) GetLatest() []NoteItem {
 	var notes []NoteItem
 
-	d.g.Model(&Note{}).Order("created_at DESC, updated_at DESC").Limit(5).Find(&notes)
+	d.g.Model(&Note{}).Order("updated_at DESC, created_at DESC").Limit(5).Find(&notes)
 
 	return notes
 }
@@ -32,6 +32,8 @@ func (d *Db) GetNoteById(id string) (Note, bool) {
 
 func (d *Db) UpdateNote(n NoteUpdate) (string, bool) {
 	un := n.Note()
+
+	d.g.Model(&un).Association("Tags").Replace(un.Tags)
 	trx := d.g.Omit("created_at").Save(&un)
 	if trx.RowsAffected != 1 {
 		return "", false
