@@ -1,4 +1,6 @@
 <script>
+  import { Link } from "svelte-routing";
+
   export let tags = [];
 </script>
 
@@ -7,7 +9,7 @@
 {:else}
   <div class="list">
     {#each tags as tag}
-      <div class="tag">{tag.label}</div>
+      <div class="tag"><Link to={`tags/${tag.id}`}>{tag.label}</Link></div>
     {/each}
   </div>
 {/if}
@@ -29,7 +31,6 @@
 
   .tag:hover {
     border-color: #646cff;
-    color: #747bff;
     cursor: pointer;
   }
 </style>
