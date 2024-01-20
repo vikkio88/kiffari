@@ -1,4 +1,5 @@
 <script>
+    import NoteList from "../components/NoteList.svelte";
     import { KATO_API_URL } from "../const";
 
     export let id = "";
@@ -9,5 +10,6 @@
 
 {#await tagPromise then tag}
     <h2>{tag.label}</h2>
-    <h3>{tag.notes.length} notes</h3>
+    <strong>Notes with this tag ({tag.notes.length})</strong>
+    <NoteList notes={tag.notes} />
 {/await}
