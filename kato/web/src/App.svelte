@@ -5,14 +5,16 @@
   import NoteDetail from "./pages/NoteDetail.svelte";
   import EditNote from "./pages/EditNote.svelte";
   import TagDetail from "./pages/TagDetail.svelte";
-  
+  import Search from "./pages/Search.svelte";
+
   let url = "";
 </script>
 
 <Router {url}>
   <nav>
-    <Link to="/">Dash</Link>
-    <Link to="/create-note">Create</Link>
+    <Link to="/" title="Dashboard">🪣</Link>
+    <Link to="/create-note" title="Add New">➕</Link>
+    <Link to="/search" title="Search">🔍</Link>
   </nav>
   <main>
     <Route path="/tags/:id" let:params>
@@ -25,6 +27,7 @@
     <Route path="/notes/:id" let:params>
       <NoteDetail id={params.id} />
     </Route>
+    <Route path="/search" component={Search} />
     <Route path="/" component={Dash} />
   </main>
 </Router>
