@@ -1,6 +1,7 @@
 <script>
   import { navigate } from "svelte-routing";
   export let tags = [];
+  export let big = false;
 </script>
 
 {#if tags.length < 1}
@@ -8,7 +9,7 @@
 {:else}
   <div class="list">
     {#each tags as tag}
-      <button class="tag" on:click={() => navigate(`/tags/${tag.id}`)}>
+      <button class:big class="tag" on:click={() => navigate(`/tags/${tag.id}`)}>
         {tag.label}
       </button>
     {/each}
@@ -28,6 +29,11 @@
     padding: 0.5em;
     font-size: small;
     font-weight: bold;
+  }
+
+  .big {
+    font-size: 18px;
+    padding: 1em;
   }
 
   .tag:hover {

@@ -1,25 +1,39 @@
 <script>
     import Select from "svelecte";
     import { KATO_API_URL } from "../const";
-    let value = "";
+    import TagsList from "../components/TagsList.svelte";
     let timer;
+    let tags = [];
+    let controller = null;
 
     const debounce = (v) => {
         clearTimeout(timer);
         timer = setTimeout(() => {
-            value = v;
+            if (v.length <= 2) {
+                tags = [];
+                return;
+            }
+
+            if (controller) controller.abort();
+            controller = new AbortController();
+
+            fetch(`${KATO_API_URL}/tags?q=${v}`, {
+                method: "get",
+                signal: controller.signal,
+            })
+                .then((data) => data.json())
+                .then((t) => (tags = t));
         }, 500);
     };
 </script>
 
 <div class="tagSearch">
-    <input
-        type="text"
-        on:keyup={({ target: { value } }) => debounce(value)}
-    />
+    <input type="text" on:keyup={({ target: { value } }) => debounce(value)} />
 </div>
 
-<h1>{value}</h1>
+<div class="result">
+    <TagsList big {tags} />
+</div>
 
 <style>
     .tagSearch {
@@ -32,5 +46,10 @@
         font-size: 18px;
         background-color: #d3d3d3;
         color: black;
+    }
+
+    .result {
+        display: flex;
+        justify-content: center;
     }
 </style>
