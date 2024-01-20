@@ -1,6 +1,5 @@
 <script>
-  import { Link } from "svelte-routing";
-
+  import { navigate } from "svelte-routing";
   export let tags = [];
 </script>
 
@@ -9,7 +8,9 @@
 {:else}
   <div class="list">
     {#each tags as tag}
-      <div class="tag"><Link to={`tags/${tag.id}`}>{tag.label}</Link></div>
+      <button class="tag" on:click={() => navigate(`/tags/${tag.id}`)}>
+        {tag.label}
+      </button>
     {/each}
   </div>
 {/if}
