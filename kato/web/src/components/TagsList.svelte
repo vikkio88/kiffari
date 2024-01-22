@@ -21,7 +21,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.5em;
-    padding: 2em;
+    margin-bottom: 1rem;
   }
   .tag {
     border: 2px white solid;

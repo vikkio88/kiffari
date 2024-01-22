@@ -8,6 +8,7 @@
   );
 </script>
 
+<h2>Latest Notes</h2>
 {#await notePromise then notes}
   <NoteList {notes} />
 {/await}

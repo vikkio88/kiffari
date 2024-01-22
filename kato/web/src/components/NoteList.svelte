@@ -1,36 +1,43 @@
 <script>
-    import { Link } from "svelte-routing";
+    import { navigate } from "svelte-routing";
     export let notes = [];
 </script>
 
 <ul class="list">
     {#each notes as note}
         <li class="note-item">
-            <Link to={`notes/${note.id}`}>{note.title}</Link>
             <span class="date">
-                {new Date(note.created_at).toLocaleDateString()}
+                {new Date(note.created_at).toLocaleString()}
             </span>
+            <h2>{note.title}</h2>
+            <button on:click={() => navigate(`/notes/${note.id}`)}>➡️</button>
         </li>
     {/each}
 </ul>
 
 <style>
     .list {
-        display: flex;
-        flex-direction: row;
+        width: 80%;
+        margin: 0 auto;
     }
     .note-item {
         border: 2px white solid;
         border-radius: 10px;
-        padding: 0.5em;
-        margin: 1em;
+        padding: 2rem;
+        margin: 2rem 0;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
         font-size: 16px;
-        flex: 1 1 0;
     }
 
-    span.date {
-        font-size: x-small;
+    .note-item:hover {
+        background-color: #3a3a3a;
+    }
+
+    h2 {
+        margin: 0 auto;
+        text-align: center;
     }
 </style>

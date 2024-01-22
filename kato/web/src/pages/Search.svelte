@@ -27,6 +27,7 @@
     };
 </script>
 
+<h2>Search Tag</h2>
 <div class="tagSearch">
     <input type="text" on:keyup={({ target: { value } }) => debounce(value)} />
 </div>
