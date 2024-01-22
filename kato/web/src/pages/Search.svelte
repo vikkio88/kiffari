@@ -29,7 +29,7 @@
 
 <h2>Search Tag</h2>
 <div class="tagSearch">
-    <input type="text" on:keyup={({ target: { value } }) => debounce(value)} />
+    <input type="text" on:keyup={({ currentTarget: { value } }) => debounce(value)} />
 </div>
 
 <div class="result">
