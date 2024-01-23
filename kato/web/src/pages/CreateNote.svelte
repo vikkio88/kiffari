@@ -2,6 +2,9 @@
   import { navigate } from "svelte-routing";
   import NoteEditor from "../components/NoteEditor.svelte";
   import { KATO_API_URL } from "../const";
+  import { protectedRoute } from "../libs";
+  protectedRoute();
+  
   let postPromise = null;
   async function onSave(title, body, tags) {
     postPromise = fetch(`${KATO_API_URL}/notes`, {
@@ -20,6 +23,7 @@
     }
   }
 </script>
+
 <h2>Add Note</h2>
 {#if postPromise == null}
   <NoteEditor {onSave} />

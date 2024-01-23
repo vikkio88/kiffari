@@ -1,7 +1,8 @@
 <script>
-  import { Link } from "svelte-routing";
   import { KATO_API_URL } from "../const";
   import NoteList from "../components/NoteList.svelte";
+  import { protectedRoute } from "../libs";
+  protectedRoute();
 
   let notePromise = fetch(`${KATO_API_URL}/notes?latest=true`).then((resp) =>
     resp.json(),

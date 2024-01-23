@@ -1,6 +1,8 @@
 <script>
     import NoteList from "../components/NoteList.svelte";
     import { KATO_API_URL } from "../const";
+    import { protectedRoute } from "../libs";
+    protectedRoute();
 
     export let id = "";
     let tagPromise = fetch(`${KATO_API_URL}/tags/${id}`).then((resp) =>
@@ -23,7 +25,7 @@
 
 <style>
     .header {
-        border-top: 2px white solid;
+        border-top: 2px #a3a3a3 solid;
         margin-bottom: 5em;
     }
     .header > h1 {
@@ -32,17 +34,18 @@
     }
 
     .header > span {
-        font-size: 2rem;
+        font-size: 1.5rem;
         margin: 0;
         padding: 0 1rem;
         display: inline-block;
         transform: translateY(-50%);
         background-color: #242424;
+        color: #a3a3a3;
     }
 
     .results {
         margin-top: 5rem;
-        border-top: 2px white solid;
+        border-top: 2px #a3a3a3 solid;
     }
 
     .results > h3 {
@@ -51,5 +54,6 @@
         display: inline-block;
         transform: translateY(-50%);
         background-color: #242424;
+        color: #a3a3a3;
     }
 </style>

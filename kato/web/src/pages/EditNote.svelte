@@ -2,9 +2,12 @@
   import { navigate } from "svelte-routing";
   import NoteEditor from "../components/NoteEditor.svelte";
   import { KATO_API_URL } from "../const";
+  import { protectedRoute } from "../libs";
+  protectedRoute();
+  
   export let id = "";
   let notePromise = fetch(`${KATO_API_URL}/notes/${id}`).then((resp) =>
-    resp.json()
+    resp.json(),
   );
   let putPromise = null;
 

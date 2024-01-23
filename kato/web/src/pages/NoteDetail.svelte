@@ -5,6 +5,8 @@
   import Controls from "../components/shared/Controls.svelte";
   import { navigate } from "svelte-routing";
   import ConfirmButton from "../components/shared/ConfirmButton.svelte";
+  import { protectedRoute } from "../libs";
+  protectedRoute();
 
   export let id = "";
   let notePromise = fetch(`${KATO_API_URL}/notes/${id}`).then((resp) =>
@@ -27,7 +29,6 @@
 
     return new Date(created_at).toLocaleString();
   }
-
 </script>
 
 {#await notePromise then note}
@@ -61,6 +62,7 @@
 
   .note span.date {
     font-size: smaller;
+    color: #a3a3a3;
   }
 
   .body {
@@ -69,7 +71,7 @@
 
   .tags {
     margin-top: 3rem;
-    border-top: 2px white solid;
+    border-top: 2px #a3a3a3 solid;
   }
 
   .tags h3 {
@@ -78,5 +80,6 @@
     display: inline-block;
     transform: translateY(-50%);
     background-color: #242424;
+    color: #a3a3a3;
   }
 </style>

@@ -1,7 +1,9 @@
 <script>
-  import Select from "svelecte";
   import { KATO_API_URL } from "../const";
   import TagsList from "../components/TagsList.svelte";
+  import { protectedRoute } from "../libs";
+  protectedRoute();
+  
   let timer;
   let tags = [];
   let controller = null;
