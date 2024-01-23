@@ -20,9 +20,15 @@
     }
   }
 </script>
-
+<h2>Add Note</h2>
 {#if postPromise == null}
   <NoteEditor {onSave} />
 {:else}
   <h2>Creating...</h2>
 {/if}
+
+<style>
+  h2 {
+    margin: 0;
+  }
+</style>
