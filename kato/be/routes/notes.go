@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NoteRoutes(r *gin.Engine, d *db.Db) {
+func NoteRoutes(r gin.IRouter, d *db.Db) {
 	r.GET("/notes", func(c *gin.Context) {
 		latest := c.Query("latest")
 		if latest == "true" {

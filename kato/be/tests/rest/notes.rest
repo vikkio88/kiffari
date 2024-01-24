@@ -1,5 +1,12 @@
+###
+GET http://localhost:5111/ping
+
+###
+
+
 POST http://localhost:5111/notes
 content-type: application/json
+Authorization: user
 
 {
     "title":"Some title",
@@ -10,6 +17,7 @@ content-type: application/json
 ###
 
 GET http://localhost:5111/notes
+Authorization: user
 
 ###
 

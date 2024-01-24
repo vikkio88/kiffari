@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func TagRoutes(r *gin.Engine, d *db.Db) {
+func TagRoutes(r gin.IRouter, d *db.Db) {
 	r.POST("/tags", func(c *gin.Context) {
 		var newTag db.TagCreate
 		if c.Bind(&newTag) == nil {

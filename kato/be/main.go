@@ -39,8 +39,20 @@ func main() {
 		})
 	})
 
-	routes.TagRoutes(r, d)
-	routes.NoteRoutes(r, d)
+	private := r.Group("")
+	private.Use(AuthRequired)
+
+	routes.TagRoutes(private, d)
+	routes.NoteRoutes(private, d)
 
 	r.Run(":5111")
+}
+
+func AuthRequired(c *gin.Context) {
+	if c.GetHeader("Authorization") != "user" {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "unauth"})
+		return
+	}
+
+	c.Next()
 }
