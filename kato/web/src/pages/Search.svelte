@@ -1,7 +1,7 @@
 <script>
   import { KATO_API_URL } from "../const";
   import TagsList from "../components/TagsList.svelte";
-  import { protectedRoute } from "../libs";
+  import { protectedRoute } from "../libs/routes";
   protectedRoute();
   
   let timer;

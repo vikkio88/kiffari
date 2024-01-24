@@ -1,12 +1,9 @@
 <script>
-  import { KATO_API_URL } from "../const";
   import NoteList from "../components/NoteList.svelte";
-  import { protectedRoute } from "../libs";
+  import { getLatestNotes } from "../libs/api";
+  import { protectedRoute } from "../libs/routes";
   protectedRoute();
-
-  let notePromise = fetch(`${KATO_API_URL}/notes?latest=true`).then((resp) =>
-    resp.json(),
-  );
+  let notePromise = getLatestNotes().then((resp) => resp.json());
 </script>
 
 <h2>Latest Notes</h2>

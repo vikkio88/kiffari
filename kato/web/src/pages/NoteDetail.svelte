@@ -1,22 +1,18 @@
 <script>
-  import { KATO_API_URL } from "../const";
   import SvelteMarkdown from "svelte-markdown";
   import TagsList from "../components/TagsList.svelte";
   import Controls from "../components/shared/Controls.svelte";
   import { navigate } from "svelte-routing";
   import ConfirmButton from "../components/shared/ConfirmButton.svelte";
-  import { protectedRoute } from "../libs";
+  import { protectedRoute } from "../libs/routes";
+  import { getNoteDetails, deleteNote } from "../libs/api";
   protectedRoute();
 
   export let id = "";
-  let notePromise = fetch(`${KATO_API_URL}/notes/${id}`).then((resp) =>
-    resp.json(),
-  );
+  let notePromise = getNoteDetails(id).then((resp) => resp.json());
 
   async function onDelete() {
-    const resp = await fetch(`${KATO_API_URL}/notes/${id}`, {
-      method: "DELETE",
-    });
+    const resp = await deleteNote(id);
     if (resp.ok) {
       navigate("/", { replace: true });
     }

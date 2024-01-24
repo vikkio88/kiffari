@@ -6,10 +6,10 @@
 <ul class="list">
   {#each notes as note}
     <li class="note-item">
-        <span class="date">
-          {new Date(note.created_at).toLocaleString()}
-        </span>
-        <h2>{note.title}</h2>
+      <span class="date">
+        {new Date(note.created_at).toLocaleString()}
+      </span>
+      <h2>{note.title}</h2>
       <button on:click={() => navigate(`/notes/${note.id}`)}>➡️</button>
     </li>
   {/each}

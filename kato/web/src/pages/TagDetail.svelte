@@ -1,7 +1,7 @@
 <script>
     import NoteList from "../components/NoteList.svelte";
     import { KATO_API_URL } from "../const";
-    import { protectedRoute } from "../libs";
+    import { protectedRoute } from "../libs/routes";
     protectedRoute();
 
     export let id = "";

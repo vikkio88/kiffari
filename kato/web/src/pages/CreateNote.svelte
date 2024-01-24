@@ -1,20 +1,13 @@
 <script>
   import { navigate } from "svelte-routing";
   import NoteEditor from "../components/NoteEditor.svelte";
-  import { KATO_API_URL } from "../const";
-  import { protectedRoute } from "../libs";
+  import { protectedRoute } from "../libs/routes";
+  import { createNote } from "../libs/api";
   protectedRoute();
   
   let postPromise = null;
   async function onSave(title, body, tags) {
-    postPromise = fetch(`${KATO_API_URL}/notes`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title, body, tags }),
-    });
+    postPromise = createNote({ title, body, tags })
 
     const data = await postPromise;
     if (data.status == 200) {
