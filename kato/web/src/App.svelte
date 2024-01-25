@@ -8,12 +8,12 @@
   import Search from "./pages/Search.svelte";
   import Login from "./pages/Login.svelte";
   import { LOGIN_TOKEN_KEY } from "./const";
-  import { isLoggedIn } from "./store";
+  import { userToken } from "./store";
 
   let url = "";
 
   function logout() {
-    $isLoggedIn = false;
+    $userToken = null;
     window.localStorage.removeItem(LOGIN_TOKEN_KEY);
     navigate("/login", { replace: true });
   }
@@ -24,7 +24,7 @@
     <Link to="/" title="Dashboard">🪣</Link>
     <Link to="/create-note" title="Add New">➕</Link>
     <Link to="/search" title="Search">🔍</Link>
-    {#if $isLoggedIn}
+    {#if $userToken !== null}
       <button on:click={logout} title="Logout">👋</button>
     {/if}
   </nav>

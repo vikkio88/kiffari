@@ -1,12 +1,13 @@
 <script>
-  import { KATO_API_URL } from "../const";
   import TagsList from "../components/TagsList.svelte";
   import { protectedRoute } from "../libs/routes";
+  import { filterTags } from "../libs/api";
   protectedRoute();
-  
+
   let timer;
   let tags = [];
   let controller = null;
+  let searchPromise = null;
 
   const debounce = (v) => {
     clearTimeout(timer);
@@ -19,12 +20,7 @@
       if (controller) controller.abort();
       controller = new AbortController();
 
-      fetch(`${KATO_API_URL}/tags?q=${v}`, {
-        method: "get",
-        signal: controller.signal,
-      })
-        .then((data) => data.json())
-        .then((t) => (tags = t));
+      searchPromise = filterTags(v, controller).then((data) => data.json());
     }, 500);
   };
 </script>
@@ -40,7 +36,15 @@
 </div>
 
 <div class="result">
-  <TagsList big {tags} />
+  {#if searchPromise}
+    {#await searchPromise}
+      <strong>Loading...</strong>
+    {:then tags}
+      <TagsList big {tags} />
+    {/await}
+  {:else}
+    <strong>Here there will be tags...</strong>
+  {/if}
 </div>
 
 <style>
@@ -62,5 +66,9 @@
   .result {
     display: flex;
     justify-content: center;
+  }
+
+  strong {
+    color: #a3a3a3;
   }
 </style>

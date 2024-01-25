@@ -1,11 +1,12 @@
 <script>
     import NoteList from "../components/NoteList.svelte";
     import { KATO_API_URL } from "../const";
+  import { getTagDetails } from "../libs/api";
     import { protectedRoute } from "../libs/routes";
     protectedRoute();
 
     export let id = "";
-    let tagPromise = fetch(`${KATO_API_URL}/tags/${id}`).then((resp) =>
+    let tagPromise = getTagDetails(id).then((resp) =>
         resp.json(),
     );
 </script>
