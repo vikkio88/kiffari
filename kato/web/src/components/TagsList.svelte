@@ -1,5 +1,6 @@
 <script>
   import { navigate } from "svelte-routing";
+  export let onTagClick = (tag) => () => navigate(`/tags/${tag.id}`);
   export let tags = [];
   export let big = false;
 </script>
@@ -7,22 +8,14 @@
 {#if tags.length < 1}
   <strong>No tags...</strong>
 {:else}
-  <div class="list">
-    {#each tags as tag}
-      <button class:big class="tag" on:click={() => navigate(`/tags/${tag.id}`)}>
-        {tag.label}
-      </button>
-    {/each}
-  </div>
+  {#each tags as tag}
+    <button class:big class="tag" on:click={onTagClick(tag)}>
+      {tag.label}
+    </button>
+  {/each}
 {/if}
 
 <style>
-  .list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5em;
-    margin-bottom: 1rem;
-  }
   .tag {
     border: 2px white solid;
     border-radius: 10px;

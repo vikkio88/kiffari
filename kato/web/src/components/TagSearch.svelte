@@ -1,34 +1,133 @@
 <script>
-  import Select from "svelecte";
   import { createEventDispatcher } from "svelte";
-  import { KATO_API_URL } from "../const";
-
-  export let initialTags = [];
-
+  import { filterTags } from "../libs/api";
+  import TagsList from "./TagsList.svelte";
+  import Spinner from "./shared/Spinner.svelte";
   const d = createEventDispatcher();
 
-  function onChange({ detail: selected }) {
-    d("added_tag", { tags: selected });
+  function onTagSelected({ id = null, label }) {
+    const newTag = { label };
+    if (Boolean(id)) {
+      newTag.id = id;
+    }
+    selectedTags = [...selectedTags, newTag];
+    d("updatedSelection", selectedTags);
   }
+
+  function deselect(tagLabel) {
+    selectedTags = selectedTags.filter((t) => t.label != tagLabel);
+    d("updatedSelection", selectedTags);
+  }
+
+  let searchResultTags = [];
+  let selectedTags = [];
+
+  let timer;
+  let controller = null;
+  let searchPromise = null;
+  let searchValue = "";
+
+  const debounce = (v, k) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      if (v.length <= 2) {
+        searchResultTags = [];
+        return;
+      }
+
+      if (controller) controller.abort();
+      controller = new AbortController();
+
+      searchPromise = filterTags(v, controller).then((data) => data.json());
+    }, 500);
+  };
 </script>
 
 <div class="tagSearch">
-  <Select
-    name="selection"
-    valueAsObject
-    value={initialTags}
-    on:change={onChange}
-    multiple
-    required
-    creatable
-    placeholder="Tags..."
-    fetch={`${KATO_API_URL}/tags?q=[query]`}
+  <div class="selectedTags">
+    {#each selectedTags as tag}
+      <div class="tag" class:NewTag={!Boolean(tag.id)}>
+        {tag.label}
+        <button on:click={() => deselect(tag.label)}>❌</button>
+      </div>
+    {/each}
+  </div>
+  <input
+    type="text"
+    size="50"
+    bind:value={searchValue}
+    on:keyup={({ currentTarget: { value }, key }) => debounce(value, key)}
+    placeholder="Add Tags..."
   />
+  <div class="searchResultTags">
+    {#if searchPromise}
+      {#await searchPromise}
+        <Spinner />
+      {:then tags}
+        {#if tags.length > 0 && Boolean(searchValue)}
+          <TagsList
+            tags={tags.filter(
+              (t) => !selectedTags.some((st) => st.id === t.id)
+            )}
+            onTagClick={(tag) => () => {
+              onTagSelected(tag);
+              searchValue = "";
+              searchPromise = null;
+            }}
+          />
+        {:else if Boolean(searchValue)}
+          <button
+            on:click={() => {
+              onTagSelected({ label: searchValue });
+              searchValue = "";
+              searchPromise = null;
+            }}>🆕 {searchValue}</button
+          >
+        {/if}
+      {/await}
+    {/if}
+  </div>
 </div>
 
 <style>
-  .tagSearch {
-    color: black;
+  .selectedTags {
+    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .selectedTags > .tag {
+    border: solid 2px #333;
+    border-radius: 10px;
+    padding: .5rem 1rem;
+    margin: 0 0.5rem;
+  }
+
+  .selectedTags > .tag:hover {
+    background-color: #333;
+    border-color: white;
+  }
+
+  .selectedTags > .NewTag {
+    border: dashed 2px #333;
+  }
+  .selectedTags > .tag > button {
+    font-size: 0.5rem;
+    margin-left: 0.5rem;
+  }
+
+  input {
     padding: 1em;
+    border-radius: 10px;
+  }
+
+  .searchResultTags {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
 </style>
