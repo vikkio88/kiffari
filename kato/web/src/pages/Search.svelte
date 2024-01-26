@@ -1,5 +1,6 @@
 <script>
   import TagsList from "../components/TagsList.svelte";
+  import Spinner from "../components/shared/Spinner.svelte";
   import { protectedRoute } from "../libs/routes";
   import { filterTags } from "../libs/api";
   protectedRoute();
@@ -38,7 +39,7 @@
 <div class="result">
   {#if searchPromise}
     {#await searchPromise}
-      <strong>Loading...</strong>
+      <Spinner />
     {:then tags}
       <TagsList big {tags} />
     {/await}
