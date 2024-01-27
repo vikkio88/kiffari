@@ -68,7 +68,7 @@
         </div>
       {/if}
     </div>
-    <TagSearch on:updatedSelection={onTagsSelection} />
+    <TagSearch on:updatedSelection={onTagsSelection} selectedTags={tags} />
     <Controls>
       <button type="submit">Save</button>
     </Controls>

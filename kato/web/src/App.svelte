@@ -11,7 +11,6 @@
   import { userToken } from "./store";
 
   let url = "";
-
   function logout() {
     $userToken = null;
     window.localStorage.removeItem(LOGIN_TOKEN_KEY);

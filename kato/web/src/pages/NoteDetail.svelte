@@ -36,7 +36,9 @@
     </div>
     <div class="tags">
       <h3>Tags</h3>
-      <TagsList tags={note.tags} />
+      <div class="tagList">
+        <TagsList tags={note.tags} />
+      </div>
     </div>
   </div>
   <Controls>
@@ -66,8 +68,14 @@
   }
 
   .tags {
-    margin-top: 3rem;
+    margin-top: 4rem;
     border-top: 2px #a3a3a3 solid;
+  }
+
+  .tagList {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: .5rem;
   }
 
   .tags h3 {

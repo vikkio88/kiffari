@@ -19,8 +19,8 @@
     d("updatedSelection", selectedTags);
   }
 
+  export let selectedTags = [];
   let searchResultTags = [];
-  let selectedTags = [];
 
   let timer;
   let controller = null;
