@@ -1,8 +1,11 @@
 package db
 
 import (
+	"errors"
 	"fmt"
+	"time"
 
+	"github.com/golang-jwt/jwt/v5"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -24,4 +27,25 @@ func NewDb(fileName string) *Db {
 
 	migrate(g)
 	return &Db{g}
+}
+
+func (db *Db) CheckPk(pk PasskeyClear) (string, error) {
+	pkd := db.getPasskey()
+	fmt.Println(pkd.Hash)
+	fmt.Println(pk.Key)
+
+	if !pk.Check(pkd) {
+		return "", errors.New("Invalid Passkey")
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"foo": "bar",
+		"exp": time.Now().Add(time.Hour * 2).Unix(),
+	})
+
+	return token.SignedString(pk.Key)
+}
+
+func (db *Db) getPasskey() Passkey {
+	return NewPasskey("password")
 }

@@ -40,9 +40,20 @@ func main() {
 	})
 
 	r.POST("/login", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"token": "user",
-		})
+		var pk db.PasskeyClear
+		if c.Bind(&pk) == nil {
+			t, err := d.CheckPk(pk)
+			if err != nil {
+				c.JSON(http.StatusUnauthorized, gin.H{"error": "could not login"})
+				return
+			}
+
+			c.JSON(http.StatusOK, gin.H{"token": t})
+
+			return
+		}
+		c.JSON(http.StatusBadRequest, gin.H{"error": "could not login"})
+
 	})
 
 	private := r.Group("")

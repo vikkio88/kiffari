@@ -1,6 +1,6 @@
 import { KATO_API_URL, LOGIN_TOKEN_KEY } from "../const";
 
-function login(passkey) {
+export function login(passkey) {
   return fetch(`${KATO_API_URL}/login`, {
     method: 'POST',
     ...makeHeaders(),
