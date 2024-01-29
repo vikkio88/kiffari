@@ -39,6 +39,12 @@ func main() {
 		})
 	})
 
+	r.POST("/login", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"token": "user",
+		})
+	})
+
 	private := r.Group("")
 	private.Use(AuthRequired)
 
