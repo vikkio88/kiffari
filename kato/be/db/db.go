@@ -31,9 +31,6 @@ func NewDb(fileName string) *Db {
 
 func (db *Db) CheckPk(pk PasskeyClear) (string, error) {
 	pkd := db.getPasskey()
-	fmt.Println(pkd.Hash)
-	fmt.Println(pk.Key)
-
 	if !pk.Check(pkd) {
 		return "", errors.New("Invalid Passkey")
 	}
@@ -43,7 +40,7 @@ func (db *Db) CheckPk(pk PasskeyClear) (string, error) {
 		"exp": time.Now().Add(time.Hour * 2).Unix(),
 	})
 
-	return token.SignedString(pk.Key)
+	return token.SignedString([]byte(pk.Key))
 }
 
 func (db *Db) getPasskey() Passkey {

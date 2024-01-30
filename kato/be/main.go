@@ -44,7 +44,7 @@ func main() {
 		if c.Bind(&pk) == nil {
 			t, err := d.CheckPk(pk)
 			if err != nil {
-				c.JSON(http.StatusUnauthorized, gin.H{"error": "could not login"})
+				c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 				return
 			}
 

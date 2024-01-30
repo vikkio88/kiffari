@@ -1,7 +1,8 @@
 package db
 
 import (
-	"golang.org/x/crypto/bcrypt"
+	"kato-be/libs"
+
 	"gorm.io/gorm"
 )
 
@@ -10,7 +11,7 @@ type PasskeyClear struct {
 }
 
 func (p *PasskeyClear) Check(key Passkey) bool {
-	return bcrypt.CompareHashAndPassword([]byte(key.Hash), []byte(p.Key)) == nil
+	return libs.CompareHash(key.Hash, p.Key)
 }
 
 type Passkey struct {
@@ -19,6 +20,5 @@ type Passkey struct {
 }
 
 func NewPasskey(clear string) Passkey {
-	hashed, _ := bcrypt.GenerateFromPassword([]byte(clear), bcrypt.DefaultCost)
-	return Passkey{Hash: string(hashed)}
+	return Passkey{Hash: libs.Hash(clear)}
 }
