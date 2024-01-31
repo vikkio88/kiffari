@@ -4,6 +4,7 @@ import (
 	"kato-be/db"
 	"kato-be/routes"
 	"net/http"
+	"strings"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -73,6 +74,7 @@ func AuthRequired(db *db.Db) func(c *gin.Context) {
 			return
 		}
 
+		token = strings.TrimSpace(token)
 		if !db.IsTokenValid(token) {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "token not valid"})
 			return

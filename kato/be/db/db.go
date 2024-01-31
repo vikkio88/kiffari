@@ -46,6 +46,6 @@ func (db *Db) CheckPk(pk PasskeyClear) (string, error) {
 }
 
 func (db *Db) getPasskey() Passkey {
-	// cache this
+	//TODO: cache this
 	return NewPasskey("password")
 }
