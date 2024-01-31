@@ -17,8 +17,7 @@ Authorization: user
 ###
 
 GET http://localhost:5111/notes
-Authorization: user
-
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDY3MjI5OTV9.z9jKGvkF7KD-nR9iW257liKXHM_t1nefMG01glJc7KU
 ###
 
 GET http://localhost:5111/notes?latest=true

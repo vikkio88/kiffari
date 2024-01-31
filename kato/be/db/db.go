@@ -3,9 +3,9 @@ package db
 import (
 	"errors"
 	"fmt"
-	"time"
+	"kato-be/conf"
+	"kato-be/libs"
 
-	"github.com/golang-jwt/jwt/v5"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -29,20 +29,23 @@ func NewDb(fileName string) *Db {
 	return &Db{g}
 }
 
+func (db *Db) IsTokenValid(token string) bool {
+	if token == "" {
+		return false
+	}
+	return libs.VerifyToken(token, conf.TOKEN_SIGNATURE)
+}
+
 func (db *Db) CheckPk(pk PasskeyClear) (string, error) {
 	pkd := db.getPasskey()
 	if !pk.Check(pkd) {
 		return "", errors.New("Invalid Passkey")
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"foo": "bar",
-		"exp": time.Now().Add(time.Hour * 2).Unix(),
-	})
-
-	return token.SignedString([]byte(pk.Key))
+	return libs.NewToken(conf.TOKEN_SIGNATURE)
 }
 
 func (db *Db) getPasskey() Passkey {
+	// cache this
 	return NewPasskey("password")
 }

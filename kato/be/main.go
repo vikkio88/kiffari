@@ -57,7 +57,7 @@ func main() {
 	})
 
 	private := r.Group("")
-	private.Use(AuthRequired)
+	private.Use(AuthRequired(d))
 
 	routes.TagRoutes(private, d)
 	routes.NoteRoutes(private, d)
@@ -65,11 +65,19 @@ func main() {
 	r.Run(":5111")
 }
 
-func AuthRequired(c *gin.Context) {
-	if c.GetHeader("Authorization") != "user" {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "unauth"})
-		return
-	}
+func AuthRequired(db *db.Db) func(c *gin.Context) {
+	return func(c *gin.Context) {
+		token := ""
+		if token = c.GetHeader("Authorization"); token == "" {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "unauth"})
+			return
+		}
 
-	c.Next()
+		if !db.IsTokenValid(token) {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "token not valid"})
+			return
+		}
+
+		c.Next()
+	}
 }
