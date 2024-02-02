@@ -2,7 +2,7 @@
   import TagsList from "../components/TagsList.svelte";
   import Spinner from "../components/shared/Spinner.svelte";
   import { protectedRoute } from "../libs/routes";
-  import { filterTags } from "../libs/api";
+  import { filterTags, parseOrThrow, catchLogout } from "../libs/api";
   protectedRoute();
 
   let timer;
@@ -21,7 +21,9 @@
       if (controller) controller.abort();
       controller = new AbortController();
 
-      searchPromise = filterTags(v, controller).then((data) => data.json());
+      searchPromise = filterTags(v, controller)
+        .then(parseOrThrow)
+        .catch(catchLogout);
     }, 500);
   };
 </script>

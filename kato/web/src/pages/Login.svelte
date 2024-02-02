@@ -17,9 +17,13 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ passkey: value }),
-    }).then(resp => resp.json()).then(console.log);
-    // $userToken = "user";
-    // navigate("/", { replace: true });
+    })
+      .then((resp) => resp.json())
+      .then(({ token }) => {
+        $userToken = token;
+        window.localStorage.setItem(LOGIN_TOKEN_KEY, token);
+        navigate("/", { replace: true });
+      });
   }
 
   onMount(() => {

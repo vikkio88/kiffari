@@ -42,8 +42,8 @@
     <div class="note">
       {#if !showPreview}
         <div class="form">
+          <!--TODO: put this back and finish error required -->
           <input
-            required
             class="title"
             bind:value={title}
             on:focus={(e) => {

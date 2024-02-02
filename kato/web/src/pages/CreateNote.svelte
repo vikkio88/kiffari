@@ -2,16 +2,29 @@
   import { navigate } from "svelte-routing";
   import NoteEditor from "../components/NoteEditor.svelte";
   import { protectedRoute } from "../libs/routes";
-  import { createNote } from "../libs/api";
+  import { catchLogout, createNote } from "../libs/api";
+  import Error from "../components/shared/Error.svelte";
   protectedRoute();
-  
+
+  let showError = false;
+
   let postPromise = null;
   async function onSave(title, body, tags) {
-    postPromise = createNote({ title, body, tags })
+    postPromise = createNote({ title, body, tags });
 
-    const data = await postPromise;
-    if (data.status == 200) {
-      const { id } = await data.json();
+    const resp = await postPromise;
+    if (resp.status == 401) {
+      catchLogout();
+      return;
+    }
+
+    if (resp.status == 400) {
+      postPromise = null;
+      showError = true;
+    }
+
+    if (resp.status == 200) {
+      const { id } = await resp.json();
       navigate(`/notes/${id}`, { replace: true });
     }
   }
@@ -22,6 +35,10 @@
   <NoteEditor {onSave} />
 {:else}
   <h2>Creating...</h2>
+{/if}
+
+{#if showError}
+  <Error />
 {/if}
 
 <style>

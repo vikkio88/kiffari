@@ -5,11 +5,16 @@
   import { navigate } from "svelte-routing";
   import ConfirmButton from "../components/shared/ConfirmButton.svelte";
   import { protectedRoute } from "../libs/routes";
-  import { getNoteDetails, deleteNote } from "../libs/api";
+  import {
+    getNoteDetails,
+    deleteNote,
+    parseOrThrow,
+    catchLogout,
+  } from "../libs/api";
   protectedRoute();
 
   export let id = "";
-  let notePromise = getNoteDetails(id).then((resp) => resp.json());
+  let notePromise = getNoteDetails(id).then(parseOrThrow).catch(catchLogout);
 
   async function onDelete() {
     const resp = await deleteNote(id);
@@ -75,7 +80,7 @@
   .tagList {
     display: flex;
     flex-direction: row;
-    padding-bottom: .5rem;
+    padding-bottom: 0.5rem;
   }
 
   .tags h3 {

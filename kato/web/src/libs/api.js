@@ -1,5 +1,17 @@
+import { navigate } from "svelte-routing";
 import { KATO_API_URL, LOGIN_TOKEN_KEY } from "../const";
 
+export function parseOrThrow(resp) {
+  if (resp.status == 401) {
+    throw new Error("unauth");
+  }
+  return resp.json();
+}
+
+export function catchLogout() {
+  window.localStorage.removeItem(LOGIN_TOKEN_KEY);
+  navigate("/login", { replace: true });
+}
 
 export function login(passkey) {
   return fetch(`${KATO_API_URL}/login`, {
@@ -34,10 +46,6 @@ export function createNote(note) {
 }
 
 export function getLatestNotes() {
-  let token = null;
-  if (!(token = getAuthToken())) {
-    return;
-  }
   return fetch(`${KATO_API_URL}/notes?latest=true`, makeHeaders());
 }
 
