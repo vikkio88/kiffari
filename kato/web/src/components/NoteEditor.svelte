@@ -6,17 +6,21 @@
 
   export const note = null;
 
-  let showPreview = false;
   export let title = "new note title";
   export let text = "";
   export let tags = [];
+  let showPreview = false;
 
   async function handleKeydown(event) {
     if (event.key !== "Tab") return;
 
     event.preventDefault();
 
-    const { selectionStart: start, selectionEnd: end, value } = this;
+    const {
+      selectionStart: start,
+      selectionEnd: end,
+      value,
+    } = event.currentTarget;
     text = value.substring(0, start) + "  " + value.substring(end);
     await tick();
     this.selectionStart = this.selectionEnd = start + 2;
@@ -37,13 +41,17 @@
 
 <div class="editor">
   <form on:submit|preventDefault={onSaveInternal}>
-    <button on:click={() => (showPreview = !showPreview)}>Toggle Preview</button
+    <button
+      on:click|stopPropagation|preventDefault={() =>
+        (showPreview = !showPreview)}
     >
+      Toggle Preview
+    </button>
     <div class="note">
       {#if !showPreview}
         <div class="form">
-          <!--TODO: put this back and finish error required -->
           <input
+            required
             class="title"
             bind:value={title}
             on:focus={(e) => {
@@ -63,7 +71,6 @@
       {:else}
         <div class="preview">
           <h2>{title}</h2>
-          s
           <SvelteMarkdown source={text} />
         </div>
       {/if}

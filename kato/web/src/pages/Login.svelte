@@ -5,8 +5,11 @@
   import { KATO_API_URL, LOGIN_TOKEN_KEY } from "../const";
   import { userToken } from "../store";
   import { onMount } from "svelte";
+  import ErrorToast from "../components/shared/ErrorToast.svelte";
 
+  let error = null;
   let loginPromise = null;
+  let passwordInput;
   let value;
 
   function login() {
@@ -18,11 +21,20 @@
       },
       body: JSON.stringify({ passkey: value }),
     })
-      .then((resp) => resp.json())
+      .then((resp) => {
+        if (resp.status != 200) {
+          throw Error(`${resp.status}`);
+        }
+        return resp.json();
+      })
       .then(({ token }) => {
         $userToken = token;
         window.localStorage.setItem(LOGIN_TOKEN_KEY, token);
         navigate("/", { replace: true });
+      })
+      .catch((err) => {
+        value = "";
+        error = `Could not login(#'${err}')`;
       });
   }
 
@@ -34,8 +46,41 @@
 </script>
 
 {#if !loginPromise}
-  <input type="text" placeholder="Passkey" bind:value />
-  <button on:click={login}>Login</button>
+  <div class="wrapper">
+    <input
+      bind:this={passwordInput}
+      type="password"
+      placeholder="Insert your Passkey..."
+      bind:value
+    />
+    <button on:click={login}>Login</button>
+  </div>
 {:else}
   <Spinner />
 {/if}
+
+<ErrorToast
+  {error}
+  onDismiss={() => {
+    error = null;
+    passwordInput.focus();
+  }}
+/>
+
+<style>
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .wrapper > input {
+    padding: 1em;
+    font-size: 16px;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .wrapper > button {
+    font-size: 18px;
+  }
+</style>

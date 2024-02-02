@@ -3,10 +3,10 @@
   import NoteEditor from "../components/NoteEditor.svelte";
   import { protectedRoute } from "../libs/routes";
   import { catchLogout, createNote } from "../libs/api";
-  import Error from "../components/shared/Error.svelte";
+  import Error from "../components/shared/ErrorToast.svelte";
   protectedRoute();
 
-  let showError = false;
+  let error = null;
 
   let postPromise = null;
   async function onSave(title, body, tags) {
@@ -20,7 +20,7 @@
 
     if (resp.status == 400) {
       postPromise = null;
-      showError = true;
+      error = `Could not create.`;
     }
 
     if (resp.status == 200) {
@@ -37,8 +37,8 @@
   <h2>Creating...</h2>
 {/if}
 
-{#if showError}
-  <Error />
+{#if Boolean(error)}
+  <Error {error} onDismiss={() => (error = null)} />
 {/if}
 
 <style>
