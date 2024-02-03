@@ -17,11 +17,10 @@
 
 <style>
   .tag {
-    border: 2px white solid;
+    border: solid 2px #333;
     border-radius: 10px;
-    padding: 0.5em;
-    font-size: small;
-    font-weight: bold;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
   }
 
   .big {
@@ -30,7 +29,9 @@
   }
 
   .tag:hover {
-    border-color: #646cff;
+    color: #646cff;
+    background-color: #333;
+    border-color: white;
     cursor: pointer;
   }
 </style>

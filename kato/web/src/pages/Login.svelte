@@ -82,5 +82,6 @@
 
   .wrapper > button {
     font-size: 18px;
+    padding: 1rem;
   }
 </style>

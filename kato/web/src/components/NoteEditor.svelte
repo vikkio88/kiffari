@@ -46,6 +46,11 @@
         (showPreview = !showPreview)}
     >
       Toggle Preview
+      {#if showPreview}
+      🤓
+      {:else}
+      😎
+      {/if}
     </button>
     <div class="note">
       {#if !showPreview}

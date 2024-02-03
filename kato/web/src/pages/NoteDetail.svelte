@@ -54,7 +54,7 @@
 
 <style>
   .note {
-    border: 2px white solid;
+    /* border: 2px white solid; */
     border-radius: 10px;
     padding: 0 2rem;
   }
@@ -69,15 +69,19 @@
   }
 
   .body {
+    border-radius: 10px;
     text-align: left;
+    padding: 3rem;
+    margin: 1em 0;
+    min-height: 50vh;
   }
 
   .tags {
-    margin-top: 4rem;
     border-top: 2px #a3a3a3 solid;
   }
 
   .tagList {
+    margin: 1rem 0;
     display: flex;
     flex-direction: row;
     padding-bottom: 0.5rem;
