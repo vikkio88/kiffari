@@ -1,7 +1,6 @@
 package libs
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -26,13 +25,10 @@ func VerifyToken(token string, passkey string) bool {
 		return []byte(passkey), nil
 	})
 
-	fmt.Println("valid?", value.Valid)
-
 	if err != nil || !value.Valid {
 		return false
 	}
 
 	exp, _ := value.Claims.GetExpirationTime()
-	fmt.Println("exp", exp.Unix())
 	return exp.After(time.Now())
 }

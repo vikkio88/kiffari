@@ -32,7 +32,7 @@ func NoteRoutes(r gin.IRouter, d *db.Db) {
 			SuccessOr400(c, n, ok)
 			return
 		}
-		c.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	})
 
 	r.PUT("/notes/:id", func(c *gin.Context) {

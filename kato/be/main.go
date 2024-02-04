@@ -5,9 +5,12 @@ import (
 	"kato-be/routes"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-playground/validator/v10"
 )
 
 func corsConfig() cors.Config {
@@ -28,9 +31,26 @@ func corsConfig() cors.Config {
 
 }
 
+// TODO: move to validator module
+var dateInTheFuture validator.Func = func(fl validator.FieldLevel) bool {
+	date, ok := fl.Field().Interface().(time.Time)
+	if !ok {
+		return false
+	}
+	if date.IsZero() {
+		return true
+	}
+
+	today := time.Now()
+	return !today.After(date)
+}
+
 func main() {
 	d := db.NewDb("testing.db")
 	r := gin.Default()
+	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		v.RegisterValidation("dateInTheFuture", dateInTheFuture)
+	}
 
 	r.Use(cors.New(corsConfig()))
 
@@ -66,6 +86,7 @@ func main() {
 	r.Run(":5111")
 }
 
+// TODO: move to middleware module
 func AuthRequired(db *db.Db) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		token := ""

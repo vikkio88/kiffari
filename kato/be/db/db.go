@@ -39,7 +39,7 @@ func (db *Db) IsTokenValid(token string) bool {
 func (db *Db) CheckPk(pk PasskeyClear) (string, error) {
 	pkd := db.getPasskey()
 	if !pk.Check(pkd) {
-		return "", errors.New("Invalid Passkey")
+		return "", errors.New("invalid passkey")
 	}
 
 	return libs.NewToken(conf.TOKEN_SIGNATURE)

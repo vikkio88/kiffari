@@ -3,15 +3,15 @@ GET http://localhost:5111/ping
 
 ###
 
-
 POST http://localhost:5111/notes
 content-type: application/json
-Authorization: user
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDcwODY1NjB9.CiZ1RupTbH-roqgzMW9ccDH33C2cscwrpqjX-l6jvQ4
 
 {
-    "title":"Some title",
+    "title":"Some DueDate title",
     "body": "yet a note, maybe a note",
-    "tags":[{"label": "jujujvuj"}]
+    "due_date": "2024-02-04T23:04:11.517Z",
+    "tags":[]
 }
 
 ###
@@ -24,17 +24,19 @@ GET http://localhost:5111/notes?latest=true
 
 ###
 
-GET http://localhost:5111/notes/01HMEM1AWS5MRE59QJ5K5VCRP7
+GET http://localhost:5111/notes/01HNTZC5EZWHZY6Z29JEJEZVJ4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDcwODY1NjB9.CiZ1RupTbH-roqgzMW9ccDH33C2cscwrpqjX-l6jvQ4
 
 ###
-PUT http://localhost:5111/notes/01HMEM1AWS5MRE59QJ5K5VCRP7
+PUT http://localhost:5111/notes/01HNTZC5EZWHZY6Z29JEJEZVJ4
 content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDcwODY1NjB9.CiZ1RupTbH-roqgzMW9ccDH33C2cscwrpqjX-l6jvQ4
 
 {
-  "id": "01HMEM1AWS5MRE59QJ5K5VCRP7",
+  "id": "01HNTZC5EZWHZY6Z29JEJEZVJ4",
   "title": "some updated title",
   "body": "note updated, I can believe it",
-  "tags": [{"label": "giulio"}]
+  "tags": [{"label": "giulioxx"}]
 }
 
 
