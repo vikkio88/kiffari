@@ -4,6 +4,7 @@
   import Controls from "../components/shared/Controls.svelte";
   import { navigate } from "svelte-routing";
   import ConfirmButton from "../components/shared/ConfirmButton.svelte";
+  import Plugin from "../components/Plugin.svelte";
   import { protectedRoute } from "../libs/routes";
   import {
     getNoteDetails,
@@ -37,6 +38,7 @@
     <h2>{note.title}</h2>
     <span class="date">{getDate(note)}</span>
     <div class="body">
+      <Plugin config={note.body} />
       <SvelteMarkdown source={note.body} />
     </div>
     <div class="tags">
