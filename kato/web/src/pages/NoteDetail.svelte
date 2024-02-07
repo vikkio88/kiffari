@@ -1,10 +1,9 @@
 <script>
-  import SvelteMarkdown from "svelte-markdown";
   import TagsList from "../components/TagsList.svelte";
   import Controls from "../components/shared/Controls.svelte";
   import { navigate } from "svelte-routing";
   import ConfirmButton from "../components/shared/ConfirmButton.svelte";
-  import Plugin from "../components/Plugin.svelte";
+  import BodyRenderer from "../components/BodyRenderer.svelte";
   import { protectedRoute } from "../libs/routes";
   import {
     getNoteDetails,
@@ -38,9 +37,8 @@
     <h2>{note.title}</h2>
     <span class="date">{getDate(note)}</span>
     <div class="body">
-      <SvelteMarkdown source={note.body} />
+      <BodyRenderer body={note.body} />
     </div>
-    <Plugin config={note.body} />
     <div class="tags">
       <h3>Tags</h3>
       <div class="tagList">
