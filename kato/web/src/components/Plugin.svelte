@@ -1,22 +1,14 @@
 <script>
-    export let config = "";
-    let plugins = parseConfig(config);
+  import { mdConfigParser } from "../libs/mdConfigParser";
 
-    /**
-     * @param {String} config
-     */
-    function parseConfig(config) {
-        const results = config.match(/<\!--(.+?)-->/s);
-        if (results.length < 2) {
-            return [];
-        }
-        console.log(results[1].trim());
-        return [];
-    }
+  export let config = "";
+  let plugins = parseConfig(config);
+
+  function parseConfig(config) {
+    return mdConfigParser(config);
+  }
 </script>
 
-<ul>
-    {#each plugins as plugin}
-        <li>{plugin.name}</li>
-    {/each}
-</ul>
+<pre>
+    {JSON.stringify(plugins, null, 2)}
+</pre>

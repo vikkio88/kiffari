@@ -38,9 +38,9 @@
     <h2>{note.title}</h2>
     <span class="date">{getDate(note)}</span>
     <div class="body">
-      <Plugin config={note.body} />
       <SvelteMarkdown source={note.body} />
     </div>
+    <Plugin config={note.body} />
     <div class="tags">
       <h3>Tags</h3>
       <div class="tagList">
@@ -75,7 +75,7 @@
     text-align: left;
     padding: 3rem;
     margin: 1em 0;
-    min-height: 50vh;
+    min-height: 40vh;
   }
 
   .tags {
