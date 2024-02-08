@@ -41,17 +41,25 @@
 
 <div class="editor">
   <form on:submit|preventDefault={onSaveInternal}>
-    <button
-      on:click|stopPropagation|preventDefault={() =>
-        (showPreview = !showPreview)}
-    >
-      Toggle Preview
-      {#if showPreview}
-      🤓
-      {:else}
-      😎
-      {/if}
-    </button>
+    <div class="controls">
+      <button
+        on:click|stopPropagation|preventDefault={() =>
+          (showPreview = !showPreview)}
+      >
+        {#if showPreview}
+          Code 🤓
+        {:else}
+          Markdown 😎
+        {/if}
+      </button>
+      <button on:click|stopPropagation|preventDefault={() => {
+        showPreview = false;
+        if (text.includes("<!--")) return;
+        text = `<!--\nPlugin: \n-->\n${text}`;
+      }}>
+        Plugin ⚙️
+      </button>
+    </div>
     <div class="note">
       {#if !showPreview}
         <div class="form">
@@ -108,5 +116,15 @@
 
   .preview {
     display: block;
+    text-align: left;
+  }
+
+  .preview h2 {
+    text-align: center;
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: row;
   }
 </style>

@@ -73,7 +73,6 @@
     text-align: left;
     padding: 3rem;
     margin: 1em 0;
-    min-height: 40vh;
   }
 
   .tags {

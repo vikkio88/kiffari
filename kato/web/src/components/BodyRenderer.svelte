@@ -1,19 +1,20 @@
 <script>
-  import SvelteMarkdown from "svelte-markdown";
-  import { mdConfigParser } from "../libs/mdConfigParser";
+  import { mdConfigParser } from "../libs/renderers/mdConfigParser";
   import Code from "./renderers/Code.svelte";
-  //TODO: add MD force view
+  import Markdown from "./renderers/Markdown.svelte";
+  import Link from "./renderers/Link.svelte";
 
   export let body = "";
   let config = mdConfigParser(body);
 
   const pluginMapper = {
     Code: Code,
+    Link: Link,
+    default: Markdown,
   };
 </script>
 
-{#if pluginMapper[config.Plugin]}
-  <svelte:component this={pluginMapper[config.Plugin]} {body} />
-{:else}
-  <SvelteMarkdown source={body} />
-{/if}
+<svelte:component
+  this={pluginMapper[config.Plugin] ?? pluginMapper.default}
+  {body}
+/>
