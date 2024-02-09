@@ -11,6 +11,8 @@
   export let tags = [];
   let showPreview = false;
 
+  const PLUGIN_SETUP_STRING = "<!--\nPlugin: \n-->\n";
+
   async function handleKeydown(event) {
     if (event.key !== "Tab") return;
 
@@ -37,6 +39,16 @@
   function onSaveInternal() {
     onSave(title, text, tags);
   }
+
+  function setupPlugin(event) {
+    showPreview = false;
+    if (!text.includes("<!--")) {
+      text = `${PLUGIN_SETUP_STRING}${text}`;
+    }
+
+    event.currentTarget.selectionStart = 11; //this is the end of Plugin:
+    event.currentTarget.focus();
+  }
 </script>
 
 <div class="editor">
@@ -52,11 +64,7 @@
           Markdown 😎
         {/if}
       </button>
-      <button on:click|stopPropagation|preventDefault={() => {
-        showPreview = false;
-        if (text.includes("<!--")) return;
-        text = `<!--\nPlugin: \n-->\n${text}`;
-      }}>
+      <button on:click|stopPropagation|preventDefault={setupPlugin}>
         Plugin ⚙️
       </button>
     </div>
