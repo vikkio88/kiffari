@@ -7,6 +7,10 @@
   const links = parseLinks(body);
 </script>
 
+{#if links.length < 1}
+  <h3>No links...</h3>
+{/if}
+
 <div class="urls">
   {#each links as link}
     <a class="link" href={link.href} target="_blank">{link.label}</a>
@@ -14,6 +18,9 @@
 </div>
 
 <style>
+  h3 {
+    text-align: center;
+  }
   a.link {
     font-size: 2rem;
   }
