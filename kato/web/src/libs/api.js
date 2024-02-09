@@ -61,6 +61,20 @@ export function updateNote(id, note) {
   });
 }
 
+export function archiveNote(id) {
+  return fetch(`${KATO_API_URL}/notes/${id}/archive`, {
+    method: "POST",
+    ...makeHeaders(),
+  });
+}
+
+export function unArchiveNote(id) {
+  return fetch(`${KATO_API_URL}/notes/${id}/archive`, {
+    method: "DELETE",
+    ...makeHeaders(),
+  });
+}
+
 export function deleteNote(id) {
   return fetch(`${KATO_API_URL}/notes/${id}`, {
     method: "DELETE",

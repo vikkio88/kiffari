@@ -47,6 +47,18 @@ func NoteRoutes(r gin.IRouter, d *db.Db) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
 	})
 
+	r.POST("/notes/:id/archive", func(c *gin.Context) {
+		id := c.Params.ByName("id")
+		ok := d.SetArchivedNote(id, true)
+		SuccessOr400(c, gin.H{"result": id}, ok)
+	})
+
+	r.DELETE("/notes/:id/archive", func(c *gin.Context) {
+		id := c.Params.ByName("id")
+		ok := d.SetArchivedNote(id, false)
+		SuccessOr400(c, gin.H{"result": id}, ok)
+	})
+
 	r.DELETE("/notes/:id", func(c *gin.Context) {
 		id := c.Params.ByName("id")
 		ok := d.DeleteNote(id)

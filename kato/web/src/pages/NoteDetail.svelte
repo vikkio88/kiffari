@@ -10,6 +10,8 @@
     deleteNote,
     parseOrThrow,
     catchLogout,
+    archiveNote,
+    unArchiveNote,
   } from "../libs/api";
   protectedRoute();
 
@@ -20,6 +22,13 @@
     const resp = await deleteNote(id);
     if (resp.ok) {
       navigate("/", { replace: true });
+    }
+  }
+
+  async function onArchiveToggle(isArchived) {
+    const resp = await (isArchived ? unArchiveNote(id) : archiveNote(id));
+    if (resp.ok) {
+      window.location.reload();
     }
   }
 
@@ -34,6 +43,9 @@
 
 {#await notePromise then note}
   <div class="note">
+    {#if note.archived}
+      <h3>Archived</h3>
+    {/if}
     <h2>{note.title}</h2>
     <span class="date">{getDate(note)}</span>
     <div class="body">
@@ -47,8 +59,17 @@
     </div>
   </div>
   <Controls>
-    <button on:click={() => navigate(`/edit-note/${id}`)}>Edit</button>
-    <ConfirmButton onConfirmed={onDelete}>Delete</ConfirmButton>
+    <ConfirmButton onConfirmed={() => onArchiveToggle(note.archived)}>
+      {#if !note.archived}
+        Archive 🗄️
+      {:else}
+        Un-Archive 🔄
+      {/if}
+    </ConfirmButton>
+    {#if !note.archived}
+      <button on:click={() => navigate(`/edit-note/${id}`)}>Edit 📝</button>
+    {/if}
+    <ConfirmButton onConfirmed={onDelete}>Delete 🗑️</ConfirmButton>
   </Controls>
 {/await}
 

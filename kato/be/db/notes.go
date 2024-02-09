@@ -9,7 +9,7 @@ func (d *Db) InsertNote(value NoteCreate) (Note, bool) {
 func (d *Db) GetLatest() []NoteItem {
 	var notes []NoteItem
 
-	d.g.Model(&Note{}).Order("updated_at DESC, created_at DESC").Limit(5).Find(&notes)
+	d.g.Model(&Note{}).Order("updated_at DESC, created_at DESC").Where("archived", false).Limit(5).Find(&notes)
 
 	return notes
 }
@@ -39,6 +39,12 @@ func (d *Db) UpdateNote(n NoteUpdate) (string, bool) {
 		return "", false
 	}
 	return n.Id, true
+}
+
+func (d *Db) SetArchivedNote(id string, archived bool) bool {
+	trx := d.g.Model(&Note{}).Where("id", id).Update("archived", archived)
+
+	return trx.RowsAffected == 1
 }
 
 func (d *Db) DeleteNote(id string) bool {

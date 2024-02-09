@@ -12,6 +12,7 @@ type Note struct {
 	Body      string     `json:"body"`
 	Tags      []*Tag     `gorm:"many2many:note_tags;constraint:OnDelete:CASCADE" json:"tags"`
 	DueDate   *time.Time `json:"due_date"`
+	Archived  bool       `json:"archived"`
 	CreatedAt time.Time  `json:"created_at"`
 	UpdatedAt time.Time  `json:"updated_at"`
 }
@@ -21,13 +22,15 @@ type NoteItem struct {
 	Title     string    `json:"title"`
 	Body      string    `json:"body"`
 	DueDate   time.Time `json:"due_date"`
+	Archived  bool      `json:"archived"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
 type NoteUpdate struct {
 	NoteCreate
-	Id string `json:"id" binding:"required"`
+	Id       string `json:"id" binding:"required"`
+	Archived bool   `json:"archived"`
 }
 
 func (n NoteUpdate) Note() Note {
@@ -39,11 +42,12 @@ func (n NoteUpdate) Note() Note {
 	}
 
 	return Note{
-		Id:      n.Id,
-		Title:   n.Title,
-		Body:    n.Body,
-		DueDate: n.DueDate,
-		Tags:    n.Tags,
+		Id:       n.Id,
+		Title:    n.Title,
+		Body:     n.Body,
+		DueDate:  n.DueDate,
+		Archived: n.Archived,
+		Tags:     n.Tags,
 	}
 
 }
