@@ -16,8 +16,15 @@ func (d *Db) GetLatest() []NoteItem {
 
 func (d *Db) GetAllNotes() []NoteItem {
 	var notes []NoteItem
+	d.g.Model(&Note{}).Order("updated_at DESC, created_at DESC").Find(&notes)
 
-	d.g.Model(&Note{}).Find(&notes)
+	return notes
+}
+
+func (d *Db) GetArchivedNotes() []NoteItem {
+	var notes []NoteItem
+
+	d.g.Model(&Note{}).Order("updated_at DESC, created_at DESC").Where("archived", true).Find(&notes)
 
 	return notes
 }

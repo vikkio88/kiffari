@@ -1,7 +1,6 @@
 <script>
-  import Nav from './components/Nav.svelte';
-
-  import { Router, Route, } from "svelte-routing";
+  import { Router, Route } from "svelte-routing";
+  import Nav from "./components/Nav.svelte";
   import CreateNote from "./pages/CreateNote.svelte";
   import Dash from "./pages/Dash.svelte";
   import NoteDetail from "./pages/NoteDetail.svelte";
@@ -9,7 +8,7 @@
   import TagDetail from "./pages/TagDetail.svelte";
   import Search from "./pages/Search.svelte";
   import Login from "./pages/Login.svelte";
-    import Archived from './pages/Archived.svelte';
+  import Archived from "./pages/Archived.svelte";
 
   let url = "";
 </script>

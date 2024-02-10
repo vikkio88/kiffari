@@ -49,6 +49,10 @@ export function getLatestNotes() {
   return fetch(`${KATO_API_URL}/notes?latest=true`, makeHeaders());
 }
 
+export function getArchivedNotes() {
+  return fetch(`${KATO_API_URL}/notes?archived=true`, makeHeaders());
+}
+
 export function getNoteDetails(id) {
   return fetch(`${KATO_API_URL}/notes/${id}`, makeHeaders());
 }

@@ -44,7 +44,7 @@
 {#await notePromise then note}
   <div class="note">
     {#if note.archived}
-      <h3>Archived</h3>
+      <h3 class="archived">Archived</h3>
     {/if}
     <h2>{note.title}</h2>
     <span class="date">{getDate(note)}</span>
@@ -75,9 +75,13 @@
 
 <style>
   .note {
-    /* border: 2px white solid; */
     border-radius: 10px;
     padding: 0 2rem;
+  }
+
+  h3.archived {
+    color: #a3a3a3;
+    border-bottom: dashed 1px #a3a3a3;
   }
 
   .note h2 {

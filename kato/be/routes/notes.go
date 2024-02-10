@@ -14,7 +14,11 @@ func NoteRoutes(r gin.IRouter, d *db.Db) {
 			c.JSON(http.StatusOK, d.GetLatest())
 			return
 		}
-
+		archived := c.Query("archived")
+		if archived == "true" {
+			c.JSON(http.StatusOK, d.GetArchivedNotes())
+			return
+		}
 		c.JSON(http.StatusOK, d.GetAllNotes())
 	})
 
