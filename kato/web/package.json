@@ -17,6 +17,7 @@
     "vitest": "^1.2.2"
   },
   "dependencies": {
+    "javascript-time-ago": "^2.5.9",
     "svelte-markdown": "^0.4.1"
   }
 }

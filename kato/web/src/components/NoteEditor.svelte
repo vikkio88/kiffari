@@ -97,6 +97,7 @@
       {/if}
     </div>
     <TagSearch on:updatedSelection={onTagsSelection} selectedTags={tags} />
+    <!-- ADD DUE DATE -->
     <Controls>
       <button type="submit">Save</button>
     </Controls>

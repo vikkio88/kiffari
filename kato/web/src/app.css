@@ -96,3 +96,7 @@ nav {
 nav>a {
   font-size: 30px;
 }
+
+.crs-pointer {
+  cursor: pointer;
+}

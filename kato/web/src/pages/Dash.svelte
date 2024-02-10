@@ -5,8 +5,16 @@
 
   protectedRoute();
   let notePromise = getLatestNotes().then(parseOrThrow).catch(catchLogout);
+  let reminderNotesPromise = null;
 </script>
 
+{#if Boolean(reminderNotesPromise)}
+  {#await reminderNotesPromise then reminderNotes}
+    {#if reminderNotes.length > 0}
+      <NoteList notes={reminderNotes} />
+    {/if}
+  {/await}
+{/if}
 <h2>Latest Notes</h2>
 {#await notePromise then notes}
   {#if notes.length > 0}
