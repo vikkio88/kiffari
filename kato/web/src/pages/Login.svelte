@@ -46,15 +46,15 @@
 </script>
 
 {#if !loginPromise}
-  <div class="wrapper">
+  <form class="wrapper" on:submit|preventDefault|stopPropagation={login}>
     <input
       bind:this={passwordInput}
       type="password"
       placeholder="Insert your Passkey..."
       bind:value
     />
-    <button on:click={login}>Login</button>
-  </div>
+    <button>Login</button>
+  </form>
 {:else}
   <Spinner />
 {/if}
@@ -69,6 +69,7 @@
 
 <style>
   .wrapper {
+    margin-top: 3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
