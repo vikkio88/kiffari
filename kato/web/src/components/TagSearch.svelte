@@ -67,7 +67,7 @@
         {#if tags.length > 0 && Boolean(searchValue)}
           <TagsList
             tags={tags.filter(
-              (t) => !selectedTags.some((st) => st.id === t.id)
+              (t) => !selectedTags.some((st) => st.id === t.id),
             )}
             onTagClick={(tag) => () => {
               onTagSelected(tag);
@@ -101,7 +101,7 @@
   .selectedTags > .tag {
     border: solid 2px #333;
     border-radius: 10px;
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
     margin: 0 0.5rem;
   }
 

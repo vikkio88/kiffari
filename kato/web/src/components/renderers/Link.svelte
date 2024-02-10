@@ -1,5 +1,4 @@
 <script>
-  import { removeComments } from "../../libs/renderers/cleanup";
   import { parseLinks } from "../../libs/renderers/extractors";
 
   export let body = "";

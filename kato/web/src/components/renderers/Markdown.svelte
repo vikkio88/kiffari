@@ -1,7 +1,7 @@
 <script>
-  import SvelteMarkdown from "svelte-markdown";
+    import SvelteMarkdown from "svelte-markdown";
 
-  export let body = "";
+    export let body = "";
 </script>
 
 <div class="mdBody">

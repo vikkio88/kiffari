@@ -20,8 +20,10 @@
         border-radius: 10px;
         position: absolute;
         bottom: 0;
-        left: 45%;
-        margin-bottom: 5rem;
+        left: 0;
+        /* left: 50%; */
+        /* right: 50%; */
+        margin: 0 0 5rem 5rem;
         padding: 1rem 2rem;
         display: flex;
         flex-direction: column;
