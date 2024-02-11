@@ -11,9 +11,14 @@
       <div class="info">
         <span
           class="date"
-          title={`${new Date(note.updated_at).toLocaleString()}`}
+          class:due={Boolean(note.due_date)}
+          title={`last updated: ${new Date(note.updated_at).toLocaleString()}`}
         >
-          {timeAgo.format(new Date(note.updated_at), "twitter-now")}
+          {#if !Boolean(note.due_date)}
+            {timeAgo.format(new Date(note.updated_at), "twitter-now")}
+          {:else}
+            {`⏰: ${timeAgo.format(new Date(note.updated_at), "twitter-now")}`}
+          {/if}
         </span>
         {#if note.archived}
           <span class="crs-pointer" title="Archived">🗄️</span>
@@ -69,5 +74,9 @@
   .info {
     display: flex;
     gap: 1rem;
+  }
+
+  .due {
+    color: #db3a34;
   }
 </style>

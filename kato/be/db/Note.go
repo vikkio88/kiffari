@@ -18,13 +18,13 @@ type Note struct {
 }
 
 type NoteItem struct {
-	Id        string    `json:"id"`
-	Title     string    `json:"title"`
-	Body      string    `json:"body"`
-	DueDate   time.Time `json:"due_date"`
-	Archived  bool      `json:"archived"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	Id        string     `json:"id"`
+	Title     string     `json:"title"`
+	Body      string     `json:"body"`
+	DueDate   *time.Time `json:"due_date"`
+	Archived  bool       `json:"archived"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
 }
 
 type NoteUpdate struct {
