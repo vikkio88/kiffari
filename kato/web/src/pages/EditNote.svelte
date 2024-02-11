@@ -9,8 +9,8 @@
   let notePromise = getNoteDetails(id).then((resp) => resp.json());
   let putPromise = null;
 
-  async function onSave(title, body, tags) {
-    putPromise = updateNote(id, { id, title, body, tags });
+  async function onSave(note) {
+    putPromise = updateNote(id, { id, ...note });
 
     const data = await putPromise;
     if (data.status == 200) {
@@ -20,5 +20,11 @@
 </script>
 
 {#await notePromise then note}
-  <NoteEditor title={note.title} text={note.body} tags={note.tags} {onSave} />
+  <NoteEditor
+    title={note.title}
+    text={note.body}
+    tags={note.tags}
+    dueDate={note.due_date}
+    {onSave}
+  />
 {/await}

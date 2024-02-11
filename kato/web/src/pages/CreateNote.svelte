@@ -9,8 +9,8 @@
   let error = null;
 
   let postPromise = null;
-  async function onSave(title, body, tags) {
-    postPromise = createNote({ title, body, tags });
+  async function onSave(note) {
+    postPromise = createNote(note);
 
     const resp = await postPromise;
     if (resp.status == 401) {

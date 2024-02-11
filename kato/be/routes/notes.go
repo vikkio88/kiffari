@@ -48,7 +48,7 @@ func NoteRoutes(r gin.IRouter, d *db.Db) {
 			SuccessOr400(c, gin.H{"result": id}, ok)
 			return
 		}
-		c.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	})
 
 	r.POST("/notes/:id/archive", func(c *gin.Context) {

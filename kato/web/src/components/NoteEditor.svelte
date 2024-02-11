@@ -9,6 +9,7 @@
   export let title = "new note title";
   export let text = "";
   export let tags = [];
+  export let dueDate = null;
   let showPreview = false;
 
   const PLUGIN_SETUP_STRING = "<!--\nPlugin: \n-->\n";
@@ -32,12 +33,12 @@
     tags = e.detail;
   }
 
-  export let onSave = (title, body, tags) => {
-    console.log({ title, body, tags });
+  export let onSave = (note) => {
+    console.log(note);
   };
 
   function onSaveInternal() {
-    onSave(title, text, tags);
+    onSave({ title, body: text, tags, due_date: new Date(dueDate) });
   }
 
   function setupPlugin(event) {
@@ -96,8 +97,14 @@
         </div>
       {/if}
     </div>
+    <div class="additionalInfo">
+      <input
+        type="datetime-local"
+        bind:value={dueDate}
+        min={new Date().toISOString()}
+      />
+    </div>
     <TagSearch on:updatedSelection={onTagsSelection} selectedTags={tags} />
-    <!-- ADD DUE DATE -->
     <Controls>
       <button type="submit">Save</button>
     </Controls>
