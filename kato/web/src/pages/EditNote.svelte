@@ -24,7 +24,7 @@
     title={note.title}
     text={note.body}
     tags={note.tags}
-    dueDate={note.due_date}
+    dueDate={Boolean(note.due_date) ? new Date(note.due_date) : null}
     {onSave}
   />
 {/await}
