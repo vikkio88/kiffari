@@ -13,6 +13,7 @@
     archiveNote,
     unArchiveNote,
   } from "../libs/api";
+  import DateSeverity from "../components/shared/DateSeverity.svelte";
   protectedRoute();
 
   export let id = "";
@@ -47,7 +48,10 @@
       <h3 class="archived">Archived</h3>
     {/if}
     <h2>{note.title}</h2>
-    <span class="date">{getDate(note)}</span>
+    <div class="dates">
+      {getDate(note)}
+      <DateSeverity date={note.due_date} />
+    </div>
     <div class="body">
       <BodyRenderer body={note.body} />
     </div>
@@ -88,7 +92,7 @@
     margin: 1rem 0 0 0;
   }
 
-  .note span.date {
+  .note div.dates {
     font-size: smaller;
     color: #a3a3a3;
   }
