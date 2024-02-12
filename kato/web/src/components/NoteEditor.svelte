@@ -3,6 +3,7 @@
   import { tick } from "svelte";
   import TagSearch from "./TagSearch.svelte";
   import Controls from "./shared/Controls.svelte";
+  import { formatDTL } from "../libs/dates";
 
   export const note = null;
 
@@ -10,6 +11,13 @@
   export let text = "";
   export let tags = [];
   export let dueDate = null;
+  let dueDateProxy = Boolean(dueDate)
+    ? formatDTL(dueDate)
+    : null;
+  function clearDueDate() {
+    dueDateProxy = null;
+  }
+
   let showPreview = false;
 
   const PLUGIN_SETUP_STRING = "<!--\nPlugin: \n-->\n";
@@ -38,7 +46,12 @@
   };
 
   function onSaveInternal() {
-    onSave({ title, body: text, tags, due_date: new Date(dueDate) });
+    onSave({
+      title,
+      body: text,
+      tags,
+      due_date: Boolean(dueDateProxy) ? new Date(dueDateProxy) : null,
+    });
   }
 
   function setupPlugin(event) {
@@ -47,8 +60,14 @@
       text = `${PLUGIN_SETUP_STRING}${text}`;
     }
 
-    event.currentTarget.selectionStart = 11; //this is the end of Plugin:
-    event.currentTarget.focus();
+    event.currentTarget.selectionStart = 11; //this is the end of `Plugin: ` string
+    // TODO: check whether tick() here would work
+    // event.currentTarget.focus();
+  }
+
+  let showAdditionalInfo = Boolean(dueDate);
+  function toggleAdditionalInfo() {
+    showAdditionalInfo = !showAdditionalInfo;
   }
 </script>
 
@@ -98,11 +117,32 @@
       {/if}
     </div>
     <div class="additionalInfo">
-      <input
-        type="datetime-local"
-        bind:value={dueDate}
-        min={new Date().toISOString()}
-      />
+      <button
+        class="toggler"
+        on:click|stopPropagation|preventDefault={toggleAdditionalInfo}
+      >
+        {#if !showAdditionalInfo}
+          More ➕
+        {:else}
+          ◀️ Less
+        {/if}
+      </button>
+      {#if showAdditionalInfo}
+        <div>
+          <div>
+            <label for="dueDate">Due Date:</label>
+            <input
+              name="dueDate"
+              type="datetime-local"
+              bind:value={dueDateProxy}
+              min={new Date().toISOString()}
+            />
+            <button on:click|stopPropagation|preventDefault={clearDueDate}
+              >❌</button
+            >
+          </div>
+        </div>
+      {/if}
     </div>
     <TagSearch on:updatedSelection={onTagsSelection} selectedTags={tags} />
     <Controls>
@@ -137,6 +177,18 @@
 
   .preview h2 {
     text-align: center;
+  }
+
+  .additionalInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .additionalInfo input {
+    padding: 0.6rem;
+    font-size: 18px;
   }
 
   .controls {
