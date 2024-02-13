@@ -1,6 +1,7 @@
 package main
 
 import (
+	"kato-be/conf"
 	"kato-be/db"
 	"kato-be/routes"
 	"net/http"
@@ -48,6 +49,8 @@ var dateInTheFuture validator.Func = func(fl validator.FieldLevel) bool {
 func main() {
 	d := db.NewDb("testing.db")
 	r := gin.Default()
+	gin.SetMode(conf.GinMode)
+
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 		v.RegisterValidation("dateInTheFuture", dateInTheFuture)
 	}
@@ -57,6 +60,7 @@ func main() {
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
+			"version": conf.Version,
 		})
 	})
 
