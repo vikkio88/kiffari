@@ -54,7 +54,7 @@
   </div>
   <input
     type="text"
-    size="50"
+    size="40"
     bind:value={searchValue}
     on:keyup={({ currentTarget: { value }, key }) => debounce(value, key)}
     placeholder="Add Tags..."

@@ -9,6 +9,7 @@
   import Search from "./pages/Search.svelte";
   import Login from "./pages/Login.svelte";
   import Archived from "./pages/Archived.svelte";
+  import Footer from "./components/Footer.svelte";
 
   let url = "";
 </script>
@@ -31,4 +32,5 @@
     <Route path="/" component={Dash} />
     <Route path="/archived" component={Archived} />
   </main>
+  <Footer />
 </Router>

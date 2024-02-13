@@ -45,6 +45,8 @@
   });
 </script>
 
+<h1>Kato</h1>
+
 {#if !loginPromise}
   <form class="wrapper" on:submit|preventDefault|stopPropagation={login}>
     <input
