@@ -3,11 +3,12 @@
   import DateSeverity from "./shared/DateSeverity.svelte";
   import { formatRelativeNow } from "../libs/dates";
   export let notes = [];
+  export let compact = false;
 </script>
 
 <ul class="list">
   {#each notes as note}
-    <li class="note-item" class:archived={note.archived}>
+    <li class="note-item" class:archived={note.archived} class:compact={compact}>
       <div class="info">
         <div class="dates">
           <DateSeverity date={note.due_date} />
@@ -36,6 +37,7 @@
     display: flex;
     flex-direction: column;
   }
+
   .note-item {
     border: 2px white solid;
     border-radius: 10px;
@@ -46,6 +48,10 @@
     align-items: center;
     justify-content: center;
     padding: 1rem 2rem;
+  }
+
+  .compact {
+    flex-direction: column;
   }
 
   .archived {
@@ -63,6 +69,10 @@
 
   .note-item > button {
     margin-left: auto;
+  }
+
+  .compact > button {
+    margin: unset;
   }
 
   h2 {

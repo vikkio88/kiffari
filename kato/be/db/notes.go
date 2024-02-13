@@ -1,5 +1,7 @@
 package db
 
+import "kato-be/conf"
+
 func (d *Db) InsertNote(value NoteCreate) (Note, bool) {
 	n := value.Note()
 	trx := d.g.Create(&n)
@@ -9,7 +11,9 @@ func (d *Db) InsertNote(value NoteCreate) (Note, bool) {
 func (d *Db) GetLatest() []NoteItem {
 	var notes []NoteItem
 
-	d.g.Model(&Note{}).Order("updated_at DESC, created_at DESC").Where("archived", false).Limit(5).Find(&notes)
+	d.g.Model(&Note{}).Order("updated_at DESC, created_at DESC").
+		Where("due_date IS NULL AND archived = ?", false).
+		Limit(conf.LatestNotesLimit).Find(&notes)
 
 	return notes
 }
@@ -21,10 +25,20 @@ func (d *Db) GetAllNotes() []NoteItem {
 	return notes
 }
 
+func (d *Db) GetReminderNotes() []NoteItem {
+	var notes []NoteItem
+
+	d.g.Model(&Note{}).Order("due_date ASC, updated_at DESC").
+		Where("due_date IS NOT NULL AND archived = ?", false).Find(&notes)
+
+	return notes
+}
+
 func (d *Db) GetArchivedNotes() []NoteItem {
 	var notes []NoteItem
 
-	d.g.Model(&Note{}).Order("updated_at DESC, created_at DESC").Where("archived", true).Find(&notes)
+	d.g.Model(&Note{}).Order("updated_at DESC, created_at DESC").
+		Where("archived", true).Find(&notes)
 
 	return notes
 }

@@ -1,31 +1,59 @@
 <script>
   import NoteList from "../components/NoteList.svelte";
-  import { catchLogout, getLatestNotes, parseOrThrow } from "../libs/api";
+  import {
+    catchLogout,
+    getLatestNotes,
+    getReminderNotes,
+    parseOrThrow,
+  } from "../libs/api";
   import { protectedRoute } from "../libs/routes";
 
   protectedRoute();
   let notePromise = getLatestNotes().then(parseOrThrow).catch(catchLogout);
-  let reminderNotesPromise = null;
+  let reminderNotesPromise = getReminderNotes()
+    .then(parseOrThrow)
+    .then((reminders) => {
+      if (reminders.length > 0) {
+        return reminders;
+      }
+      reminderNotesPromise = null;
+    })
+    .catch(catchLogout);
 </script>
 
-{#if Boolean(reminderNotesPromise)}
-  {#await reminderNotesPromise then reminderNotes}
-    {#if reminderNotes.length > 0}
-      <NoteList notes={reminderNotes} />
-    {/if}
-  {/await}
+<div class="wrapper">
+  <div class="subwrapper">
+    <h2>Latest Notes</h2>
+    {#await notePromise then notes}
+      {#if notes.length > 0}
+        <NoteList {notes} compact />
+      {:else}
+        <h3 class="empty">No notes yet... 🤷</h3>
+      {/if}
+    {/await}
+  </div>
+
+  {#if Boolean(reminderNotesPromise)}
+  <div id="reminders" class="subwrapper hidden">
+    <h2>Reminders</h2>
+    {#await reminderNotesPromise then reminderNotes}
+      {#if reminderNotes.length > 0}
+        <NoteList notes={reminderNotes} compact />
+      {/if}
+    {/await}
+  </div>
 {/if}
-<h2>Latest Notes</h2>
-{#await notePromise then notes}
-  {#if notes.length > 0}
-    <NoteList {notes} />
-  {:else}
-    <h3 class="empty">No notes yet... 🤷</h3>
-  {/if}
-{/await}
+</div>
 
 <style>
   h3.empty {
     margin-top: 8rem;
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
   }
 </style>
