@@ -33,7 +33,7 @@ func (db *Db) IsTokenValid(token string) bool {
 	if token == "" {
 		return false
 	}
-	return libs.VerifyToken(token, conf.TOKEN_SIGNATURE)
+	return libs.VerifyToken(token, conf.TokenSignature)
 }
 
 func (db *Db) CheckPk(pk PasskeyClear) (string, error) {
@@ -42,7 +42,7 @@ func (db *Db) CheckPk(pk PasskeyClear) (string, error) {
 		return "", errors.New("invalid passkey")
 	}
 
-	return libs.NewToken(conf.TOKEN_SIGNATURE)
+	return libs.NewToken(conf.TokenSignature)
 }
 
 func (db *Db) getPasskey() Passkey {

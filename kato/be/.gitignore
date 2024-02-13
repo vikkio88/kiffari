@@ -1,3 +1,5 @@
 # Logs
 *.db
 tmp/
+bin/
+conf/conf_prod.go.bak
