@@ -10,7 +10,7 @@ type Note struct {
 	Id        string     `gorm:"primarykey;size:16" json:"id"`
 	Title     string     `json:"title"`
 	Body      string     `json:"body"`
-	Tags      []*Tag     `gorm:"many2many:note_tags;constraint:OnDelete:CASCADE" json:"tags"`
+	Tags      []*Tag     `gorm:"many2many:note_tags;constraint:OnDelete:CASCADE" json:"tags,omitempty"`
 	DueDate   *time.Time `json:"due_date"`
 	Archived  bool       `json:"archived"`
 	CreatedAt time.Time  `json:"created_at"`

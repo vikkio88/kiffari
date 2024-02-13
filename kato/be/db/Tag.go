@@ -10,7 +10,7 @@ type Tag struct {
 	Id    string  `gorm:"primarykey;size:16" json:"id" binding:"required"`
 	Value string  `gorm:"uniqueIndex" json:"-"`
 	Label string  `json:"label"`
-	Notes []*Note `gorm:"many2many:note_tags;constraint:OnDelete:CASCADE" json:"notes"`
+	Notes []*Note `gorm:"many2many:note_tags;constraint:OnDelete:CASCADE" json:"notes,omitempty"`
 }
 
 type TagCreate struct {
