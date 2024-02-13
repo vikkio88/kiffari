@@ -19,7 +19,7 @@
     <Link to="/" title="Dashboard">🪣</Link>
     <Link to="/archived" title="Archived">🗄️</Link>
     <Link to="/search" title="Search">🔍</Link>
-    <button class="add" on:click={create}>➕</button>
+    <button class="add" title="New Note" on:click={create}>➕</button>
     <button on:click={logout} title="Logout" class="logout">👋</button>
   </nav>
 {/if}
@@ -32,7 +32,7 @@
   }
 
   .add {
-    font-size: 1.5rem;
-    padding: 0.2rem 1rem;
+    font-size: 1.2rem;
+    padding: 0.3rem 1rem;
   }
 </style>
