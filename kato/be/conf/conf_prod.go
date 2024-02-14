@@ -6,6 +6,6 @@ package conf
 const (
 	TokenSignature   = "someTokensignature"
 	LatestNotesLimit = 5
-	Version          = "PROD_VERSION"
+	Version          = "162efcd"
 	GinMode          = "release"
 )

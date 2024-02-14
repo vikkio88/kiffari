@@ -12,6 +12,8 @@ import (
 
 type Db struct {
 	g *gorm.DB
+
+	pk *Passkey
 }
 
 func NewDb(fileName string) *Db {
@@ -26,7 +28,8 @@ func NewDb(fileName string) *Db {
 	}
 
 	migrate(g)
-	return &Db{g}
+	db := &Db{g, nil}
+	return db
 }
 
 func (db *Db) IsTokenValid(token string) bool {
@@ -37,7 +40,11 @@ func (db *Db) IsTokenValid(token string) bool {
 }
 
 func (db *Db) CheckPk(pk PasskeyClear) (string, error) {
-	pkd := db.getPasskey()
+	pkd, isInit := db.getPasskey()
+	if !isInit {
+		return "", errors.New("Not Initialised")
+	}
+
 	if !pk.Check(pkd) {
 		return "", errors.New("invalid passkey")
 	}
@@ -45,7 +52,13 @@ func (db *Db) CheckPk(pk PasskeyClear) (string, error) {
 	return libs.NewToken(conf.TokenSignature)
 }
 
-func (db *Db) getPasskey() Passkey {
-	//TODO: cache this
-	return NewPasskey("password")
+func (db *Db) getPasskey() (*Passkey, bool) {
+	if db.pk == nil {
+		p, ok := db.GetHashedKey()
+		if ok {
+			db.pk = p
+		}
+		return p, ok
+	}
+	return db.pk, true
 }
