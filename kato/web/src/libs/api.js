@@ -1,5 +1,6 @@
 import { navigate } from "svelte-routing";
 import { KATO_API_URL, LOGIN_TOKEN_KEY } from "../const";
+import { userToken } from "../store";
 
 export function parseOrThrow(resp) {
   if (resp.status == 401) {
@@ -10,6 +11,7 @@ export function parseOrThrow(resp) {
 
 export function catchLogout() {
   window.localStorage.removeItem(LOGIN_TOKEN_KEY);
+  userToken.set(null);
   navigate("/login", { replace: true });
 }
 
