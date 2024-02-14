@@ -55,14 +55,19 @@
     <div class="body">
       <BodyRenderer body={note.body} />
     </div>
-    <div class="tags">
-      <h3>Tags</h3>
-      <div class="tagList">
-        <TagsList tags={note.tags} />
+    {#if Array.isArray(note.tags) && note.tags.length > 0}
+      <div class="tags">
+        <h3>Tags</h3>
+        <div class="tagList">
+          <TagsList tags={note.tags} />
+        </div>
       </div>
-    </div>
+    {/if}
   </div>
   <Controls>
+    {#if !note.archived}
+      <button on:click={() => navigate(`/edit-note/${id}`)}>Edit 📝</button>
+    {/if}
     <ConfirmButton onConfirmed={() => onArchiveToggle(note.archived)}>
       {#if !note.archived}
         Archive 🗄️
@@ -70,9 +75,6 @@
         Un-Archive 🔄
       {/if}
     </ConfirmButton>
-    {#if !note.archived}
-      <button on:click={() => navigate(`/edit-note/${id}`)}>Edit 📝</button>
-    {/if}
     <ConfirmButton onConfirmed={onDelete}>Delete 🗑️</ConfirmButton>
   </Controls>
 {/await}
