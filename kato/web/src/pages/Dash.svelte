@@ -26,6 +26,8 @@
   }
 </script>
 
+<button class="add" title="New Note" on:click={create}>Add Note 📝</button>
+
 <div class="wrapper">
   <div class="subwrapper">
     <h2>Latest Notes</h2>
@@ -50,8 +52,6 @@
   {/if}
 </div>
 
-<button class="add" title="New Note" on:click={create}>📝</button>
-
 <style>
   h3.empty {
     margin-top: 8rem;
@@ -65,11 +65,7 @@
   }
 
   .add {
-    font-size: 1.2rem;
-    /* border-radius: 50rem; */
-    padding: 0.5rem 1rem;
-    position: absolute;
-    right: 0;
-    margin-right: 1rem;
+    /* font-size: 1.2rem; */
+    padding: 1rem 2rem;
   }
 </style>
