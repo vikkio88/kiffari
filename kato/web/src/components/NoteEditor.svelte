@@ -4,16 +4,16 @@
   import TagSearch from "./TagSearch.svelte";
   import Controls from "./shared/Controls.svelte";
   import { formatDTL } from "../libs/dates";
+  import { addDays, format } from "date-fns";
+  import { removeComments } from "../libs/renderers/cleanup";
 
   export const note = null;
 
-  export let title = "new note title";
+  export let title = `${format(new Date(), "E d MMM, HH:mm")}`;
   export let text = "";
   export let tags = [];
   export let dueDate = null;
-  let dueDateProxy = Boolean(dueDate)
-    ? formatDTL(dueDate)
-    : null;
+  let dueDateProxy = Boolean(dueDate) ? formatDTL(dueDate) : null;
   function clearDueDate() {
     dueDateProxy = null;
   }
@@ -21,6 +21,7 @@
   let showPreview = false;
 
   const PLUGIN_SETUP_STRING = "<!--\nPlugin: \n-->\n";
+  const generatePlugin = (name) => `<!--\nPlugin: ${name}\n-->\n`;
 
   async function handleKeydown(event) {
     if (event.key !== "Tab") return;
@@ -65,6 +66,8 @@
     // event.currentTarget.focus();
   }
 
+  function setupLinkPlugin(event) {}
+
   let showAdditionalInfo = Boolean(dueDate);
   function toggleAdditionalInfo() {
     showAdditionalInfo = !showAdditionalInfo;
@@ -83,6 +86,13 @@
         {:else}
           Markdown 😎
         {/if}
+      </button>
+      <button
+        on:click|stopPropagation|preventDefault={() => {
+          text = `${generatePlugin("Link")}${removeComments(text)}`;
+        }}
+      >
+        Plugin:Link 🔗
       </button>
       <button on:click|stopPropagation|preventDefault={setupPlugin}>
         Plugin ⚙️
@@ -128,18 +138,36 @@
         {/if}
       </button>
       {#if showAdditionalInfo}
-        <div>
+        <div class="col">
+          <h3>Due Date</h3>
+          <input
+            name="dueDate"
+            type="datetime-local"
+            bind:value={dueDateProxy}
+            min={new Date().toISOString()}
+          />
+
           <div>
-            <label for="dueDate">Due Date:</label>
-            <input
-              name="dueDate"
-              type="datetime-local"
-              bind:value={dueDateProxy}
-              min={new Date().toISOString()}
-            />
-            <button on:click|stopPropagation|preventDefault={clearDueDate}
-              >❌</button
+            <button
+              on:click|stopPropagation|preventDefault={clearDueDate}
+              disabled={!Boolean(dueDateProxy)}
             >
+              ❌
+            </button>
+            <button
+              on:click|stopPropagation|preventDefault={() => {
+                dueDateProxy = formatDTL(addDays(new Date(), 1));
+              }}
+            >
+              Tomorrow
+            </button>
+            <button
+              on:click|stopPropagation|preventDefault={() => {
+                dueDateProxy = formatDTL(addDays(new Date(), 7));
+              }}
+            >
+              Next Week
+            </button>
           </div>
         </div>
       {/if}
@@ -189,6 +217,15 @@
   .additionalInfo input {
     padding: 0.6rem;
     font-size: 18px;
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .col h3 {
+    margin: 0;
   }
 
   .controls {
