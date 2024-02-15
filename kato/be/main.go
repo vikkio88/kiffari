@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	d := db.NewDb("testing.db")
+	d := db.NewDb()
 	r := gin.Default()
 	gin.SetMode(conf.GinMode)
 	//TODO: check the Proxy warning

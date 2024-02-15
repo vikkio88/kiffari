@@ -2,11 +2,9 @@ package db
 
 import (
 	"errors"
-	"fmt"
 	"kato-be/conf"
 	"kato-be/libs"
 
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
@@ -16,9 +14,9 @@ type Db struct {
 	pk *Passkey
 }
 
-func NewDb(fileName string) *Db {
+func NewDb() *Db {
 	g, err := gorm.Open(
-		sqlite.Open(fmt.Sprintf("%s?_foreign_keys=on", fileName)),
+		conf.Connection,
 		&gorm.Config{
 			// Logger: logger.Default.LogMode(logger.Info),
 		},
@@ -42,7 +40,7 @@ func (db *Db) IsTokenValid(token string) bool {
 func (db *Db) CheckPk(pk PasskeyClear) (string, error) {
 	pkd, isInit := db.getPasskey()
 	if !isInit {
-		return "", errors.New("Not Initialised")
+		return "", errors.New("not initialised")
 	}
 
 	if !pk.Check(pkd) {

@@ -7,7 +7,7 @@ import (
 )
 
 type Note struct {
-	Id        string     `gorm:"primarykey;size:16" json:"id"`
+	Id        string     `gorm:"primarykey" json:"id"`
 	Title     string     `json:"title"`
 	Body      string     `json:"body"`
 	Tags      []*Tag     `gorm:"many2many:note_tags;constraint:OnDelete:CASCADE" json:"tags,omitempty"`

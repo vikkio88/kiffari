@@ -6,3 +6,5 @@ const (
 	Version          = "DEV"
 	GinMode          = "debug"
 )
+
+var Connection = sqlite.Open(fmt.Sprintf("%s?_foreign_keys=on", "testing.db"))
