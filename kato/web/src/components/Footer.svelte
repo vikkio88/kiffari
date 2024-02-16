@@ -13,7 +13,8 @@
     display: flex;
     flex-direction: column;
     font-size: x-small;
-    margin-bottom: 4rem;
+    align-items: flex-start;
+    padding: 1rem 2rem;
   }
 
   .version {
