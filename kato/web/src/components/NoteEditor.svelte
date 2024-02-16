@@ -174,7 +174,7 @@
     </div>
     <TagSearch on:updatedSelection={onTagsSelection} selectedTags={tags} />
     <Controls>
-      <button type="submit">Save</button>
+      <button type="submit">Save 💾</button>
     </Controls>
   </form>
 </div>
