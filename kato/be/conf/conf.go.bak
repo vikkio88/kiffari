@@ -5,6 +5,7 @@ const (
 	LatestNotesLimit = 5
 	Version          = "DEV"
 	GinMode          = "debug"
+	Port             = "5111"
 )
 
 var Connection = sqlite.Open(fmt.Sprintf("%s?_foreign_keys=on", "testing.db"))
