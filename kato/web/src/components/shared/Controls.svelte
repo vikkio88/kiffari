@@ -7,6 +7,7 @@
     position: absolute;
     bottom: 0;
     right: 0;
-    padding: 2em;
+    padding-bottom: 3rem;
+    padding-right: 1rem;
   }
 </style>
