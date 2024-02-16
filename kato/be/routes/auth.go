@@ -9,7 +9,7 @@ import (
 )
 
 func AuthRoutes(r gin.IRouter, d *db.Db) {
-	r.POST("/login", func(c *gin.Context) {
+	r.POST("api/login", func(c *gin.Context) {
 		var pk db.PasskeyClear
 		if c.Bind(&pk) == nil {
 
