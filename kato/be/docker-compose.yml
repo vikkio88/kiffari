@@ -8,3 +8,7 @@ services:
     environment:
       POSTGRES_USER: kato
       POSTGRES_PASSWORD: kato
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:
