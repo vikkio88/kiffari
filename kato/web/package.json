@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:move": "rm -rf ../be/static && npm run build && mv dist ../be/static",
+    "build": "sh scripts/update_version.sh && vite build",
     "preview": "vite preview",
     "test": "vitest"
   },
