@@ -33,6 +33,20 @@
     }
   }
 
+  function onDownload(title, body, tags) {
+    var element = document.createElement("a");
+    element.setAttribute(
+      "href",
+      "data:text/markdown;charset=utf-8," +
+        encodeURIComponent(`# ${title}\n${body}`)
+    );
+    element.download = `${title}.md`;
+    element.style.display = "none";
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
+
   function getDate({ created_at, updated_at }) {
     if (created_at != updated_at) {
       return `updated: ${new Date(updated_at).toLocaleString()}`;
@@ -65,17 +79,20 @@
     {/if}
   </div>
   <Controls>
+    <button on:click={() => onDownload(note.title, note.body, note.tags)}>
+      🔽
+    </button>
     {#if !note.archived}
-      <button on:click={() => navigate(`/edit-note/${id}`)}>Edit 📝</button>
+      <button on:click={() => navigate(`/edit-note/${id}`)}>📝</button>
     {/if}
     <ConfirmButton onConfirmed={() => onArchiveToggle(note.archived)}>
       {#if !note.archived}
-        Archive 🗄️
+        🗄️
       {:else}
-        Un-Archive 🔄
+        🔄
       {/if}
     </ConfirmButton>
-    <ConfirmButton onConfirmed={onDelete}>Delete 🗑️</ConfirmButton>
+    <ConfirmButton onConfirmed={onDelete}>🗑️</ConfirmButton>
   </Controls>
 {/await}
 
