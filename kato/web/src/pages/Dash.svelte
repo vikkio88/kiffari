@@ -8,6 +8,7 @@
     parseOrThrow,
   } from "../libs/api";
   import { protectedRoute } from "../libs/routes";
+  import Controls from "../components/shared/Controls.svelte";
 
   protectedRoute();
   let notePromise = getLatestNotes().then(parseOrThrow).catch(catchLogout);
@@ -25,8 +26,6 @@
     navigate("/create-note");
   }
 </script>
-
-<button class="add" title="New Note" on:click={create}>Add Note 📝</button>
 
 <div class="wrapper">
   <div class="subwrapper">
@@ -51,6 +50,10 @@
     </div>
   {/if}
 </div>
+
+<Controls>
+  <button class="add" title="New Note" on:click={create}>Add Note 📝</button>
+</Controls>
 
 <style>
   h3.empty {
