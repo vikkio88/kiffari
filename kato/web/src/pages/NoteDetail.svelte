@@ -34,11 +34,15 @@
   }
 
   function onDownload(title, body, tags) {
-    var element = document.createElement("a");
+    let tagsString = "";
+    for (const tag of tags) {
+      tagsString += ` #${tag.label}`;
+    }
+    const element = document.createElement("a");
     element.setAttribute(
       "href",
       "data:text/markdown;charset=utf-8," +
-        encodeURIComponent(`# ${title}\n${body}`)
+        encodeURIComponent(`# ${title}\n${body}\n\n${tagsString.trim()}`),
     );
     element.download = `${title}.md`;
     element.style.display = "none";
