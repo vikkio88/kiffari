@@ -40,7 +40,6 @@ func main() {
 			"version": conf.Version,
 		})
 	})
-
 	routes.AuthRoutes(r, d)
 
 	private := r.Group("api")
@@ -48,6 +47,10 @@ func main() {
 
 	routes.TagRoutes(private, d)
 	routes.NoteRoutes(private, d)
+
+	r.NoRoute(func(c *gin.Context) {
+		c.File("./static")
+	})
 
 	r.Run(fmt.Sprintf(":%s", conf.Port))
 }
