@@ -32,7 +32,7 @@
 <div class="tagSearch">
   <input
     type="text"
-    size="50"
+    size="30"
     on:keyup={({ currentTarget: { value } }) => debounce(value)}
     placeholder="Tag..."
   />
