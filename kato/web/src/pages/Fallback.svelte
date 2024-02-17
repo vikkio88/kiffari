@@ -5,7 +5,7 @@
 <div class="wrapper">
     <h1>Ooops!</h1>
     <h3>you found an empty Kato...</h3>
-    <img src="favicon.svg" alt="A Kato rolling around" />
+    <img src="/favicon.svg" alt="A Kato rolling around" />
     <button on:click={() => navigate("/")}>Back Home 🏠</button>
 </div>
 
