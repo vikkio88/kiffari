@@ -83,20 +83,35 @@
     {/if}
   </div>
   <Controls>
-    <button on:click={() => onDownload(note.title, note.body, note.tags)}>
+    <button
+      title="Export as MD"
+      on:click={() => onDownload(note.title, note.body, note.tags)}
+    >
       🔽
     </button>
     {#if !note.archived}
-      <button on:click={() => navigate(`/edit-note/${id}`)}>📝</button>
+      <button title="Edit Note" on:click={() => navigate(`/edit-note/${id}`)}>
+        📝
+      </button>
     {/if}
-    <ConfirmButton onConfirmed={() => onArchiveToggle(note.archived)}>
+    <ConfirmButton
+      title="Archive Note"
+      confirmLabel="Archive?"
+      onConfirmed={() => onArchiveToggle(note.archived)}
+    >
       {#if !note.archived}
         🗄️
       {:else}
         🔄
       {/if}
     </ConfirmButton>
-    <ConfirmButton onConfirmed={onDelete}>🗑️</ConfirmButton>
+    <ConfirmButton
+      title="Delete Note"
+      confirmLabel="Delete?"
+      onConfirmed={onDelete}
+    >
+      🗑️
+    </ConfirmButton>
   </Controls>
 {/await}
 

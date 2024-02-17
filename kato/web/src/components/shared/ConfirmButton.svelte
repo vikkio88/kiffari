@@ -1,6 +1,8 @@
 <script>
-  let clicked = false;
+  export let title = "";
+  export let confirmLabel = "Confirm?";
   export let onConfirmed = () => console.log("Confirmed");
+  let clicked = false;
 
   function handleClick() {
     if (!clicked) {
@@ -10,13 +12,13 @@
   }
 </script>
 
-<button on:click={handleClick}>
+<button {title} on:click={handleClick}>
   {#if !clicked}
     <slot />
   {:else}
     <div class="internal">
-      Confirm?
-      <button on:click|stopPropagation={() => (clicked = false)}>❌</button>
+      {confirmLabel}
+      <button on:click|stopPropagation={() => (clicked = false)}> ❌ </button>
       <button on:click|stopPropagation={() => onConfirmed()}>👍</button>
     </div>
   {/if}
