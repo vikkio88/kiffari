@@ -32,7 +32,7 @@
 <div class="tagSearch">
   <input
     type="text"
-    size="30"
+    class="searchBar"
     on:keyup={({ currentTarget: { value } }) => debounce(value)}
     placeholder="Tag..."
   />
@@ -59,6 +59,9 @@
     padding: 1em;
   }
 
+  .searchBar {
+    min-width: 40%;
+  }
   .tagSearch input {
     padding: 1em;
     font-size: 18px;
