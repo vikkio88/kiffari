@@ -10,7 +10,7 @@
 {:else}
   {#each tags as tag}
     <button class:big class="tag" on:click={onTagClick(tag)}>
-      {tag.label}
+      <span class="hash">#</span>{tag.label}
     </button>
   {/each}
 {/if}
@@ -21,6 +21,12 @@
     border-radius: 10px;
     padding: 0.5rem 1rem;
     margin: 0 0.5rem;
+  }
+
+  .hash {
+    font-size: 1.2rem;
+    color: #646cff;
+    margin-right: .3rem;
   }
 
   .big {

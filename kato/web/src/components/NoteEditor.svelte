@@ -134,26 +134,26 @@
         {#if !showAdditionalInfo}
           More ➕
         {:else}
-          ◀️ Less
+          ◀️
         {/if}
       </button>
       {#if showAdditionalInfo}
-        <div class="col">
+        <div class="dueDateWrapper">
           <h3>Due Date</h3>
-          <input
-            name="dueDate"
-            type="datetime-local"
-            bind:value={dueDateProxy}
-            min={new Date().toISOString()}
-          />
-
           <div>
-            <button
-              on:click|stopPropagation|preventDefault={clearDueDate}
-              disabled={!Boolean(dueDateProxy)}
-            >
-              ❌
-            </button>
+            <input
+              name="dueDate"
+              type="datetime-local"
+              bind:value={dueDateProxy}
+              min={new Date().toISOString()}
+            />
+            {#if Boolean(dueDateProxy)}
+              <button on:click|stopPropagation|preventDefault={clearDueDate}>
+                ❌
+              </button>
+            {/if}
+          </div>
+          <div class="presets">
             <button
               on:click|stopPropagation|preventDefault={() => {
                 dueDateProxy = formatDTL(addDays(new Date(), 1));
@@ -215,17 +215,28 @@
   }
 
   .additionalInfo input {
-    padding: 0.6rem;
-    font-size: 18px;
+    padding: 0.5rem;
+    font-size: 1rem;
   }
 
-  .col {
+  .dueDateWrapper {
     display: flex;
     flex-direction: column;
   }
 
-  .col h3 {
+  .dueDateWrapper > div {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .dueDateWrapper h3 {
     margin: 0;
+    font-size: 1rem;
+  }
+
+  .presets {
+    display: flex;
+    flex-direction: row;
   }
 
   .controls {

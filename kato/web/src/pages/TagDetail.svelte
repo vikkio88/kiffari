@@ -10,7 +10,7 @@
 
 {#await tagPromise then tag}
   <div class="header">
-    <span>Tag</span>
+    <h1 class="hash">#</h1>
     <h1>
       {tag.label}
     </h1>
@@ -23,22 +23,20 @@
 
 <style>
   .header {
-    border-top: 2px #a3a3a3 solid;
-    margin-bottom: 5em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
   .header > h1 {
     margin: 0;
     font-size: 3rem;
   }
 
-  .header > span {
-    font-size: 1.5rem;
-    margin: 0;
-    padding: 0 1rem;
-    display: inline-block;
-    transform: translateY(-50%);
-    background-color: #242424;
-    color: #a3a3a3;
+  h1.hash {
+    color: #646cff;
+    font-size: 3.2rem;
+    margin-right: .3rem;
   }
 
   .results {

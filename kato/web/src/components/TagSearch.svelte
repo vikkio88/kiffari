@@ -54,7 +54,7 @@
   </div>
   <input
     type="text"
-    size="40"
+    width="50%"
     bind:value={searchValue}
     on:keyup={({ currentTarget: { value }, key }) => debounce(value, key)}
     placeholder="Add Tags..."
@@ -93,9 +93,10 @@
   .selectedTags {
     padding: 2rem;
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     align-items: center;
     justify-content: flex-start;
+    overflow: auto;
   }
 
   .selectedTags > .tag {

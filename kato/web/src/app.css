@@ -31,7 +31,9 @@ body {
 
 main {
   padding-top: 2em;
-  height: 85vh;
+  min-height: 85vh;
+  /* padding-bottom: 4rem; */
+  margin-bottom: 3rem;
 }
 
 h1 {

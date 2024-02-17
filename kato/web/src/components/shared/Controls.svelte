@@ -4,10 +4,8 @@
 
 <style>
   .controls {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     right: 0;
-    padding-bottom: 3rem;
-    padding-right: 1rem;
   }
 </style>

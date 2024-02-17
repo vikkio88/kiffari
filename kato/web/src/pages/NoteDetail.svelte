@@ -138,7 +138,7 @@
   .body {
     border-radius: 10px;
     text-align: left;
-    padding: 3rem;
+    padding: 1.5rem;
     margin: 1em 0;
   }
 
@@ -151,6 +151,8 @@
     display: flex;
     flex-direction: row;
     padding-bottom: 0.5rem;
+    flex-wrap: wrap;
+    gap: .2rem;
   }
 
   .tags h3 {

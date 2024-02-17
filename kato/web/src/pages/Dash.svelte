@@ -1,14 +1,15 @@
 <script>
   import { navigate } from "svelte-routing";
-  import NoteList from "../components/NoteList.svelte";
   import {
     catchLogout,
     getLatestNotes,
     getReminderNotes,
     parseOrThrow,
   } from "../libs/api";
-  import { protectedRoute } from "../libs/routes";
+  import NoteList from "../components/NoteList.svelte";
   import Controls from "../components/shared/Controls.svelte";
+  import Footer from "../components/Footer.svelte"
+  import { protectedRoute } from "../libs/routes";
 
   protectedRoute();
   let notePromise = getLatestNotes().then(parseOrThrow).catch(catchLogout);
@@ -50,6 +51,8 @@
     </div>
   {/if}
 </div>
+
+<Footer />
 
 <Controls>
   <button class="add" title="New Note" on:click={create}>Add Note 📝</button>
