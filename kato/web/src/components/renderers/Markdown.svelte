@@ -10,6 +10,6 @@
 
 <style>
     .mdBody {
-        min-height: 40vh;
+        min-height: 30vh;
     }
 </style>

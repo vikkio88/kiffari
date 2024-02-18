@@ -82,7 +82,7 @@
       </div>
     {/if}
   </div>
-  <Controls>
+  <Controls background>
     <button
       title="Export as MD"
       on:click={() => onDownload(note.title, note.body, note.tags)}
@@ -139,7 +139,7 @@
     border-radius: 10px;
     text-align: left;
     padding: 1.5rem;
-    margin: 1em 0;
+    margin: .5rem 0;
   }
 
   .tags {
@@ -147,10 +147,9 @@
   }
 
   .tagList {
-    margin: 1rem 0;
     display: flex;
     flex-direction: row;
-    padding-bottom: 0.5rem;
+    padding-bottom: 1.5rem;
     flex-wrap: wrap;
     gap: .2rem;
   }

@@ -148,7 +148,7 @@
               min={new Date().toISOString()}
             />
             {#if Boolean(dueDateProxy)}
-              <button on:click|stopPropagation|preventDefault={clearDueDate}>
+              <button on:click|stopPropagation|preventDefault={clearDueDate} class="removeDue">
                 ❌
               </button>
             {/if}
@@ -173,7 +173,7 @@
       {/if}
     </div>
     <TagSearch on:updatedSelection={onTagsSelection} selectedTags={tags} />
-    <Controls>
+    <Controls background>
       <button type="submit">Save 💾</button>
     </Controls>
   </form>
@@ -237,6 +237,11 @@
   .presets {
     display: flex;
     flex-direction: row;
+  }
+
+  .removeDue {
+    font-size: .5rem;
+    padding: .5rem;
   }
 
   .controls {
