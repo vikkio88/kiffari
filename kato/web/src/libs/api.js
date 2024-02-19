@@ -104,3 +104,11 @@ export function filterTags(value, abortCtrl) {
     ...makeHeaders(),
   });
 }
+
+export function filterNotes(value, abortCtrl) {
+  return fetch(`${KATO_API_URL}/notes?q=${value}`, {
+    method: "get",
+    signal: abortCtrl.signal,
+    ...makeHeaders(),
+  });
+}

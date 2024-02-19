@@ -27,7 +27,15 @@ func NoteRoutes(r gin.IRouter, d *db.Db) {
 			return
 		}
 
-		c.JSON(http.StatusOK, d.GetAllNotes())
+		filterValue := c.Query("q")
+		if filterValue == "" {
+			c.JSON(http.StatusOK, d.GetAllNotes())
+			return
+		}
+
+		//TODO: maybe add an opts to parse in here, so you can pass values like ASC/DESC Archived and Dates?
+		titleOnly := c.Query("t")
+		c.JSON(http.StatusOK, d.FilterNotes(filterValue, titleOnly == "true"))
 	})
 
 	r.GET("/notes/:id", func(c *gin.Context) {

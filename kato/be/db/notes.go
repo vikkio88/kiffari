@@ -1,6 +1,9 @@
 package db
 
-import "kato-be/conf"
+import (
+	"fmt"
+	"kato-be/conf"
+)
 
 func (d *Db) InsertNote(value NoteCreate) (Note, bool) {
 	n := value.Note()
@@ -22,6 +25,20 @@ func (d *Db) GetAllNotes() []NoteItem {
 	var notes []NoteItem
 	d.g.Model(&Note{}).Order("updated_at DESC, created_at DESC").Find(&notes)
 
+	return notes
+}
+
+func (d *Db) FilterNotes(text string, titleOnly bool) []NoteItem {
+	var notes []NoteItem
+	searchValue := fmt.Sprintf("%%%s%%", text)
+	q := d.g.Model(&Note{})
+	if titleOnly {
+		q.Where("title LIKE ?", searchValue)
+	} else {
+		q.Where("body LIKE ? or title LIKE ?", searchValue, searchValue)
+	}
+
+	q.Order("updated_at DESC, created_at DESC").Find(&notes)
 	return notes
 }
 
