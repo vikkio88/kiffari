@@ -1,9 +1,9 @@
 ###
-GET http://localhost:5111/ping
+GET http://localhost:5111/api/ping
 
 ###
 
-POST http://localhost:5111/notes
+POST http://localhost:5111/api/notes
 content-type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDcwODY1NjB9.CiZ1RupTbH-roqgzMW9ccDH33C2cscwrpqjX-l6jvQ4
 
@@ -16,19 +16,19 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDcwODY1NjB9.CiZ
 
 ###
 
-GET http://localhost:5111/notes
-Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDY3MjI5OTV9.z9jKGvkF7KD-nR9iW257liKXHM_t1nefMG01glJc7KU
+GET http://localhost:5111/api/notes?q=lorem
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDgzNTc5OTF9.434iNJcjTpqFX55oWLHzUN-DtIULdgcvwxk3RixeCQw
 ###
 
-GET http://localhost:5111/notes?latest=true
+GET http://localhost:5111/api/notes?latest=true
 
 ###
 
-GET http://localhost:5111/notes/01HNTZC5EZWHZY6Z29JEJEZVJ4
+GET http://localhost:5111/api/notes/01HNTZC5EZWHZY6Z29JEJEZVJ4
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDcwODY1NjB9.CiZ1RupTbH-roqgzMW9ccDH33C2cscwrpqjX-l6jvQ4
 
 ###
-PUT http://localhost:5111/notes/01HNTZC5EZWHZY6Z29JEJEZVJ4
+PUT http://localhost:5111/api/notes/01HNTZC5EZWHZY6Z29JEJEZVJ4
 content-type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDcwODY1NjB9.CiZ1RupTbH-roqgzMW9ccDH33C2cscwrpqjX-l6jvQ4
 
@@ -41,4 +41,4 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDcwODY1NjB9.CiZ
 
 
 ###
-DELETE http://localhost:5111/notes/01HM92C75FC1STJHN9PT1W3SZ6
+DELETE http://localhost:5111/api/notes/01HM92C75FC1STJHN9PT1W3SZ6

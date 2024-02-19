@@ -1,6 +1,6 @@
-POST http://localhost:5111/login
+POST http://localhost:5111/api/login
 content-type: application/json
 
 {
-    "passkey": "maurilio"
+    "passkey": "maurizio"
 }
