@@ -1,11 +1,9 @@
 <script>
-  import { navigate } from "svelte-routing";
+  import Version from "./shared/Version.svelte";
 </script>
 
 <footer>
-  <button class="version" on:click={() => navigate("/about")}>
-    version: {import.meta.env.VITE_VERSION}
-  </button>
+  <Version />
 </footer>
 
 <style>
@@ -16,14 +14,5 @@
     flex-direction: column;
     font-size: x-small;
     align-items: flex-start;
-  }
-
-  .version {
-    color: #454545;
-  }
-
-  .version {
-    border: 0;
-    background-color: transparent;
   }
 </style>

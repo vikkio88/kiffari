@@ -6,6 +6,7 @@
   import { userToken } from "../store";
   import { onMount } from "svelte";
   import ErrorToast from "../components/shared/ErrorToast.svelte";
+  import Version from "../components/shared/Version.svelte";
 
   let error = null;
   let loginPromise = null;
@@ -61,6 +62,7 @@
   <Spinner />
 {/if}
 
+<h3><Version /></h3>
 <ErrorToast
   {error}
   onDismiss={() => {
