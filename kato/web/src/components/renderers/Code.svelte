@@ -1,5 +1,5 @@
 <script>
-    export let body = "";
+  export let body = "";
 </script>
 
 <h3>Code View</h3>
@@ -8,8 +8,8 @@
 </pre>
 
 <style>
-    .pre {
-        font-family: monospace;
-        font-size: 18px;
-    }
+  .pre {
+    font-family: monospace;
+    font-size: 18px;
+  }
 </style>

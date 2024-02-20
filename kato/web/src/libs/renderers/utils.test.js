@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { parseLinks } from './extractors';
+import { extractYTVideos, parseLinks } from './extractors';
 
 
 test('should extract links correctly', () => {
@@ -28,4 +28,29 @@ fabrizio https://example.com:8080/path/to/resource?query=param&foo=bar
   ];
 
   expect(parseLinks(input)).toEqual(expectedOutput);
+});
+
+
+test("should extract yt videos correctly", () => {
+  const input = `
+<!--
+Plugin: Youtube
+-->
+blabla
+https://www.youtube.com/watch?v=tgbNymZ7vqY
+https://youtu.be/tgbNymZ7vqY?si=o2CKaC88Hle4psd
+https://youtu.be/tgbNymZ7vqY
+http://google.eu/path/to/resource?query=param&foo=bar
+xxxx
+https://example.com:8080/path/to/resource?query=param&foo=bar
+  `;
+
+  const expectedOutput = [
+    { original: "https://www.youtube.com/watch?v=tgbNymZ7vqY", embed: "https://www.youtube.com/embed/tgbNymZ7vqY" },
+    { original: "https://youtu.be/tgbNymZ7vqY?si=o2CKaC88Hle4psd", embed: "https://www.youtube.com/embed/tgbNymZ7vqY" },
+    { original: "https://youtu.be/tgbNymZ7vqY", embed: "https://www.youtube.com/embed/tgbNymZ7vqY" },
+  ];
+
+  expect(extractYTVideos(input)).toEqual(expectedOutput);
+
 });
