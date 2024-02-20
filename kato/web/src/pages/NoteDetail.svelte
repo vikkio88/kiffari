@@ -21,6 +21,10 @@
 
   async function onDelete() {
     const resp = await deleteNote(id);
+    if (resp.status === 401) {
+      catchLogout();
+    }
+    
     if (resp.ok) {
       navigate("/", { replace: true });
     }
@@ -42,7 +46,7 @@
     element.setAttribute(
       "href",
       "data:text/markdown;charset=utf-8," +
-        encodeURIComponent(`# ${title}\n${body}\n\n${tagsString.trim()}`),
+        encodeURIComponent(`# ${title}\n${body}\n\n${tagsString.trim()}`)
     );
     element.download = `${title}.md`;
     element.style.display = "none";
@@ -139,7 +143,7 @@
     border-radius: 10px;
     text-align: left;
     padding: 1.5rem;
-    margin: .5rem 0;
+    margin: 0.5rem 0;
   }
 
   .tags {
@@ -151,7 +155,7 @@
     flex-direction: row;
     padding-bottom: 1.5rem;
     flex-wrap: wrap;
-    gap: .2rem;
+    gap: 0.2rem;
   }
 
   .tags h3 {
