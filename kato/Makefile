@@ -4,7 +4,7 @@ watch-fe:
 	cd web && npm run dev
 build-fe:
 	cd web && npm run build
-build-fe-static-local:
+build-fe-local:
 	cd web && cp .env.production .env.production.bak && cp .env.local .env.production && npm run build && rm -rf ../be/static && mv dist/ ../be/static && mv .env.production.bak .env.production
 build-be:
 	cd be && make build-awd
