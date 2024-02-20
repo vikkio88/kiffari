@@ -11,16 +11,17 @@ A small cloud tool to save notes and download them as markdown files (compatible
 - [x] Export as simple `.md` files.
 - [x] Create set of plugins to load different styles of renderers
  - [x] Link Plugin to just show list of links
+ - [x] Youtube/Videoplayer Plugin to showcase video
  - [ ] Code Plugin to show code snippets
- - [ ] Youtube/Videoplayer Plugin to showcase video
 - [x] Search by tag
-- [ ] Search by title/body free text
+- [x] Search by title/body free text
 - [ ] Create/Explore PWA with offline/online sync.
 
 ### How to
 Run Watch both BE/FE
 (make sure you `cd web && nvm use`)
 then:
+
 ```
 make -j4 watch-be watch-fe
 ```
