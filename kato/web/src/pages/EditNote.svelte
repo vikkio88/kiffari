@@ -1,7 +1,7 @@
 <script>
   import { navigate } from "svelte-routing";
   import NoteEditor from "../components/NoteEditor.svelte";
-  import { getNoteDetails, updateNote } from "../libs/api";
+  import { catchLogout, getNoteDetails, updateNote } from "../libs/api";
   import { protectedRoute } from "../libs/routes";
   protectedRoute();
 
@@ -12,8 +12,12 @@
   async function onSave(note) {
     putPromise = updateNote(id, { id, ...note });
 
-    const data = await putPromise;
-    if (data.status == 200) {
+    const resp = await putPromise;
+    if (resp.status == 401) {
+      catchLogout();
+    }
+    
+    if (resp.status == 200) {
       navigate(`/notes/${id}`, { replace: true });
     }
   }

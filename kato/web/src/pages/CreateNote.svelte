@@ -23,6 +23,10 @@
       error = `Could not create.`;
     }
 
+    if (resp.status == 401) {
+      catchLogout();
+    }
+
     if (resp.status == 200) {
       const { id } = await resp.json();
       navigate(`/notes/${id}`, { replace: true });
