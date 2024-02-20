@@ -1,6 +1,6 @@
 ## Kato
 
-A small cloud tool to save notes and download them as markdown files (compatible with [Obsidian.md](https://obisidian.md).
+A small cloud tool to save notes and download them as markdown files (compatible with [Obsidian.md](https://obsidian.md/).
 
 ## How it looks
 [![Watch the video](https://img.youtube.com/vi/2p7wZoG-bLw/default.jpg)](https://youtu.be/2p7wZoG-bLw)
@@ -10,9 +10,9 @@ A small cloud tool to save notes and download them as markdown files (compatible
 - [x] Add `due date` to create reminders.
 - [x] Export as simple `.md` files.
 - [x] Create set of plugins to load different styles of renderers
- - [x] Link Plugin to just show list of links
- - [x] Youtube/Videoplayer Plugin to showcase video
- - [ ] Code Plugin to show code snippets
+  - [x] Link Plugin to just show list of links
+  - [x] Youtube/Videoplayer Plugin to showcase video
+  - [ ] Code Plugin to show code snippets
 - [x] Search by tag
 - [x] Search by title/body free text
 - [ ] Create/Explore PWA with offline/online sync.
