@@ -6,36 +6,41 @@
   export let compact = false;
 </script>
 
-<ul class="list">
-  {#each notes as note}
-    <li class="note-item" class:archived={note.archived} class:compact={compact}>
-      <div class="info">
-        <div class="dates">
-          <DateSeverity date={note.due_date} />
-          <div
-            title={`last updated: ${new Date(
-              note.updated_at
-            ).toLocaleString()}`}
-          >
-            {formatRelativeNow(note.updated_at)}
+{#if notes.length < 1}
+  <h3 class="empty">No notes... 🤷</h3>
+{:else}
+  <ul class="list">
+    {#each notes as note}
+      <li class="note-item" class:archived={note.archived} class:compact>
+        <div class="info">
+          <div class="dates">
+            <DateSeverity date={note.due_date} />
+            <div
+              title={`last updated: ${new Date(
+                note.updated_at,
+              ).toLocaleString()}`}
+            >
+              {formatRelativeNow(note.updated_at)}
+            </div>
           </div>
+          {#if note.archived}
+            <span class="crs-pointer" title="Archived">🗄️</span>
+          {/if}
         </div>
-        {#if note.archived}
-          <span class="crs-pointer" title="Archived">🗄️</span>
-        {/if}
-      </div>
-      <h2>{note.title}</h2>
+        <h2>{note.title}</h2>
 
-      <button on:click={() => navigate(`/notes/${note.id}`)}>➡️</button>
-    </li>
-  {/each}
-</ul>
+        <button on:click={() => navigate(`/notes/${note.id}`)}>➡️</button>
+      </li>
+    {/each}
+  </ul>
+{/if}
 
 <style>
   .list {
     padding: 0 1rem;
     display: flex;
     flex-direction: column;
+    list-style: none;
   }
 
   .note-item {

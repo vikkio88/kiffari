@@ -8,7 +8,7 @@
   } from "../libs/api";
   import NoteList from "../components/NoteList.svelte";
   import Controls from "../components/shared/Controls.svelte";
-  import Footer from "../components/Footer.svelte"
+  import Footer from "../components/Footer.svelte";
   import { protectedRoute } from "../libs/routes";
 
   protectedRoute();
@@ -32,11 +32,7 @@
   <div class="subwrapper">
     <h2>Latest Notes</h2>
     {#await notePromise then notes}
-      {#if notes.length > 0}
-        <NoteList {notes} compact />
-      {:else}
-        <h3 class="empty">No notes yet... 🤷</h3>
-      {/if}
+      <NoteList {notes} compact />
     {/await}
   </div>
 
@@ -59,10 +55,6 @@
 </Controls>
 
 <style>
-  h3.empty {
-    margin-top: 8rem;
-  }
-
   .wrapper {
     display: flex;
     flex-direction: row;

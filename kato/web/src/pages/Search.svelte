@@ -107,11 +107,6 @@
     color: black;
   }
 
-  .result {
-    display: flex;
-    justify-content: center;
-  }
-
   strong {
     color: #a3a3a3;
   }
