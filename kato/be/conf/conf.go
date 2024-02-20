@@ -26,5 +26,4 @@ var Cors = []string{
 
 // If you need to connect on the docker instance
 // var Connection = postgres.Open("host=localhost user=kato password=kato dbname=kato port=5432")
-
 var Connection = sqlite.Open(fmt.Sprintf("%s?_foreign_keys=on", "testing.db"))
