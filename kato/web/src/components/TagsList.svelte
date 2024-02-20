@@ -6,7 +6,7 @@
 </script>
 
 {#if tags.length < 1}
-  <h3 class="empty">No tags... 🤷</h3>
+  <h3>No tags... 🤷</h3>
 {:else}
   {#each tags as tag}
     <button class:big class="tag" on:click={onTagClick(tag)}>

@@ -7,7 +7,7 @@
 </script>
 
 {#if notes.length < 1}
-  <h3 class="empty">No notes... 🤷</h3>
+  <h3>No notes... 🤷</h3>
 {:else}
   <ul class="list">
     {#each notes as note}
