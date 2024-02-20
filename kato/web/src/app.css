@@ -98,3 +98,10 @@ nav>a {
 .crs-pointer {
   cursor: pointer;
 }
+
+.frc {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

@@ -72,21 +72,21 @@
   />
 </div>
 
-<div class="result">
-  {#if searchPromise}
-    {#await searchPromise}
+{#if searchPromise}
+  {#await searchPromise}
+    <div class="frc">
       <Spinner />
-    {:then results}
-      {#if activeTab === TABS.TAGS}
-        <TagsList big tags={results} />
-      {:else}
-        <NoteList notes={results} />
-      {/if}
-    {/await}
-  {:else}
-    <strong>Here there will be search results...</strong>
-  {/if}
-</div>
+    </div>
+  {:then results}
+    {#if activeTab === TABS.TAGS}
+      <TagsList big tags={results} />
+    {:else}
+      <NoteList notes={results} />
+    {/if}
+  {/await}
+{:else}
+  <strong>Here there will be search results...</strong>
+{/if}
 
 <style>
   h2 {
