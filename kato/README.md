@@ -1,6 +1,6 @@
 ## Kato
 
-A small cloud tool to save notes and download them as markdown files (compatible with [Obsidian.md](https://obsidian.md/).
+A selfhostable webapp to save notes and download them as markdown files (compatible with [Obsidian.md](https://obsidian.md/)).
 
 ## How it looks
 [![Watch the video](https://img.youtube.com/vi/2p7wZoG-bLw/default.jpg)](https://youtu.be/2p7wZoG-bLw)
