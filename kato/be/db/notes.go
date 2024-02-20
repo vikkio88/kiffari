@@ -35,10 +35,10 @@ func (d *Db) FilterNotes(text string, titleOnly bool) []NoteItem {
 	if titleOnly {
 		q.Where("title LIKE ?", searchValue)
 	} else {
-		q.Where("body LIKE ? or title LIKE ?", searchValue, searchValue)
+		q.Where("body LIKE ? OR title LIKE ?", searchValue, searchValue)
 	}
-
 	q.Order("updated_at DESC, created_at DESC").Find(&notes)
+
 	return notes
 }
 
