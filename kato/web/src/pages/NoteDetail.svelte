@@ -24,7 +24,7 @@
     if (resp.status === 401) {
       catchLogout();
     }
-    
+
     if (resp.ok) {
       navigate("/", { replace: true });
     }
@@ -46,7 +46,7 @@
     element.setAttribute(
       "href",
       "data:text/markdown;charset=utf-8," +
-        encodeURIComponent(`# ${title}\n${body}\n\n${tagsString.trim()}`)
+        encodeURIComponent(`# ${title}\n${body}\n\n${tagsString.trim()}`),
     );
     element.download = `${title}.md`;
     element.style.display = "none";
@@ -99,8 +99,8 @@
       </button>
     {/if}
     <ConfirmButton
-      title="Archive Note"
-      confirmLabel="Archive?"
+      title={note.archived ? "Un-Archive Note" : "Archive Note"}
+      confirmLabel={note.archived ? "Un-Archive?" : "Archive?"}
       onConfirmed={() => onArchiveToggle(note.archived)}
     >
       {#if !note.archived}
