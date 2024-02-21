@@ -10,7 +10,7 @@
 
   <div>
     Source available on <a
-      href="https://github.com/vikkio88/kiffari/tree/main/kato"
+      href="https://github.com/vikkio88/kiffari/tree/main/kato#kato"
       target="_blank"
       rel="noopener noreferrer">Github</a
     >
