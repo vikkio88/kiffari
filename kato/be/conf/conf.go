@@ -10,11 +10,12 @@ import (
 )
 
 const (
-	TokenSignature   = "someTokensignature"
-	LatestNotesLimit = 5
-	Version          = "DEV"
-	GinMode          = "debug"
-	Port             = "5111"
+	TokenSignature    = "someTokensignature"
+	LatestNotesLimit  = 5
+	TrandingTagsLimit = 5
+	Version           = "DEV"
+	GinMode           = "debug"
+	Port              = "5111"
 )
 
 var Cors = []string{

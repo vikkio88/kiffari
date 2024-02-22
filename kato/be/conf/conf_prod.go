@@ -11,9 +11,10 @@ import (
 )
 
 const (
-	LatestNotesLimit = 10
-	Version          = "PROD_VERSION"
-	GinMode          = "release"
+	LatestNotesLimit  = 10
+	TrandingTagsLimit = 5
+	Version           = "PROD_VERSION"
+	GinMode           = "release"
 )
 
 var Cors = []string{

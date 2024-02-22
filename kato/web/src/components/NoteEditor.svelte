@@ -24,6 +24,13 @@
   const generatePlugin = (name) => `<!--\nPlugin: ${name}\n-->\n`;
 
   async function handleKeydown(event) {
+    /*
+    this is to intercept words in case we want to match trending tags
+    if (event.key === " ") {
+      console.log(text.split(" ").pop());
+      return;
+    }
+    */
     if (event.key !== "Tab") return;
 
     event.preventDefault();
@@ -65,8 +72,6 @@
     // TODO: check whether tick() here would work
     // event.currentTarget.focus();
   }
-
-  function setupLinkPlugin(event) {}
 
   let showAdditionalInfo = Boolean(dueDate);
   function toggleAdditionalInfo() {
@@ -148,7 +153,10 @@
               min={new Date().toISOString()}
             />
             {#if Boolean(dueDateProxy)}
-              <button on:click|stopPropagation|preventDefault={clearDueDate} class="removeDue">
+              <button
+                on:click|stopPropagation|preventDefault={clearDueDate}
+                class="removeDue"
+              >
                 ❌
               </button>
             {/if}
@@ -172,7 +180,11 @@
         </div>
       {/if}
     </div>
-    <TagSearch on:updatedSelection={onTagsSelection} selectedTags={tags} />
+    <TagSearch
+      on:updatedSelection={onTagsSelection}
+      selectedTags={tags}
+      suggestTrending
+    />
     <Controls background>
       <button type="submit">Save 💾</button>
     </Controls>
@@ -240,8 +252,8 @@
   }
 
   .removeDue {
-    font-size: .5rem;
-    padding: .5rem;
+    font-size: 0.5rem;
+    padding: 0.5rem;
   }
 
   .controls {

@@ -92,7 +92,6 @@ export function deleteNote(id) {
   });
 }
 
-
 export function getTagDetails(id) {
   return fetch(`${KATO_API_URL}/tags/${id}`, makeHeaders());
 }
@@ -101,6 +100,13 @@ export function filterTags(value, abortCtrl) {
   return fetch(`${KATO_API_URL}/tags?q=${value}`, {
     method: "get",
     signal: abortCtrl.signal,
+    ...makeHeaders(),
+  });
+}
+
+export function trendingTags() {
+  return fetch(`${KATO_API_URL}/tags?trending=true`, {
+    method: "get",
     ...makeHeaders(),
   });
 }

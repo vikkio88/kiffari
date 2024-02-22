@@ -63,7 +63,6 @@
   }
 
   .add {
-    /* font-size: 1.2rem; */
     padding: 1rem 2rem;
   }
 </style>

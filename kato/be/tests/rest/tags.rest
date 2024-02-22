@@ -14,3 +14,7 @@ DELETE http://localhost:5111/api/tags/01HM90Z1RTRF44AYD4D9NYFGBK
 
 ###
 GET http://localhost:5111/api/tags/01HMHR9Y453CCRTJHT8JREF9DK
+
+### Trending tags
+GET http://localhost:5111/api/tags?trending="true"
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg2MDA1OTN9.6XHSPKIGoXTzP5InbG0-epWgWe-YjuK5bsqANk01qpA

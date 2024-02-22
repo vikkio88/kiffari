@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"kato-be/conf"
 	"strings"
 )
 
@@ -54,4 +55,15 @@ func (d *Db) DeleteTag(id string) bool {
 	trx := d.g.Where("id", id).Delete(&Tag{})
 
 	return trx.RowsAffected > 0
+}
+
+func (d *Db) TrendingTags() []Tag {
+	var tags []Tag
+	d.g.Raw("select t.* from tags t left join note_tags nt on t.id = nt.tag_id group by t.id order by count(*) DESC limit ?", conf.TrandingTagsLimit).Find(&tags)
+
+	if tags == nil {
+		return []Tag{}
+	}
+
+	return tags
 }

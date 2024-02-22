@@ -19,6 +19,12 @@ func TagRoutes(r gin.IRouter, d *db.Db) {
 	})
 
 	r.GET("/tags", func(c *gin.Context) {
+		trending := c.Query("trending")
+		if trending == "true" {
+			c.JSON(http.StatusOK, d.TrendingTags())
+			return
+		}
+
 		filterValue := c.Query("q")
 		if filterValue == "" {
 			c.JSON(http.StatusOK, d.GetAllTags())

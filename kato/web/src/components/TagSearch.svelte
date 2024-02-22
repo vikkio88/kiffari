@@ -1,6 +1,11 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { filterTags } from "../libs/api";
+  import {
+    catchLogout,
+    filterTags,
+    parseOrThrow,
+    trendingTags,
+  } from "../libs/api";
   import TagsList from "./TagsList.svelte";
   import Spinner from "./shared/Spinner.svelte";
   const d = createEventDispatcher();
@@ -19,6 +24,7 @@
     d("updatedSelection", selectedTags);
   }
 
+  export let suggestTrending = false;
   export let selectedTags = [];
   let searchResultTags = [];
 
@@ -28,6 +34,7 @@
   let searchValue = "";
 
   const debounce = (v, k) => {
+    searchPromise = null;
     clearTimeout(timer);
     timer = setTimeout(() => {
       if (v.length <= 2) {
@@ -41,13 +48,17 @@
       searchPromise = filterTags(v, controller).then((data) => data.json());
     }, 500);
   };
+
+  if (suggestTrending) {
+    searchPromise = trendingTags().then(parseOrThrow).catch(catchLogout);
+  }
 </script>
 
 <div class="tagSearch">
   <div class="selectedTags">
     {#each selectedTags as tag}
       <div class="tag" class:NewTag={!Boolean(tag.id)}>
-        {tag.label}
+        <span class="hash">#</span>{tag.label}
         <button on:click={() => deselect(tag.label)}>❌</button>
       </div>
     {/each}
@@ -64,7 +75,11 @@
       {#await searchPromise}
         <Spinner />
       {:then tags}
-        {#if tags.length > 0 && Boolean(searchValue)}
+        <!-- {#if tags.length > 0 && Boolean(searchValue)} -->
+        {#if tags.length > 0}
+          {#if !Boolean(searchValue)}
+            <h3>Suggested tags:</h3>
+          {/if}
           <TagsList
             tags={tags.filter(
               (t) => !selectedTags.some((st) => st.id === t.id),
@@ -130,5 +145,11 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+  }
+
+  .hash {
+    font-size: 1.1rem;
+    color: #646cff;
+    margin-right: 0.2rem;
   }
 </style>
