@@ -15,6 +15,7 @@ const (
 	TrandingTagsLimit = 5
 	Version           = "PROD_VERSION"
 	GinMode           = "release"
+	KiffariEnabled    = false
 )
 
 var Cors = []string{

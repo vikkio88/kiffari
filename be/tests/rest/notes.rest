@@ -1,7 +1,4 @@
 ###
-GET http://localhost:5111/api/ping
-
-###
 
 POST http://localhost:5111/api/notes
 content-type: application/json

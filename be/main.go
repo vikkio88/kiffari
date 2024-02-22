@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"kato-be/conf"
 	"kato-be/db"
+	"kato-be/middlewares"
 	"kato-be/routes"
 	"kato-be/validators"
 	"net/http"
-	"strings"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/static"
@@ -34,16 +34,17 @@ func main() {
 
 	r.Use(static.ServeRoot("/", "./static"))
 
-	r.GET("api/ping", func(c *gin.Context) {
+	r.GET("api/config", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
 			"version": conf.Version,
+			"kiffari": conf.KiffariEnabled,
 		})
 	})
 	routes.AuthRoutes(r, d)
 
 	private := r.Group("api")
-	private.Use(AuthRequired(d))
+	private.Use(middlewares.AuthRequired(d))
 
 	routes.TagRoutes(private, d)
 	routes.NoteRoutes(private, d)
@@ -53,25 +54,6 @@ func main() {
 	})
 
 	r.Run(fmt.Sprintf(":%s", conf.Port))
-}
-
-// TODO: move to middleware module
-func AuthRequired(db *db.Db) func(c *gin.Context) {
-	return func(c *gin.Context) {
-		token := ""
-		if token = c.GetHeader("Authorization"); token == "" {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "unauth"})
-			return
-		}
-
-		token = strings.TrimSpace(token)
-		if !db.IsTokenValid(token) {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "token not valid"})
-			return
-		}
-
-		c.Next()
-	}
 }
 
 func corsConfig() cors.Config {

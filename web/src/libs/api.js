@@ -39,6 +39,10 @@ function makeHeaders(others = {}) {
   };
 }
 
+export function getConfig() {
+  return fetch(`${KATO_API_URL}/config`, makeHeaders());
+}
+
 export function createNote(note) {
   return fetch(`${KATO_API_URL}/notes`, {
     method: "POST",

@@ -1,7 +1,7 @@
 <script>
   import { Link, navigate } from "svelte-routing";
   import { LOGIN_TOKEN_KEY } from "../const";
-  import { userToken } from "../store";
+  import { appConfig, userToken } from "../store";
 
   function logout() {
     $userToken = null;
@@ -12,7 +12,12 @@
 
 {#if $userToken !== null}
   <nav>
-    <Link to="/" title="Dashboard">🪣</Link>
+    {#if !$appConfig.kiffari}
+      <Link to="/" title="Dashboard">🪣</Link>
+    {:else}
+      <Link to="/" title="Home">🏠</Link>
+      <Link to="/kato" title="Kato">🪣</Link>
+    {/if}
     <Link to="/archived" title="Archived">🗄️</Link>
     <Link to="/search" title="Search">🔍</Link>
     <button on:click={logout} title="Logout" class="logout">👋</button>

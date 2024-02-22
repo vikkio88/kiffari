@@ -10,8 +10,8 @@
   import Controls from "../components/shared/Controls.svelte";
   import Footer from "../components/Footer.svelte";
   import { protectedRoute } from "../libs/routes";
-
   protectedRoute();
+  
   let notePromise = getLatestNotes().then(parseOrThrow).catch(catchLogout);
   let reminderNotesPromise = getReminderNotes()
     .then(parseOrThrow)

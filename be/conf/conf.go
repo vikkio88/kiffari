@@ -16,6 +16,7 @@ const (
 	Version           = "DEV"
 	GinMode           = "debug"
 	Port              = "5111"
+	KiffariEnabled    = false
 )
 
 var Cors = []string{

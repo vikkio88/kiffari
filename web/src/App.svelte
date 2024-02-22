@@ -2,7 +2,7 @@
   import { Router, Route } from "svelte-routing";
   import Nav from "./components/Nav.svelte";
   import CreateNote from "./pages/CreateNote.svelte";
-  import Dash from "./pages/Dash.svelte";
+  import KatoDash from "./pages/KatoDash.svelte";
   import NoteDetail from "./pages/NoteDetail.svelte";
   import EditNote from "./pages/EditNote.svelte";
   import TagDetail from "./pages/TagDetail.svelte";
@@ -11,28 +11,54 @@
   import Archived from "./pages/Archived.svelte";
   import About from "./pages/About.svelte";
   import Fallback from "./pages/Fallback.svelte";
+  import Spinner from "./components/shared/Spinner.svelte";
+  import { getConfig, parseOrThrow } from "./libs/api";
+  import Project from "./pages/Project.svelte";
+  import { appConfig } from "./store";
+  import Main from "./pages/Main.svelte";
 
   let url = "";
+
+
+  //TODO: this could also check validity of token
+  let configPromise = getConfig()
+    .then(parseOrThrow)
+    .then((config) => {
+      $appConfig = config;
+      return config;
+    });
 </script>
 
-<Router {url}>
-  <Nav />
-  <main>
-    <Route path="/login" component={Login} />
-    <Route path="/tags/:id" let:params>
-      <TagDetail id={params.id} />
-    </Route>
-    <Route path="/create-note" component={CreateNote} />
-    <Route path="/edit-note/:id" let:params>
-      <EditNote id={params.id} />
-    </Route>
-    <Route path="/notes/:id" let:params>
-      <NoteDetail id={params.id} />
-    </Route>
-    <Route path="/search" component={Search} />
-    <Route path="/" component={Dash} />
-    <Route path="/archived" component={Archived} />
-    <Route path="/about" component={About} />
-    <Route path="*" component={Fallback} />
-  </main>
-</Router>
+{#await configPromise}
+  <div class="frc">
+    <Spinner />
+  </div>
+{:then config}
+  <Router {url}>
+    <Nav />
+    <main>
+      <Route path="/login" component={Login} />
+      <Route path="/tags/:id" let:params>
+        <TagDetail id={params.id} />
+      </Route>
+      <Route path="/create-note" component={CreateNote} />
+      <Route path="/edit-note/:id" let:params>
+        <EditNote id={params.id} />
+      </Route>
+      <Route path="/notes/:id" let:params>
+        <NoteDetail id={params.id} />
+      </Route>
+      <Route path="/search" component={Search} />
+      {#if config.kiffari}
+        <Route path="/" component={Main} />
+        <Route path="/project" component={Project} />
+        <Route path="/kato" component={KatoDash} />
+      {:else}
+        <Route path="/" component={KatoDash} />
+      {/if}
+      <Route path="/archived" component={Archived} />
+      <Route path="/about" component={About} />
+      <Route path="*" component={Fallback} />
+    </main>
+  </Router>
+{/await}
