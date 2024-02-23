@@ -2,15 +2,22 @@
   export let open = true;
 </script>
 
-<div class="header">
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div
+  class="header crs-pointer"
+  on:click={() => (open = !open)}
+  aria-pressed="false"
+  role="button"
+  tabindex="-1"
+>
   <slot name="header">Header</slot>
-  <button on:click={() => (open = !open)}>
+  <div>
     {#if open}
-      🔼
-    {:else}
       🔽
+    {:else}
+      ◀️
     {/if}
-  </button>
+  </div>
 </div>
 {#if open}
   <slot name="content">Content</slot>
@@ -20,11 +27,11 @@
   .header {
     border-bottom: 1px white solid;
     padding: 2rem;
+    display: grid;
+    grid-template-columns: 90% 10%;
   }
 
-  .header > button {
-    position: absolute;
-    right: 0;
-
+  .header:hover {
+    background-color: #3a3a3a;
   }
 </style>

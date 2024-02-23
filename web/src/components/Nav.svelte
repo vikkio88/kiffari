@@ -1,7 +1,10 @@
 <script>
+  // @ts-nocheck
+
   import { Link, navigate } from "svelte-routing";
   import { LOGIN_TOKEN_KEY } from "../const";
   import { appConfig, userToken } from "../store";
+  import { tooltip } from "@svelte-plugins/tooltips";
 
   function logout() {
     $userToken = null;
@@ -20,7 +23,12 @@
     {/if}
     <Link to="/archived" title="Archived">🗄️</Link>
     <Link to="/search" title="Search">🔍</Link>
-    <button on:click={logout} title="Logout" class="logout">👋</button>
+    <button
+      on:click={logout}
+      title="Logout"
+      class="logout"
+      use:tooltip={{ animation: "puff", position: "left" }}>👋</button
+    >
   </nav>
 {/if}
 

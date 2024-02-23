@@ -1,4 +1,6 @@
 <script>
+// @ts-nocheck
+
   import TagsList from "../components/TagsList.svelte";
   import Controls from "../components/shared/Controls.svelte";
   import { navigate } from "svelte-routing";
@@ -14,6 +16,7 @@
     unArchiveNote,
   } from "../libs/api";
   import DateSeverity from "../components/shared/DateSeverity.svelte";
+  import { tooltip } from "@svelte-plugins/tooltips";
   protectedRoute();
 
   export let id = "";
@@ -89,17 +92,22 @@
   <Controls background>
     <button
       title="Export as MD"
+      use:tooltip={{ animation: "puff" }}
       on:click={() => onDownload(note.title, note.body, note.tags)}
     >
       🔽
     </button>
     {#if !note.archived}
-      <button title="Edit Note" on:click={() => navigate(`/edit-note/${id}`)}>
+      <button
+        title="Edit"
+        on:click={() => navigate(`/edit-note/${id}`)}
+        use:tooltip={{ animation: "puff" }}
+      >
         📝
       </button>
     {/if}
     <ConfirmButton
-      title={note.archived ? "Un-Archive Note" : "Archive Note"}
+      title={note.archived ? "Un-Archive" : "Archive"}
       confirmLabel={note.archived ? "Un-Archive?" : "Archive?"}
       onConfirmed={() => onArchiveToggle(note.archived)}
     >
@@ -110,7 +118,7 @@
       {/if}
     </ConfirmButton>
     <ConfirmButton
-      title="Delete Note"
+      title="Delete"
       confirmLabel="Delete?"
       onConfirmed={onDelete}
     >

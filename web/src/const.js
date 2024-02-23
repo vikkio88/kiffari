@@ -9,6 +9,13 @@ export const D_TASK_STATUS = {
     BACKLOG: "backlog",
 };
 
+export const D_TASK_STATUS_LABELS = {
+    [D_TASK_STATUS.DONE]: "Done ✅",
+    [D_TASK_STATUS.IN_PROGRESS]: "In Progress 🔨",
+    [D_TASK_STATUS.TODO]: "To Do 📋",
+    [D_TASK_STATUS.BACKLOG]: "Backlog 🗃️",
+};
+
 export const D_TASK_WORKFLOW = {
     [D_TASK_STATUS.DONE]: { from: D_TASK_STATUS.IN_PROGRESS, to: null },
     [D_TASK_STATUS.IN_PROGRESS]: { from: D_TASK_STATUS.TODO, to: D_TASK_STATUS.DONE },
