@@ -95,6 +95,13 @@ nav>a {
   font-size: 30px;
 }
 
+/* Shared */
+button.big-control {
+  padding: 1rem 2rem;
+}
+
+
+/* UTILS */
 .crs-pointer {
   cursor: pointer;
 }
@@ -104,4 +111,8 @@ nav>a {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+
+.mh80 {
+  min-height: 80vh;
 }

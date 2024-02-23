@@ -1,28 +1,24 @@
 <script>
-    import { navigate } from "svelte-routing";
-    import { protectedRoute } from "../libs/routes";
-    protectedRoute();
+  import { navigate } from "svelte-routing";
+  import { protectedRoute } from "../libs/routes";
+  protectedRoute();
 </script>
 
-<div class="wrapper">
+<div class="frc mh80">
+  <div class="wrapper">
     <button on:click={() => navigate("/kato")}>Kato 🪣</button>
     <button on:click={() => navigate("/project")}>Kiffari 🎫</button>
+  </div>
 </div>
 
 <style>
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 80vh;
-    }
-    button {
-        padding: 3rem;
-        font-size: 3rem;
-    }
+  button {
+    width: 70%;
+    font-size: 3rem;
+    /* flex: 0 1 0; */
+  }
 
-    button + button {
-        margin-top: 1rem;
-    }
+  button + button {
+    margin-top: 1rem;
+  }
 </style>

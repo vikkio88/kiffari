@@ -51,7 +51,7 @@
 <Footer />
 
 <Controls>
-  <button class="add" title="New Note" on:click={create}>Add Note 📝</button>
+  <button class="big-control" title="New Note" on:click={create}>Add Note 📝</button>
 </Controls>
 
 <style>
@@ -60,9 +60,5 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: flex-start;
-  }
-
-  .add {
-    padding: 1rem 2rem;
   }
 </style>
