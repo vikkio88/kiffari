@@ -1,0 +1,13 @@
+###
+GET http://localhost:5111/api/projects
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg4MTQ2NTV9.nsVGnD5FTg0bflXWzlqflqdql4MQxElYDPl2aSRk17M
+
+###
+POST http://localhost:5111/api/projects
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg4MTQ2NTV9.nsVGnD5FTg0bflXWzlqflqdql4MQxElYDPl2aSRk17M
+
+{
+    "name":"Some Project",
+    "description": "Some stuff and things"
+}

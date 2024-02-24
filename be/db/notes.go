@@ -5,7 +5,7 @@ import (
 	"kato-be/conf"
 )
 
-func (d *Db) InsertNote(value NoteCreate) (Note, bool) {
+func (d *Db) CreateNote(value NoteCreate) (Note, bool) {
 	n := value.Note()
 	trx := d.g.Create(&n)
 	return n, trx.RowsAffected == 1

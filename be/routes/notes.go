@@ -48,7 +48,7 @@ func NoteRoutes(r gin.IRouter, d *db.Db) {
 		var newNote db.NoteCreate
 		err := c.Bind(&newNote)
 		if err == nil {
-			n, ok := d.InsertNote(newNote)
+			n, ok := d.CreateNote(newNote)
 			SuccessOr400(c, n, ok)
 			return
 		}

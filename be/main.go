@@ -49,6 +49,10 @@ func main() {
 	routes.TagRoutes(private, d)
 	routes.NoteRoutes(private, d)
 
+	if conf.KiffariEnabled {
+		routes.ProjectRoutes(private, d)
+	}
+
 	r.NoRoute(func(c *gin.Context) {
 		c.File("./static")
 	})
