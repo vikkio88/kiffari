@@ -1,8 +1,4 @@
 <script>
-  // @ts-nocheck
-
-  import { tooltip } from "@svelte-plugins/tooltips";
-
   export let title = "";
   export let confirmLabel = "Confirm?";
   export let onConfirmed = () => console.log("Confirmed");
@@ -16,7 +12,7 @@
   }
 </script>
 
-<button {title} on:click={handleClick} use:tooltip={{ animation: "puff" }}>
+<button {title} on:click={handleClick}>
   {#if !clicked}
     <slot />
   {:else}

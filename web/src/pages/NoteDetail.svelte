@@ -16,7 +16,6 @@
     unArchiveNote,
   } from "../libs/api";
   import DateSeverity from "../components/shared/DateSeverity.svelte";
-  import { tooltip } from "@svelte-plugins/tooltips";
   protectedRoute();
 
   export let id = "";
@@ -92,7 +91,6 @@
   <Controls background>
     <button
       title="Export as MD"
-      use:tooltip={{ animation: "puff" }}
       on:click={() => onDownload(note.title, note.body, note.tags)}
     >
       🔽
@@ -101,7 +99,6 @@
       <button
         title="Edit"
         on:click={() => navigate(`/edit-note/${id}`)}
-        use:tooltip={{ animation: "puff" }}
       >
         📝
       </button>

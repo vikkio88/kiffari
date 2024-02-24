@@ -13,6 +13,7 @@
   };
 
   const project = {
+    id: "somePrjectId",
     name: "Kiffari",
     description: "A Kanban-ish approach to managing side projects.",
     links: [
@@ -23,7 +24,8 @@
 
   function m(override = {}) {
     return {
-      title: "Do Stuff",
+      id: (Math.random() + 1).toString(36).substring(2),
+      title: `Task ${(Math.random() + 1).toString(36).substring(7)}`,
       description: null,
       status: STATUS.BACKLOG,
       flag: null,
@@ -51,7 +53,17 @@
     m({ status: STATUS.BACKLOG }),
   ];
 
-  const groupedTasks = groupTasksByStatus(tasks);
+  let groupedTasks = groupTasksByStatus(tasks);
+  function onTaskUpdate({ detail }) {
+    const { prevStatus, task } = detail;
+    //TODO: Update task status here
+    groupedTasks[task.status].unshift(task);
+    groupedTasks[prevStatus] = groupedTasks[prevStatus].filter(
+      (t) => t.id != task.id,
+    );
+
+    groupedTasks = groupedTasks;
+  }
 </script>
 
 <div class="board">
@@ -78,7 +90,7 @@
           </h1>
           <div slot="content">
             {#each groupedTasks[status] as task}
-              <Task {task} />
+              <Task {task} on:updatedTask={onTaskUpdate} />
             {/each}
           </div>
         </Accordion>
