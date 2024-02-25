@@ -30,6 +30,9 @@
       status: STATUS.BACKLOG,
       flag: null,
       links: [],
+
+      // TODO: implement tags
+      tags: [],
       ...override,
     };
   }
