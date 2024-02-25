@@ -13,6 +13,14 @@ type Tag struct {
 	Notes []*Note `gorm:"many2many:note_tags;constraint:OnDelete:CASCADE" json:"notes,omitempty"`
 }
 
+func NewTag(label string) *Tag {
+	return &Tag{
+		Id:    ulid.Make().String(),
+		Value: normaliseTag(label),
+		Label: label,
+	}
+}
+
 type TagCreate struct {
 	Label string `json:"label" binding:"required"`
 }
