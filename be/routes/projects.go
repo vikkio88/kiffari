@@ -12,6 +12,12 @@ func ProjectRoutes(r gin.IRouter, d *db.Db) {
 		c.JSON(http.StatusOK, d.GetAllProjects())
 	})
 
+	r.GET("/projects/:id", func(c *gin.Context) {
+		id := c.Params.ByName("id")
+		p, ok := d.GetProjectById(id)
+		SuccessOr404(c, p, ok)
+	})
+
 	r.POST("/projects", func(c *gin.Context) {
 		var newP db.ProjectCreate
 		err := c.Bind(&newP)

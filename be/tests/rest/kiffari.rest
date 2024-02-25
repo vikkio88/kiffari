@@ -3,6 +3,10 @@ GET http://localhost:5111/api/projects
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg4NzYxNDF9.K5-f-0TBg8u1gh0rlAnfLy-8-KHtt1M9cqroAmcfQjs
 
 ###
+GET http://localhost:5111/api/projects/01HQEEBGHD71C63VQ85NMGF6GF
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg4NzYxNDF9.K5-f-0TBg8u1gh0rlAnfLy-8-KHtt1M9cqroAmcfQjs
+
+###
 POST http://localhost:5111/api/projects
 content-type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg4MTQ2NTV9.nsVGnD5FTg0bflXWzlqflqdql4MQxElYDPl2aSRk17M

@@ -1,5 +1,13 @@
 package db
 
+func (d *Db) GetProjectById(id string) (ProjectDto, bool) {
+	var p Project
+
+	trx := d.g.Model(&Project{}).Preload("Tasks").Find(&p, "Id = ?", id)
+
+	return p.Dto(), trx.RowsAffected == 1
+}
+
 func (d *Db) CreateProject(p ProjectCreate) (ProjectDto, bool) {
 	pc := p.Project()
 	trx := d.g.Create(&pc)
