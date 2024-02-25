@@ -22,4 +22,16 @@ func ProjectRoutes(r gin.IRouter, d *db.Db) {
 		}
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	})
+
+	r.PUT("/projects/:id", func(c *gin.Context) {
+		var updateProject db.ProjectUpdate
+		err := c.Bind(&updateProject)
+		if err == nil {
+			updateProject.Id = c.Params.ByName("id")
+			id, ok := d.UpdateProject(updateProject)
+			SuccessOr400(c, gin.H{"result": id}, ok)
+			return
+		}
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	})
 }

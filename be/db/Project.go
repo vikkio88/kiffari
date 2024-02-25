@@ -68,13 +68,32 @@ type ProjectCreate struct {
 }
 
 func (p *ProjectCreate) Project() Project {
-	links, err := json.Marshal(p.Links)
+	links := marshalLinks(p.Links)
+	return Project{
+		Id:          ulid.Make().String(),
+		Name:        p.Name,
+		Description: p.Description,
+		Links:       string(links),
+	}
+}
+
+func marshalLinks(l []Link) []byte {
+	links, err := json.Marshal(l)
 	if err != nil {
 		links = []byte("[]")
 	}
+	return links
+}
 
+type ProjectUpdate struct {
+	ProjectCreate
+	Id string `json:"id" binding:"required"`
+}
+
+func (p *ProjectUpdate) Project() Project {
+	links := marshalLinks(p.Links)
 	return Project{
-		Id:          ulid.Make().String(),
+		Id:          p.Id,
 		Name:        p.Name,
 		Description: p.Description,
 		Links:       string(links),
