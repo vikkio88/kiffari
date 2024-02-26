@@ -15,14 +15,16 @@ func (d *Db) CreateTask(tc TaskCreate, projectId string) (Task, bool) {
 	return t, trx.RowsAffected == 1
 }
 
-// func (d *Db) UpdateTask(p TaskUpdate) (string, bool) {
-// 	pu := p.Project()
-// 	trx := d.g.Omit("created_at").Save(&pu)
-// 	if trx.RowsAffected != 1 {
-// 		return "", false
-// 	}
-// 	return p.Id, true
-// }
+func (d *Db) UpdateTask(tu TaskUpdate, projectId string) (string, bool) {
+	t := tu.Task(projectId)
+
+	d.g.Model(&t).Association("Tags").Replace(t.Tags)
+	trx := d.g.Omit("created_at").Save(&t)
+	if trx.RowsAffected != 1 {
+		return "", false
+	}
+	return t.Id, true
+}
 
 // func (d *Db) MoveTask(id string, status Status) bool {
 

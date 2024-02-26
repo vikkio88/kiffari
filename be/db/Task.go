@@ -76,3 +76,26 @@ func (t *TaskCreate) Task(projectId string) Task {
 		ProjectId:   projectId,
 	}
 }
+
+type TaskUpdate struct {
+	TaskCreate
+	Id string `json:"id" binding:"required"`
+}
+
+func (t *TaskUpdate) Task(projectId string) Task {
+	for _, t := range t.Tags {
+		if t.Id == "" {
+			t.Id = ulid.Make().String()
+			t.Value = normaliseTag(t.Label)
+		}
+	}
+	return Task{
+		Id:          t.Id,
+		Title:       t.Title,
+		Description: t.Description,
+		Status:      t.Status,
+		Flag:        t.Flag,
+		Tags:        t.Tags,
+		ProjectId:   projectId,
+	}
+}

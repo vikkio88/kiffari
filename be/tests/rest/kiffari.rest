@@ -1,5 +1,5 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg5NzQ2MjB9.NpX1HiPWlaUy4kUcReIBPB17ZawVjggvedqmoCfwXmQ
-@projectId = 01HQJD114TDERTZGYTEA7E6776
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg5ODczMTZ9.-WgV_hOev6NQRys1WgpB060NaoU-KIkB9GChTFJJ2cQ
+@projectId = 01HQKJF1R5HEBH3YDEAKBE3H0X
 ###
 GET http://localhost:5111/api/projects
 Authorization: {{ token }}
@@ -29,6 +29,24 @@ Authorization: {{ token }}
     "status": "in_progress",
     "tags":[ {"label": "blumbazorg"}]
 }
+
+###
+PUT http://localhost:5111/api/projects/{{projectId}}/task
+content-type: application/json
+Authorization: {{ token }}
+
+{
+      "id": "01HQKJFEMFFA8SJ99XCDSCNK4T",
+      "title": "Some Updated Task",
+      "description": "Some stuff and things",
+      "status": "backlog",
+      "tags": [
+        {
+          "id": "01HQKJFEMFFA8SJ99XCC42NR59",
+          "label": "blumbazorg"
+        }, {"label": "not-sure"}
+      ]
+    }
 
 ###
 PUT http://localhost:5111/api/projects/{{projectId}}

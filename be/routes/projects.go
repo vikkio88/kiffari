@@ -30,6 +30,18 @@ func ProjectRoutes(r gin.IRouter, d *db.Db) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	})
 
+	r.PUT("/projects/:id/task", func(c *gin.Context) {
+		projectId := c.Params.ByName("id")
+		var uTask db.TaskUpdate
+		err := c.Bind(&uTask)
+		if err == nil {
+			id, ok := d.UpdateTask(uTask, projectId)
+			SuccessOr400(c, gin.H{"result": id}, ok)
+			return
+		}
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	})
+
 	r.POST("/projects", func(c *gin.Context) {
 		var newP db.ProjectCreate
 		err := c.Bind(&newP)
