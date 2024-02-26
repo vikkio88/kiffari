@@ -1,0 +1,69 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg5NDc5NzJ9.F7UeaRdN5fD4Wib5NsiVz5tJzJEbHgJMhADwRKeftNU
+### Tag Routes
+
+@tagId = someId
+POST http://localhost:5111/api/tags
+Authorization: {{ token }}
+content-type: application/json
+
+{
+    "label": "some-thing"
+}
+
+###
+
+GET http://localhost:5111/api/tags
+Authorization: {{ token }}
+
+###
+DELETE http://localhost:5111/api/tags/{{tagId}}
+Authorization: {{ token }}
+
+###
+GET http://localhost:5111/api/tags/}
+Authorization: {{ token }}
+
+### Trending tags
+GET http://localhost:5111/api/tags?trending="true"
+Authorization: {{ token }}
+
+### Notes Routes
+POST http://localhost:5111/api/notes
+content-type: application/json
+Authorization: {{ token }}
+
+{
+    "title":"Some DueDate title",
+    "body": "yet a note, maybe a note",
+    "due_date": "2024-02-04T23:04:11.517Z",
+    "tags":[]
+}
+
+###
+
+GET http://localhost:5111/api/notes?q=lorem
+Authorization: {{ token }}
+###
+
+GET http://localhost:5111/api/notes?latest=true
+
+###
+
+GET http://localhost:5111/api/notes/01HNTZC5EZWHZY6Z29JEJEZVJ4
+Authorization: {{ token }}
+
+###
+PUT http://localhost:5111/api/notes/01HNTZC5EZWHZY6Z29JEJEZVJ4
+content-type: application/json
+Authorization: {{ token }}
+
+{
+  "id": "01HNTZC5EZWHZY6Z29JEJEZVJ4",
+  "title": "some updated title",
+  "body": "note updated, I can believe it",
+  "tags": [{"label": "giulioxx"}]
+}
+
+
+###
+DELETE http://localhost:5111/api/notes/01HM92C75FC1STJHN9PT1W3SZ6

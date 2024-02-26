@@ -1,15 +1,17 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg5NzQ2MjB9.NpX1HiPWlaUy4kUcReIBPB17ZawVjggvedqmoCfwXmQ
+@projectId = 01HQJD114TDERTZGYTEA7E6776
 ###
 GET http://localhost:5111/api/projects
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg5MDE5ODJ9.d5B6bomXKv_oA7VEZWR6PeyhIxlVXboNWuFbfzFKMZc
+Authorization: {{ token }}
 
 ###
-GET http://localhost:5111/api/projects/01HQEEBGHD71C63VQ85NMGF6GF
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg5MDE5ODJ9.d5B6bomXKv_oA7VEZWR6PeyhIxlVXboNWuFbfzFKMZc
+GET http://localhost:5111/api/projects/{{projectId}}
+Authorization: {{ token }}
 
 ###
 POST http://localhost:5111/api/projects
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg4MTQ2NTV9.nsVGnD5FTg0bflXWzlqflqdql4MQxElYDPl2aSRk17M
+Authorization: {{ token }}
 
 {
     "name":"Some Project",
@@ -17,24 +19,24 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg4MTQ2NTV9.nsV
 }
 
 ### Add Ticket
-POST http://localhost:5111/api/projects/01HQEEBGHD71C63VQ85NMGF6GF/task
+POST http://localhost:5111/api/projects/{{projectId}}/task
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg5MDE5ODJ9.d5B6bomXKv_oA7VEZWR6PeyhIxlVXboNWuFbfzFKMZc
+Authorization: {{ token }}
 
 {
     "title":"Some Other Task",
     "description": "Some stuff and things",
     "status": "in_progress",
-    "tags":[]
+    "tags":[ {"label": "blumbazorg"}]
 }
 
 ###
-PUT http://localhost:5111/api/projects/01HQEEBGHD71C63VQ85NMGF6GF
+PUT http://localhost:5111/api/projects/{{projectId}}
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg4NzYxNDF9.K5-f-0TBg8u1gh0rlAnfLy-8-KHtt1M9cqroAmcfQjs
+Authorization: {{ token }}
 
 {
-    "id": "01HQEEBGHD71C63VQ85NMGF6GF",
+    "id": "{{projectId}}",
     "name":"Some Project",
     "description": "Some stuff and things",
     "links": [{"href": "http://google.com", "label":"google"}]
