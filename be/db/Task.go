@@ -8,6 +8,10 @@ import (
 
 type Status string
 
+type StatusWrapper struct {
+	Status Status `json:"status" binding:"required,oneof=done in_progress todo backlog"`
+}
+
 /*
 	export const D_TASK_STATUS = {
 	    DONE: "done",
@@ -37,7 +41,7 @@ type Task struct {
 	Id          string  `gorm:"primarykey" json:"id"`
 	Title       string  `json:"title"`
 	Description string  `json:"description"`
-	Status      Status  `json:"status" binding:"required,oneof='done in_progress todo backlog'"`
+	Status      Status  `json:"status" binding:"required,oneof=done in_progress todo backlog"`
 	Flag        *string `json:"flag"`
 
 	Tags []*Tag `gorm:"many2many:task_tags;constraint:OnDelete:CASCADE" json:"tags,omitempty"`

@@ -1,5 +1,7 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDg5ODczMTZ9.-WgV_hOev6NQRys1WgpB060NaoU-KIkB9GChTFJJ2cQ
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDkwNzM0MjB9.S6n__3P-d62uNz61cSIK0U3vKBfjOM2stI0Nz3nzWYA
 @projectId = 01HQKJF1R5HEBH3YDEAKBE3H0X
+@taskId = 01HQKJFEMFFA8SJ99XCDSCNK4T
+
 ###
 GET http://localhost:5111/api/projects
 Authorization: {{ token }}
@@ -47,6 +49,15 @@ Authorization: {{ token }}
         }, {"label": "not-sure"}
       ]
     }
+
+### Move Task
+PUT http://localhost:5111/api/projects/{{projectId}}/task/{{taskId}}/status
+content-type: application/json
+Authorization: {{ token }}
+
+{
+ "status": "in_progress"     
+}
 
 ###
 PUT http://localhost:5111/api/projects/{{projectId}}

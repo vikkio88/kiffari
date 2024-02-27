@@ -1,5 +1,11 @@
 package db
 
+import (
+	"errors"
+
+	"gorm.io/gorm"
+)
+
 func (d *Db) GetTaskById(id string) (Task, bool) {
 	var t Task
 
@@ -26,6 +32,22 @@ func (d *Db) UpdateTask(tu TaskUpdate, projectId string) (string, bool) {
 	return t.Id, true
 }
 
-// func (d *Db) MoveTask(id string, status Status) bool {
+func (d *Db) MoveTask(projectId, taskId string, status Status) (bool, error) {
+	err := d.g.Transaction(func(tx *gorm.DB) error {
+		res := tx.Model(&Task{}).Where("id = ?", taskId).Update("status", status)
 
-// }
+		if res.RowsAffected != 1 {
+			return errors.New("error updating task status")
+		}
+
+		res = tx.Model(&Project{}).Where("id = ?", projectId).Update("id", projectId)
+		if res.RowsAffected != 1 {
+			return errors.New("error updating project")
+		}
+
+		return nil
+	})
+
+	return err == nil, err
+
+}

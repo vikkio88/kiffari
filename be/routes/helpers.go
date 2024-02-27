@@ -23,3 +23,12 @@ func SuccessOr400(ctx *gin.Context, result any, ok bool) {
 
 	ctx.JSON(http.StatusBadRequest, gin.H{"error": "bad request"})
 }
+
+func SuccessOr400WithError(ctx *gin.Context, result any, err error) {
+	if err == nil {
+		ctx.JSON(http.StatusOK, result)
+		return
+	}
+
+	ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+}
