@@ -36,7 +36,6 @@ func main() {
 
 	r.GET("api/config", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
 			"version": conf.Version,
 			"kiffari": conf.KiffariEnabled,
 		})
