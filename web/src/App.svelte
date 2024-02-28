@@ -13,7 +13,7 @@
   import Fallback from "./pages/Fallback.svelte";
   import Spinner from "./components/shared/Spinner.svelte";
   import { getConfig, parseOrThrow } from "./libs/api";
-  import Project from "./pages/Project.svelte";
+  import ProjectDetails from "./pages/ProjectDetails.svelte";
   import { appConfig } from "./store";
   import Main from "./pages/Main.svelte";
   import KiffariDash from "./pages/KiffariDash.svelte";
@@ -53,7 +53,7 @@
         <Route path="/" component={Main} />
         <Route path="/kiffari" component={KiffariDash} />
         <Route path="/projects/:id" let:params>
-          <Project id={params.id} />
+          <ProjectDetails id={params.id} />
         </Route>
         <Route path="/kato" component={KatoDash} />
       {:else}

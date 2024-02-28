@@ -15,7 +15,6 @@
   button {
     width: 70%;
     font-size: 3rem;
-    /* flex: 0 1 0; */
   }
 
   button + button {

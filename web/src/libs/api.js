@@ -128,3 +128,15 @@ export function filterNotes(value, abortCtrl) {
 export function getProjects() {
   return fetch(`${KATO_API_URL}/projects`, { ...makeHeaders() }).then(parseOrThrow).catch(catchLogout);
 }
+
+export function getProject(id) {
+  return fetch(`${KATO_API_URL}/projects/${id}`, { ...makeHeaders() }).then(parseOrThrow).catch(catchLogout);
+}
+
+export function addTask(projectId, task) {
+  return fetch(`${KATO_API_URL}/projects/${projectId}/task`, { method: "POST", ...makeHeaders(), body: JSON.stringify(task) });
+}
+
+export function moveTask(projectId, taskId, status) {
+  return fetch(`${KATO_API_URL}/projects/${projectId}/task/${taskId}`, { method: "PUT", ...makeHeaders(), body: JSON.stringify({ status }) });
+}
