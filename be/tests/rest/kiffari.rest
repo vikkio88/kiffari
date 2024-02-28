@@ -1,5 +1,5 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDkwNzM0MjB9.S6n__3P-d62uNz61cSIK0U3vKBfjOM2stI0Nz3nzWYA
-@projectId = 01HQKJF1R5HEBH3YDEAKBE3H0X
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDkxNDUwMTh9.lwyQUJd0SgNyYlOUO5EoiPAWsfXv4Yu7nZ8CbchdJ6w
+@projectId = 01HQJD00K7HVKP3MFQQWFG4X68
 @taskId = 01HQKJFEMFFA8SJ99XCDSCNK4T
 
 ###
@@ -16,8 +16,9 @@ content-type: application/json
 Authorization: {{ token }}
 
 {
-    "name":"Some Project",
-    "description": "Some stuff and things"
+    "name":"Mamma Mia Project",
+    "description": "Some mamma mia project stuff",
+    "config": { "wip_limit": 4 }
 }
 
 ### Add Ticket
@@ -66,7 +67,7 @@ Authorization: {{ token }}
 
 {
     "id": "{{projectId}}",
-    "name":"Some Project",
+    "name":"Kiffari",
     "description": "Some stuff and things",
     "links": [{"href": "http://google.com", "label":"google"}]
 }
