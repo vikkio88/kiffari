@@ -9,15 +9,15 @@
 {#if notes.length < 1}
   <h3>No notes... 🤷</h3>
 {:else}
-  <ul class="list">
+  <div class="list" class:compact>
     {#each notes as note}
-      <li class="note-item" class:archived={note.archived} class:compact>
+      <div class="note-item" class:archived={note.archived} class:compact>
         <div class="info">
           <div class="dates">
             <DateSeverity date={note.due_date} />
             <div
               title={`last updated: ${new Date(
-                note.updated_at,
+                note.updated_at
               ).toLocaleString()}`}
             >
               {formatRelativeNow(note.updated_at)}
@@ -30,23 +30,27 @@
         <h2>{note.title}</h2>
 
         <button on:click={() => navigate(`/notes/${note.id}`)}>➡️</button>
-      </li>
+      </div>
     {/each}
-  </ul>
+  </div>
 {/if}
 
 <style>
   .list {
     padding: 0 1rem;
-    display: flex;
-    flex-direction: column;
-    list-style: none;
+    display: grid;
+    grid-row: auto;
+    gap: 1rem;
+  }
+  
+  .list.compact {
+    display: grid;
+    grid-template-columns: auto auto;
   }
 
   .note-item {
     border: 2px white solid;
     border-radius: 10px;
-    margin: 1rem 0;
     font-size: 16px;
     display: flex;
     flex-direction: row;
