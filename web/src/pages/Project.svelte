@@ -4,6 +4,7 @@
   import Controls from "../components/shared/Controls.svelte";
   import { D_TASK_STATUS as STATUS, D_TASK_STATUS_LABELS } from "../const";
   import { groupTasksByStatus } from "../libs/helpers/tasks";
+  export let id = "";
 
   const defaultAccordion = {
     [STATUS.DONE]: false,
@@ -20,6 +21,8 @@
       { label: "Source", href: "https://github.com" },
       { label: "Website", href: "https://github.com" },
     ],
+
+    config: { wip: 0 },
   };
 
   function m(override = {}) {
@@ -62,7 +65,7 @@
     //TODO: Update task status here
     groupedTasks[task.status].unshift(task);
     groupedTasks[prevStatus] = groupedTasks[prevStatus].filter(
-      (t) => t.id != task.id,
+      (t) => t.id != task.id
     );
 
     groupedTasks = groupedTasks;
@@ -70,6 +73,7 @@
 </script>
 
 <div class="board">
+  <h2>{id}</h2>
   <h1>{project.name}</h1>
   <p>{project.description}</p>
   <div class="links">
@@ -89,7 +93,7 @@
       <div class="group">
         <Accordion open={defaultAccordion[status]}>
           <h1 slot="header" class="taskGroupHead">
-            {D_TASK_STATUS_LABELS[status]}
+            {`(${groupedTasks[status].length}) ${D_TASK_STATUS_LABELS[status]}`}
           </h1>
           <div slot="content">
             {#each groupedTasks[status] as task}
