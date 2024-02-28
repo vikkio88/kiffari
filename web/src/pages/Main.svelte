@@ -7,7 +7,7 @@
 <div class="frc mh80">
   <div class="wrapper">
     <button on:click={() => navigate("/kato")}>Kato 🪣</button>
-    <button on:click={() => navigate("/project")}>Kiffari 🎫</button>
+    <button on:click={() => navigate("/kiffari")}>Kiffari 🎫</button>
   </div>
 </div>
 
