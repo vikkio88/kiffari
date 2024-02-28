@@ -100,6 +100,33 @@ button.big-control {
   padding: 1rem 2rem;
 }
 
+/* Animations */
+.wobble {
+  animation: wobble 2s ease-in-out infinite;
+}
+
+@keyframes wobble {
+  0% {
+    transform: rotate(-1deg);
+  }
+
+  25% {
+    transform: rotate(1deg);
+  }
+
+  50% {
+    transform: rotate(2deg);
+  }
+
+  75% {
+    transform: rotate(-1deg);
+  }
+
+  100% {
+    transform: rotate(-2deg);
+  }
+}
+
 
 /* UTILS */
 .crs-pointer {

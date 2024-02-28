@@ -1,3 +1,5 @@
+watch:
+	sh scripts/run.sh
 watch-be:
 	cd be && make watch
 watch-fe:

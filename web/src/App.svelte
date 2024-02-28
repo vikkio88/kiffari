@@ -12,7 +12,7 @@
   import About from "./pages/About.svelte";
   import Fallback from "./pages/Fallback.svelte";
   import Spinner from "./components/shared/Spinner.svelte";
-  import { getConfig, parseOrThrow } from "./libs/api";
+  import { catchLogout, getConfig, parseOrThrow } from "./libs/api";
   import ProjectDetails from "./pages/ProjectDetails.svelte";
   import { appConfig } from "./store";
   import Main from "./pages/Main.svelte";
@@ -24,6 +24,10 @@
   let configPromise = getConfig()
     .then(parseOrThrow)
     .then((config) => {
+      if (!config.auth) {
+        catchLogout();
+      }
+      delete config.auth;
       $appConfig = config;
       return config;
     });

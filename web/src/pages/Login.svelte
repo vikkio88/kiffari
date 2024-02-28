@@ -7,6 +7,7 @@
   import { onMount } from "svelte";
   import ErrorToast from "../components/shared/ErrorToast.svelte";
   import Version from "../components/shared/Version.svelte";
+  import { appConfig } from "../store";
 
   let error = null;
   let loginPromise = null;
@@ -46,7 +47,11 @@
   });
 </script>
 
-<h1>Kato</h1>
+{#if $appConfig.kiffari}
+  <h1 class="" title="Kiffari & Kato">🎫 🪣</h1>
+{:else}
+  <h1 class="">Kato 🪣</h1>
+{/if}
 
 {#if !loginPromise}
   <form class="wrapper" on:submit|preventDefault|stopPropagation={login}>
@@ -87,6 +92,11 @@
 
   .wrapper > button {
     font-size: 18px;
+    padding: 1rem;
+  }
+
+  h1 {
+    margin: 0;
     padding: 1rem;
   }
 </style>

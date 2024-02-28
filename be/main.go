@@ -35,7 +35,10 @@ func main() {
 	r.Use(static.ServeRoot("/", "./static"))
 
 	r.GET("api/config", func(c *gin.Context) {
+		token := middlewares.GetAuthToken(c)
+		d.IsTokenValid(token)
 		c.JSON(http.StatusOK, gin.H{
+			"auth":    d.IsTokenValid(token),
 			"version": conf.Version,
 			"kiffari": conf.KiffariEnabled,
 		})

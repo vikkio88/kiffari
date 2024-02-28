@@ -48,7 +48,5 @@
         100% {
             transform: translateY(15%) rotate(180deg);
         }
-
-
     }
 </style>

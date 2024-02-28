@@ -8,15 +8,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func GetAuthToken(c *gin.Context) string {
+	return strings.TrimSpace(c.GetHeader("Authorization"))
+}
+
 func AuthRequired(db *db.Db) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		token := ""
-		if token = c.GetHeader("Authorization"); token == "" {
+		if token = GetAuthToken(c); token == "" {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "unauth"})
 			return
 		}
 
-		token = strings.TrimSpace(token)
 		if !db.IsTokenValid(token) {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "token not valid"})
 			return
