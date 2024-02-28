@@ -10,7 +10,6 @@
   import {
     getNoteDetails,
     deleteNote,
-    parseOrThrow,
     catchLogout,
     archiveNote,
     unArchiveNote,
@@ -19,7 +18,7 @@
   protectedRoute();
 
   export let id = "";
-  let notePromise = getNoteDetails(id).then(parseOrThrow).catch(catchLogout);
+  let notePromise = getNoteDetails(id);
 
   async function onDelete() {
     const resp = await deleteNote(id);
@@ -28,7 +27,7 @@
     }
 
     if (resp.ok) {
-      navigate("/", { replace: true });
+      navigate("/kato", { replace: true });
     }
   }
 

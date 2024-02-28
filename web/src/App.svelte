@@ -16,9 +16,9 @@
   import Project from "./pages/Project.svelte";
   import { appConfig } from "./store";
   import Main from "./pages/Main.svelte";
+  import KiffariDash from "./pages/KiffariDash.svelte";
 
   let url = "";
-
 
   //TODO: this could also check validity of token
   let configPromise = getConfig()
@@ -51,9 +51,13 @@
       <Route path="/search" component={Search} />
       {#if config.kiffari}
         <Route path="/" component={Main} />
-        <Route path="/project" component={Project} />
+        <Route path="/kiffari" component={KiffariDash} />
+        <Route path="/projects/:id" let:params>
+          <Project id={params.id} />
+        </Route>
         <Route path="/kato" component={KatoDash} />
       {:else}
+        <Route path="/kato" component={KatoDash} />
         <Route path="/" component={KatoDash} />
       {/if}
       <Route path="/archived" component={Archived} />
