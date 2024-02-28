@@ -4,8 +4,6 @@
   import { protectedRoute } from "../libs/routes";
   import {
     filterTags,
-    parseOrThrow,
-    catchLogout,
     filterNotes,
   } from "../libs/api";
   import NoteList from "../components/NoteList.svelte";
@@ -35,9 +33,7 @@
 
       let search = activeTab === TABS.TAGS ? filterTags : filterNotes;
 
-      searchPromise = search(v, controller)
-        .then(parseOrThrow)
-        .catch(catchLogout);
+      searchPromise = search(v, controller);
     }, 500);
   };
 

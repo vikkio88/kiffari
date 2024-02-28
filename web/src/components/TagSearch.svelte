@@ -1,11 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import {
-    catchLogout,
-    filterTags,
-    parseOrThrow,
-    trendingTags,
-  } from "../libs/api";
+  import { filterTags, trendingTags } from "../libs/api";
   import TagsList from "./TagsList.svelte";
   import Spinner from "./shared/Spinner.svelte";
   const d = createEventDispatcher();
@@ -45,12 +40,12 @@
       if (controller) controller.abort();
       controller = new AbortController();
 
-      searchPromise = filterTags(v, controller).then((data) => data.json());
+      searchPromise = filterTags(v, controller);
     }, 500);
   };
 
   if (suggestTrending) {
-    searchPromise = trendingTags().then(parseOrThrow).catch(catchLogout);
+    searchPromise = trendingTags();
   }
 </script>
 
@@ -75,14 +70,13 @@
       {#await searchPromise}
         <Spinner />
       {:then tags}
-        <!-- {#if tags.length > 0 && Boolean(searchValue)} -->
         {#if tags.length > 0}
           {#if !Boolean(searchValue)}
             <h3>Suggested tags:</h3>
           {/if}
           <TagsList
             tags={tags.filter(
-              (t) => !selectedTags.some((st) => st.id === t.id),
+              (t) => !selectedTags.some((st) => st.id === t.id)
             )}
             onTagClick={(tag) => () => {
               onTagSelected(tag);

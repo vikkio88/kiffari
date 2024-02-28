@@ -11,8 +11,8 @@
   import Footer from "../components/Footer.svelte";
   import { protectedRoute } from "../libs/routes";
   protectedRoute();
-  
-  let notePromise = getLatestNotes().then(parseOrThrow).catch(catchLogout);
+
+  let notePromise = getLatestNotes();
   let reminderNotesPromise = getReminderNotes()
     .then(parseOrThrow)
     .then((reminders) => {
@@ -29,13 +29,6 @@
 </script>
 
 <div class="wrapper">
-  <div class="subwrapper">
-    <h2>Latest Notes</h2>
-    {#await notePromise then notes}
-      <NoteList {notes} compact />
-    {/await}
-  </div>
-
   {#if Boolean(reminderNotesPromise)}
     <div id="reminders" class="subwrapper hidden">
       <h2>Reminders</h2>
@@ -46,19 +39,27 @@
       {/await}
     </div>
   {/if}
+
+  <div class="subwrapper">
+    <h2>Latest Notes</h2>
+    {#await notePromise then notes}
+      <NoteList {notes} compact />
+    {/await}
+  </div>
 </div>
 
 <Footer />
 
 <Controls>
-  <button class="big-control" title="New Note" on:click={create}>Add Note 📝</button>
+  <button class="big-control" title="New Note" on:click={create}
+    >Add Note 📝</button
+  >
 </Controls>
 
 <style>
   .wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: flex-start;
+    display: grid;
+    grid-template-rows: auto auto;
+    padding-bottom: 2rem;
   }
 </style>

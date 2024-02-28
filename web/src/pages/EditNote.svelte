@@ -6,7 +6,7 @@
   protectedRoute();
 
   export let id = "";
-  let notePromise = getNoteDetails(id).then((resp) => resp.json());
+  let notePromise = getNoteDetails(id);
   let putPromise = null;
 
   async function onSave(note) {

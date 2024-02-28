@@ -1,9 +1,9 @@
 <script>
     import NoteList from "../components/NoteList.svelte";
-    import { catchLogout, getArchivedNotes, parseOrThrow } from "../libs/api";
+    import { getArchivedNotes } from "../libs/api";
     import { protectedRoute } from "../libs/routes";
     protectedRoute();
-    let notePromise = getArchivedNotes().then(parseOrThrow).catch(catchLogout);
+    let notePromise = getArchivedNotes();
 </script>
 
 <h2>Archived Notes</h2>

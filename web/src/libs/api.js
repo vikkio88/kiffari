@@ -52,7 +52,7 @@ export function createNote(note) {
 }
 
 export function getLatestNotes() {
-  return fetch(`${KATO_API_URL}/notes?latest=true`, makeHeaders());
+  return fetch(`${KATO_API_URL}/notes?latest=true`, makeHeaders()).then(parseOrThrow).catch(catchLogout);
 }
 
 export function getReminderNotes() {
@@ -60,11 +60,11 @@ export function getReminderNotes() {
 }
 
 export function getArchivedNotes() {
-  return fetch(`${KATO_API_URL}/notes?archived=true`, makeHeaders());
+  return fetch(`${KATO_API_URL}/notes?archived=true`, makeHeaders()).then(parseOrThrow).catch(catchLogout);
 }
 
 export function getNoteDetails(id) {
-  return fetch(`${KATO_API_URL}/notes/${id}`, makeHeaders());
+  return fetch(`${KATO_API_URL}/notes/${id}`, makeHeaders()).then(parseOrThrow).catch(catchLogout);
 }
 
 export function updateNote(id, note) {
@@ -105,14 +105,15 @@ export function filterTags(value, abortCtrl) {
     method: "get",
     signal: abortCtrl.signal,
     ...makeHeaders(),
-  });
+  }).then(parseOrThrow)
+    .catch(catchLogout);
 }
 
 export function trendingTags() {
   return fetch(`${KATO_API_URL}/tags?trending=true`, {
     method: "get",
     ...makeHeaders(),
-  });
+  }).then(parseOrThrow).catch(catchLogout);
 }
 
 export function filterNotes(value, abortCtrl) {
@@ -120,5 +121,10 @@ export function filterNotes(value, abortCtrl) {
     method: "get",
     signal: abortCtrl.signal,
     ...makeHeaders(),
-  });
+  }).then(parseOrThrow)
+    .catch(catchLogout);
+}
+
+export function getProjects() {
+  return fetch(`${KATO_API_URL}/projects`, { ...makeHeaders() }).then(parseOrThrow).catch(catchLogout);
 }
