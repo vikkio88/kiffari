@@ -27,7 +27,7 @@ func (d *Db) UpdateProject(p ProjectUpdate) (string, bool) {
 func (d *Db) GetAllProjects() []ProjectDto {
 	var ps []Project
 
-	d.g.Model(&Project{}).Find(&ps)
+	d.g.Model(&Project{}).Order("updated_at DESC").Find(&ps)
 
 	dtos := make([]ProjectDto, len(ps))
 	for i, p := range ps {
