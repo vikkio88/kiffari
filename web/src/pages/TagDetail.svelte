@@ -17,7 +17,7 @@
     </h1>
   </div>
   <div class="results">
-    <Header text="Notes"></Header>
+    <Header text="Notes" />
     <NoteList notes={tag.notes} />
   </div>
 {/await}
@@ -37,11 +37,10 @@
   h1.hash {
     color: #646cff;
     font-size: 3.2rem;
-    margin-right: .3rem;
+    margin-right: 0.3rem;
   }
 
   .results {
     margin-top: 5rem;
   }
-
 </style>
