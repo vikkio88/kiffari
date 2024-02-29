@@ -18,6 +18,8 @@ func (d *Db) CreateTask(tc TaskCreate, projectId string) (Task, bool) {
 	t := tc.Task(projectId)
 	trx := d.g.Create(&t)
 
+	//TODO: update project too
+
 	return t, trx.RowsAffected == 1
 }
 
