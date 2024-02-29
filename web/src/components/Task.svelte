@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import { D_TASK_STATUS_LABELS, D_TASK_WORKFLOW as WF } from "../const";
+  import { navigate } from "svelte-routing";
   const d = createEventDispatcher();
   export let task = null;
 
@@ -14,7 +15,9 @@
 
 <div class="wrapper">
   <div>
-    <button title="Info">ℹ️</button>
+    <button title="Info" on:click={() => navigate(`/tasks/${task.id}`)}>
+      ℹ️
+    </button>
   </div>
   <div class="mainInfo">
     <h2>{task.title}</h2>
