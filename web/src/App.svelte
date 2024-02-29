@@ -9,6 +9,7 @@
   import Search from "./pages/Search.svelte";
   import Login from "./pages/Login.svelte";
   import Archived from "./pages/Archived.svelte";
+  import TaskDetails from "./pages/TaskDetails.svelte";
   import About from "./pages/About.svelte";
   import Fallback from "./pages/Fallback.svelte";
   import Spinner from "./components/shared/Spinner.svelte";
@@ -19,8 +20,6 @@
   import KiffariDash from "./pages/KiffariDash.svelte";
 
   let url = "";
-
-  //TODO: this could also check validity of token
   let configPromise = getConfig()
     .then(parseOrThrow)
     .then((config) => {
@@ -59,13 +58,16 @@
         <Route path="/projects/:id" let:params>
           <ProjectDetails id={params.id} />
         </Route>
-        <Route path="/kato" component={KatoDash} />
+        <Route path="/tasks/:id" let:params>
+          <TaskDetails id={params.id} />
+        </Route>
       {:else}
-        <Route path="/kato" component={KatoDash} />
         <Route path="/" component={KatoDash} />
       {/if}
       <Route path="/archived" component={Archived} />
       <Route path="/about" component={About} />
+      <Route path="/kato" component={KatoDash} />
+      
       <Route path="*" component={Fallback} />
     </main>
   </Router>
