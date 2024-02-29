@@ -7,6 +7,10 @@ export function groupTasksByStatus(tasks) {
         [STATUS.TODO]: [],
         [STATUS.BACKLOG]: [],
     };
+
+    if (!Array.isArray(tasks)) {
+        return grouped;
+    }
     for (const t of tasks) {
         grouped[t.status] = [...grouped[t.status] ?? [], t];
     }
