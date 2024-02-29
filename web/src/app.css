@@ -99,6 +99,10 @@ nav>a {
 button.big-control {
   padding: 1rem 2rem;
 }
+button.smaller {
+  font-size: smaller;
+  padding: .5rem .8rem;
+}
 
 /* Animations */
 .wobble {
