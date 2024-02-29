@@ -20,7 +20,16 @@
 
 <style>
   .projects {
+    margin: 0 auto;
     display: grid;
     grid-template-columns: auto auto;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .project {
+    border: 2px white solid;
+    border-radius: 10px;
+    padding: 1rem 2rem;
   }
 </style>
