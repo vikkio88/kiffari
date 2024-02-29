@@ -1,9 +1,90 @@
 <script>
+  import TagsList from "../components/TagsList.svelte";
+  import Markdown from "../components/renderers/Markdown.svelte";
+  import Spinner from "../components/shared/Spinner.svelte";
+  import Header from "../components/shared/Header.svelte";
+  import { navigate } from "svelte-routing";
+  import { getTask } from "../libs/api";
+  import { getDate } from "../libs/dates";
   import { protectedRoute } from "../libs/routes";
+  import { D_TASK_STATUS_LABELS } from "../const";
+  import Controls from "../components/shared/Controls.svelte";
+  import ConfirmButton from "../components/shared/ConfirmButton.svelte";
   protectedRoute();
 
   export let id = "";
-  
+
+  let taskPromise = getTask(id);
+
+  function onArchiveToggle(archived) {}
+  function onDelete() {}
 </script>
 
-<h1>{id}</h1>
+{#await taskPromise}
+  <Spinner />
+{:then task}
+  <div class="status">
+    <span class="chip">{D_TASK_STATUS_LABELS[task.status]}</span>
+  </div>
+  <h2>{task.title}</h2>
+  <div class="date">
+    {getDate(task)}
+  </div>
+  <div class="description">
+    <Markdown body={task.description} />
+  </div>
+  {#if Array.isArray(task.tags) && task.tags.length > 0}
+    <div class="tags">
+      <Header text="Tags" />
+      <div class="tagList">
+        <TagsList tags={task.tags} />
+      </div>
+    </div>
+  {/if}
+  <Controls background>
+    {#if !task.archived}
+      <button title="Edit" on:click={() => navigate(`/edit-task/${id}`)}>
+        📝
+      </button>
+    {/if}
+    <ConfirmButton
+      title={task.archived ? "Un-Archive" : "Archive"}
+      confirmLabel={task.archived ? "Un-Archive?" : "Archive?"}
+      onConfirmed={() => onArchiveToggle(task.archived)}
+    >
+      {#if !task.archived}
+        🗄️
+      {:else}
+        🔄
+      {/if}
+    </ConfirmButton>
+    <ConfirmButton title="Delete" confirmLabel="Delete?" onConfirmed={onDelete}>
+      🗑️
+    </ConfirmButton>
+  </Controls>
+{/await}
+
+<style>
+  .description {
+    border-radius: 10px;
+    text-align: left;
+    padding: 1.5rem;
+    margin: 0.5rem 0;
+  }
+
+  .date {
+    font-size: smaller;
+    color: #a3a3a3;
+  }
+
+  .status {
+    padding: 1rem;
+  }
+
+  .chip {
+    border: solid 2px #333;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+  }
+</style>
