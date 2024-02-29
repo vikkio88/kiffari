@@ -25,3 +25,11 @@ export function formatYHM(date) {
 export function formatRelativeNow(date) {
     return formatRelative(date, new Date(), { locale: enGB });
 }
+
+export function getDate({ created_at, updated_at }) {
+    if (created_at != updated_at) {
+        return `updated: ${new Date(updated_at).toLocaleString()}`;
+    }
+
+    return new Date(created_at).toLocaleString();
+}

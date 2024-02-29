@@ -1,6 +1,4 @@
 <script>
-// @ts-nocheck
-
   import TagsList from "../components/TagsList.svelte";
   import Controls from "../components/shared/Controls.svelte";
   import { navigate } from "svelte-routing";
@@ -15,6 +13,8 @@
     unArchiveNote,
   } from "../libs/api";
   import DateSeverity from "../components/shared/DateSeverity.svelte";
+  import Header from "../components/shared/Header.svelte";
+  import { getDate } from "../libs/dates";
   protectedRoute();
 
   export let id = "";
@@ -55,14 +55,6 @@
     element.click();
     document.body.removeChild(element);
   }
-
-  function getDate({ created_at, updated_at }) {
-    if (created_at != updated_at) {
-      return `updated: ${new Date(updated_at).toLocaleString()}`;
-    }
-
-    return new Date(created_at).toLocaleString();
-  }
 </script>
 
 {#await notePromise then note}
@@ -80,7 +72,7 @@
     </div>
     {#if Array.isArray(note.tags) && note.tags.length > 0}
       <div class="tags">
-        <h3>Tags</h3>
+        <Header text="Tags" />
         <div class="tagList">
           <TagsList tags={note.tags} />
         </div>
@@ -95,10 +87,7 @@
       🔽
     </button>
     {#if !note.archived}
-      <button
-        title="Edit"
-        on:click={() => navigate(`/edit-note/${id}`)}
-      >
+      <button title="Edit" on:click={() => navigate(`/edit-note/${id}`)}>
         📝
       </button>
     {/if}
@@ -113,11 +102,7 @@
         🔄
       {/if}
     </ConfirmButton>
-    <ConfirmButton
-      title="Delete"
-      confirmLabel="Delete?"
-      onConfirmed={onDelete}
-    >
+    <ConfirmButton title="Delete" confirmLabel="Delete?" onConfirmed={onDelete}>
       🗑️
     </ConfirmButton>
   </Controls>
@@ -150,24 +135,11 @@
     margin: 0.5rem 0;
   }
 
-  .tags {
-    border-top: 2px #a3a3a3 solid;
-  }
-
   .tagList {
     display: flex;
     flex-direction: row;
     padding-bottom: 1.5rem;
     flex-wrap: wrap;
     gap: 0.2rem;
-  }
-
-  .tags h3 {
-    margin: 0;
-    padding: 0 1rem;
-    display: inline-block;
-    transform: translateY(-50%);
-    background-color: #242424;
-    color: #a3a3a3;
   }
 </style>
