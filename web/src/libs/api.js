@@ -138,5 +138,5 @@ export function addTask(projectId, task) {
 }
 
 export function moveTask(projectId, taskId, status) {
-  return fetch(`${KATO_API_URL}/projects/${projectId}/task/${taskId}`, { method: "PUT", ...makeHeaders(), body: JSON.stringify({ status }) });
+  return fetch(`${KATO_API_URL}/projects/${projectId}/task/${taskId}/status`, { method: "PUT", ...makeHeaders(), body: JSON.stringify({ status }) });
 }
