@@ -10,14 +10,8 @@
   role="button"
   tabindex="-1"
 >
+  <div class="accordionControls" class:inverted={open}>◀️</div>
   <slot name="header">Header</slot>
-  <div>
-    {#if open}
-      🔽
-    {:else}
-      ◀️
-    {/if}
-  </div>
 </div>
 {#if open}
   <slot name="content">Content</slot>
@@ -25,13 +19,25 @@
 
 <style>
   .header {
-    border-bottom: 1px white solid;
-    padding: 2rem;
-    display: grid;
-    grid-template-columns: 90% 10%;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    border-bottom: solid 1px white;
   }
 
   .header:hover {
-    background-color: #3a3a3a;
+    background-color: #213547;
+  }
+
+  .accordionControls {
+    transition: transform 0.4s;
+    transform: rotate(180deg);
+  }
+
+  .inverted {
+    transform: rotate(270deg);
+    transition: transform 0.4s;
   }
 </style>
