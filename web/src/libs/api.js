@@ -102,7 +102,7 @@ export function getTagDetails(id) {
 
 export function filterTags(value, abortCtrl) {
   return fetch(`${KATO_API_URL}/tags?q=${value}`, {
-    method: "get",
+    method: "GET",
     signal: abortCtrl.signal,
     ...makeHeaders(),
   }).then(parseOrThrow)
@@ -111,14 +111,14 @@ export function filterTags(value, abortCtrl) {
 
 export function trendingTags() {
   return fetch(`${KATO_API_URL}/tags?trending=true`, {
-    method: "get",
+    method: "GET",
     ...makeHeaders(),
   }).then(parseOrThrow).catch(catchLogout);
 }
 
 export function filterNotes(value, abortCtrl) {
   return fetch(`${KATO_API_URL}/notes?q=${value}`, {
-    method: "get",
+    method: "GET",
     signal: abortCtrl.signal,
     ...makeHeaders(),
   }).then(parseOrThrow)
@@ -135,6 +135,10 @@ export function getProject(id) {
 
 export function addTask(projectId, task) {
   return fetch(`${KATO_API_URL}/projects/${projectId}/task`, { method: "POST", ...makeHeaders(), body: JSON.stringify(task) });
+}
+
+export function getTask(taskId) {
+  return fetch(`${KATO_API_URL}/tasks/${taskId}`, { method: "GET", ...makeHeaders() }).then(parseOrThrow).catch(catchLogout);
 }
 
 export function moveTask(projectId, taskId, status) {
