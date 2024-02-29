@@ -16,11 +16,23 @@ func (d *Db) GetTaskById(id string) (Task, bool) {
 
 func (d *Db) CreateTask(tc TaskCreate, projectId string) (Task, bool) {
 	t := tc.Task(projectId)
-	trx := d.g.Create(&t)
+	err := d.g.Transaction(func(tx *gorm.DB) error {
 
-	//TODO: update project too
+		res := tx.Create(&t)
 
-	return t, trx.RowsAffected == 1
+		if res.RowsAffected != 1 {
+			return errors.New("error creating tasks")
+		}
+
+		res = tx.Model(&Project{}).Where("id = ?", projectId).Update("id", projectId)
+		if res.RowsAffected != 1 {
+			return errors.New("error updating project")
+		}
+
+		return nil
+	})
+
+	return t, err == nil
 }
 
 func (d *Db) UpdateTask(tu TaskUpdate, projectId string) (string, bool) {

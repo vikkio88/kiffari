@@ -43,6 +43,7 @@ type Task struct {
 	Description string  `json:"description"`
 	Status      Status  `json:"status" binding:"required,oneof=done in_progress todo backlog"`
 	Flag        *string `json:"flag"`
+	Archived    bool    `json:"archived"`
 
 	Tags []*Tag `gorm:"many2many:task_tags;constraint:OnDelete:CASCADE" json:"tags,omitempty"`
 
@@ -83,7 +84,8 @@ func (t *TaskCreate) Task(projectId string) Task {
 
 type TaskUpdate struct {
 	TaskCreate
-	Id string `json:"id" binding:"required"`
+	Id       string `json:"id" binding:"required"`
+	Archived bool   `json:"archived" binding:"required"`
 }
 
 func (t *TaskUpdate) Task(projectId string) Task {
@@ -101,5 +103,6 @@ func (t *TaskUpdate) Task(projectId string) Task {
 		Flag:        t.Flag,
 		Tags:        t.Tags,
 		ProjectId:   projectId,
+		Archived:    t.Archived,
 	}
 }

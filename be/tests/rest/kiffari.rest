@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDkyMjA2Nzl9.GDzgreBmJUewpgJzYnZjzbNI8URH3X8DblNNZtEBTJM
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDkyNDc1NzB9.eB5sXJxtD94KxuWP88eR_Pb_fDczbZO1pU0TloCW2Jc
 @projectId = 01HQJD00K7HVKP3MFQQWFG4X68
 @taskId = 01HQKJFEMFFA8SJ99XCDSCNK4T
 
@@ -16,8 +16,8 @@ content-type: application/json
 Authorization: {{ token }}
 
 {
-    "name":"Mamma Mia Project",
-    "description": "Some mamma mia project stuff",
+    "name":"Onion Rings",
+    "description": "Some onion rings maybe, I am not sure",
     "config": { "wip_limit": 4 }
 }
 

@@ -77,4 +77,10 @@ func ProjectRoutes(r gin.IRouter, d *db.Db) {
 		}
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	})
+
+	r.GET("/tasks/:id", func(c *gin.Context) {
+		id := c.Params.ByName("id")
+		task, ok := d.GetTaskById(id)
+		SuccessOr404(c, task, ok)
+	})
 }
