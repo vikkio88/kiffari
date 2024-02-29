@@ -1,5 +1,6 @@
 <script>
   import NoteList from "../components/NoteList.svelte";
+  import Header from "../components/shared/Header.svelte";
   import { getTagDetails, parseOrThrow, catchLogout } from "../libs/api";
   import { protectedRoute } from "../libs/routes";
   protectedRoute();
@@ -16,7 +17,7 @@
     </h1>
   </div>
   <div class="results">
-    <h3>Notes</h3>
+    <Header text="Notes"></Header>
     <NoteList notes={tag.notes} />
   </div>
 {/await}
@@ -41,15 +42,6 @@
 
   .results {
     margin-top: 5rem;
-    border-top: 2px #a3a3a3 solid;
   }
 
-  .results > h3 {
-    margin: 0;
-    padding: 0 1rem;
-    display: inline-block;
-    transform: translateY(-50%);
-    background-color: #242424;
-    color: #a3a3a3;
-  }
 </style>
