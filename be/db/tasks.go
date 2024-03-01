@@ -46,6 +46,12 @@ func (d *Db) UpdateTask(tu TaskUpdate, projectId string) (string, bool) {
 	return t.Id, true
 }
 
+func (d *Db) SetArchivedTask(id string, archived bool) bool {
+	trx := d.g.Model(&Note{}).Where("id", id).Update("archived", archived)
+
+	return trx.RowsAffected == 1
+}
+
 func (d *Db) MoveTask(projectId, taskId string, status Status) (bool, error) {
 	err := d.g.Transaction(func(tx *gorm.DB) error {
 		res := tx.Model(&Task{}).Where("id = ?", taskId).Update("status", status)
@@ -63,5 +69,4 @@ func (d *Db) MoveTask(projectId, taskId string, status Status) (bool, error) {
 	})
 
 	return err == nil, err
-
 }
