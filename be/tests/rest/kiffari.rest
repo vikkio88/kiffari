@@ -1,6 +1,6 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDkyNDc1NzB9.eB5sXJxtD94KxuWP88eR_Pb_fDczbZO1pU0TloCW2Jc
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDkyOTQyOTR9.0sYiwPzFtlQAS5AsK-MPsOR7pujSUP7FmEovMtM8MxI
 @projectId = 01HQJD00K7HVKP3MFQQWFG4X68
-@taskId = 01HQKJFEMFFA8SJ99XCDSCNK4T
+@taskId = 01HQTH10ZVCZQDKTBQD070REZB
 
 ###
 GET http://localhost:5111/api/projects
@@ -21,7 +21,26 @@ Authorization: {{ token }}
     "config": { "wip_limit": 4 }
 }
 
-### Add Ticket
+### Update Project
+PUT http://localhost:5111/api/projects/{{projectId}}
+content-type: application/json
+Authorization: {{ token }}
+
+{
+    "id": "{{projectId}}",
+    "name":"Kiffari",
+    "description": "Some stuff and things",
+    "links": [{"href": "http://google.com", "label":"google"}]
+}
+
+### TASKS
+
+### Get Single task
+GET http://localhost:5111/api/tasks/{{taskId}}
+content-type: application/json
+Authorization: {{ token }}
+
+### Add Task
 POST http://localhost:5111/api/projects/{{projectId}}/task
 content-type: application/json
 Authorization: {{ token }}
@@ -33,7 +52,7 @@ Authorization: {{ token }}
     "tags":[ {"label": "blumbazorg"}]
 }
 
-###
+### Update Task
 PUT http://localhost:5111/api/projects/{{projectId}}/task
 content-type: application/json
 Authorization: {{ token }}
@@ -58,16 +77,4 @@ Authorization: {{ token }}
 
 {
  "status": "in_progress"     
-}
-
-###
-PUT http://localhost:5111/api/projects/{{projectId}}
-content-type: application/json
-Authorization: {{ token }}
-
-{
-    "id": "{{projectId}}",
-    "name":"Kiffari",
-    "description": "Some stuff and things",
-    "links": [{"href": "http://google.com", "label":"google"}]
 }
