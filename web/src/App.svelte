@@ -8,8 +8,8 @@
   import TagDetail from "./pages/TagDetail.svelte";
   import Search from "./pages/Search.svelte";
   import Login from "./pages/Login.svelte";
-  import Archived from "./pages/Archived.svelte";
-  import TaskDetails from "./pages/TaskDetails.svelte";
+  import Archived from "./pages/ArchivedNotes.svelte";
+  import TaskDetails from "./pages/TaskDetail.svelte";
   import About from "./pages/About.svelte";
   import Fallback from "./pages/Fallback.svelte";
   import Spinner from "./components/shared/Spinner.svelte";
@@ -18,6 +18,8 @@
   import { appConfig } from "./store";
   import Main from "./pages/Main.svelte";
   import KiffariDash from "./pages/KiffariDash.svelte";
+  import EditTask from "./pages/EditTask.svelte";
+  import CreateTask from "./pages/CreateTask.svelte";
 
   let url = "";
   let configPromise = getConfig()
@@ -61,13 +63,19 @@
         <Route path="/tasks/:id" let:params>
           <TaskDetails id={params.id} />
         </Route>
+        <Route path="/edit-task/:id" let:params>
+          <EditTask id={params.id} />
+        </Route>
+        <Route path="/projects/:id/create-task" let:params>
+          <CreateTask projectId={params.id} />
+        </Route>
       {:else}
         <Route path="/" component={KatoDash} />
       {/if}
-      <Route path="/archived" component={Archived} />
+      <Route path="/archived-notes" component={Archived} />
       <Route path="/about" component={About} />
       <Route path="/kato" component={KatoDash} />
-      
+
       <Route path="*" component={Fallback} />
     </main>
   </Router>
