@@ -137,6 +137,10 @@ export function addTask(projectId, task) {
   return fetch(`${KATO_API_URL}/projects/${projectId}/task`, { method: "POST", ...makeHeaders(), body: JSON.stringify(task) });
 }
 
+export function updateTask(projectId, task) {
+  return fetch(`${KATO_API_URL}/projects/${projectId}/task`, { method: "PUT", ...makeHeaders(), body: JSON.stringify(task) });
+}
+
 export function getTask(taskId) {
   return fetch(`${KATO_API_URL}/tasks/${taskId}`, { method: "GET", ...makeHeaders() }).then(parseOrThrow).catch(catchLogout);
 }

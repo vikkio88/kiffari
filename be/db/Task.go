@@ -67,7 +67,7 @@ func (t *TaskCreate) Task(projectId string) Task {
 type TaskUpdate struct {
 	TaskCreate
 	Id       string `json:"id" binding:"required"`
-	Archived bool   `json:"archived" binding:"required"`
+	Archived bool   `json:"archived"`
 }
 
 func (t *TaskUpdate) Task(projectId string) Task {

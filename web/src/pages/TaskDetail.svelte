@@ -16,7 +16,9 @@
 
   let taskPromise = getTask(id);
 
-  function onArchiveToggle(archived) {}
+  function onArchiveToggle(archived) {
+    console.log(archived);
+  }
   function onDelete() {}
 </script>
 
@@ -25,6 +27,9 @@
 {:then task}
   <div class="status">
     <span class="chip">{D_TASK_STATUS_LABELS[task.status]}</span>
+    {#if Boolean(task.flag)}
+      <span class="chip">{task.flag} 🚩</span>
+    {/if}
   </div>
   <h2>{task.title}</h2>
   <div class="date">

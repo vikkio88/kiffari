@@ -37,13 +37,12 @@
     tags = e.detail;
   }
 
-  export let onSave = (task) => {
-    console.log(task);
+  export let onSave = (projectId, task) => {
+    console.log("default onSave", { projectId, task });
   };
 
   function onSaveInternal() {
-    console.log("projectId", projectId);
-    onSave({
+    onSave(projectId, {
       title,
       description: text,
       status: status,

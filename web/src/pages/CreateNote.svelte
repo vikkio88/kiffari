@@ -3,7 +3,8 @@
   import NoteEditor from "../components/NoteEditor.svelte";
   import { protectedRoute } from "../libs/routes";
   import { catchLogout, createNote } from "../libs/api";
-  import Error from "../components/shared/ErrorToast.svelte";
+  import ErrorToast from "../components/shared/ErrorToast.svelte";
+  import Spinner from "../components/shared/Spinner.svelte";
   protectedRoute();
 
   let error = null;
@@ -39,10 +40,11 @@
   <NoteEditor {onSave} />
 {:else}
   <h2>Creating...</h2>
+  <Spinner />
 {/if}
 
 {#if Boolean(error)}
-  <Error {error} onDismiss={() => (error = null)} />
+  <ErrorToast {error} onDismiss={() => (error = null)} />
 {/if}
 
 <style>
