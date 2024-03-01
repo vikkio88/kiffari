@@ -15,10 +15,10 @@
     {#if !$appConfig.kiffari}
       <Link to="/" title="Dashboard">🪣</Link>
     {:else}
-      <Link to="/" title="Home">🏠</Link>
       <Link to="/kato" title="Kato">🪣</Link>
+      <Link to="/kiffari" title="Kiffari">🎫</Link>
     {/if}
-    <Link to="/archived" title="Archived">🗄️</Link>
+    <Link to="/archived-notes" title="Archived Notes">🗄️</Link>
     <Link to="/search" title="Search">🔍</Link>
     <button on:click={logout} title="Logout" class="logout">👋</button>
   </nav>
