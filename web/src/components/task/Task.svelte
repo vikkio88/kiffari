@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { D_TASK_STATUS_LABELS, D_TASK_WORKFLOW as WF } from "../const";
+  import { D_TASK_STATUS_LABELS, D_TASK_WORKFLOW as WF } from "../../const";
   import { navigate } from "svelte-routing";
   const d = createEventDispatcher();
   export let task = null;
