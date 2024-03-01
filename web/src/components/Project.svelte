@@ -1,11 +1,12 @@
 <script>
-  import Task from "./Task.svelte";
+  import Task from "./task/Task.svelte";
   import Accordion from "./shared/Accordion.svelte";
   import Controls from "./shared/Controls.svelte";
   import { D_TASK_STATUS as STATUS, D_TASK_STATUS_LABELS } from "../const";
   import { groupTasksByStatus } from "../libs/helpers/tasks";
   import Adder from "./task/Adder.svelte";
   import { addTask, catchLogout, moveTask } from "../libs/api";
+  import { navigate } from "svelte-routing";
   export let project = {};
 
   const defaultAccordion = {
@@ -28,7 +29,6 @@
     accordionsState[prevStatus] = false;
     accordionsState[task.status] = true;
     groupedTasks = groupedTasks;
-
 
     //TODO: add fallback if it fails
     moveTask(project.id, task.id, task.status);
@@ -114,7 +114,9 @@
 </div>
 
 <Controls>
-  <button class="big-control">Add Task 🎫</button>
+  <button class="big-control" on:click={() => navigate(`/projects/${project.id}/create-task`)}
+    >Add Task 🎫</button
+  >
 </Controls>
 
 <style>
