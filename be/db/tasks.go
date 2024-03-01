@@ -48,7 +48,7 @@ func (d *Db) UpdateTask(tu TaskUpdate, projectId string) (string, bool) {
 
 func (d *Db) SetArchivedTask(id string, archived bool) bool {
 	trx := d.g.Model(&Note{}).Where("id", id).Update("archived", archived)
-
+	// TODO: update project too and maybe move to generic update both action/transaction
 	return trx.RowsAffected == 1
 }
 
