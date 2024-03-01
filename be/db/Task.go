@@ -12,14 +12,6 @@ type StatusWrapper struct {
 	Status Status `json:"status" binding:"required,oneof=done in_progress todo backlog"`
 }
 
-/*
-	export const D_TASK_STATUS = {
-	    DONE: "done",
-	    IN_PROGRESS: "in_progress",
-	    TODO: "todo",
-	    BACKLOG: "backlog",
-	};
-*/
 const (
 	DONE        Status = "done"
 	IN_PROGRESS Status = "in_progress"
@@ -27,16 +19,6 @@ const (
 	BACKLOG     Status = "backlog"
 )
 
-/*
-	{
-		id: "",
-	    title: `Task`,
-	    description: null,
-	    status: STATUS.BACKLOG,
-	    flag: null,
-	    links: [], //Links to other tasks
-	};
-*/
 type Task struct {
 	Id          string  `gorm:"primarykey" json:"id"`
 	Title       string  `json:"title"`
