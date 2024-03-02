@@ -50,5 +50,11 @@
 {/if}
 
 {#if Boolean(error)}
-  <ErrorToast {error} onDismiss={() => (error = null)} />
+  <ErrorToast
+    {error}
+    onDismiss={() => {
+      error = null;
+      navigate(`/projects`);
+    }}
+  />
 {/if}

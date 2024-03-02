@@ -14,7 +14,7 @@
   }
 
   .background {
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
     border-radius: 8px;
     background-color: #242424;
   }

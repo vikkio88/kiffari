@@ -25,11 +25,16 @@
 {#await taskPromise}
   <Spinner />
 {:then task}
-  <div class="status">
-    <span class="chip">{D_TASK_STATUS_LABELS[task.status]}</span>
-    {#if Boolean(task.flag)}
-      <span class="chip">{task.flag} 🚩</span>
-    {/if}
+  <div class="topBar">
+    <button on:click={() => navigate(`/projects/${task.project_id}`)}>
+      🔙
+    </button>
+    <div class="status">
+      <span class="chip">{D_TASK_STATUS_LABELS[task.status]}</span>
+      {#if Boolean(task.flag)}
+        <span class="chip">{task.flag} 🚩</span>
+      {/if}
+    </div>
   </div>
   <h2>{task.title}</h2>
   <div class="date">
@@ -82,8 +87,12 @@
     color: #a3a3a3;
   }
 
-  .status {
+  .topBar {
     padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .chip {

@@ -5,7 +5,7 @@
 </script>
 
 {#if projects.length < 1}
-  <h3>No notes... 🤷</h3>
+  <h3>No projects... 🤷</h3>
 {:else}
   <div class="projects">
     {#each projects as project}

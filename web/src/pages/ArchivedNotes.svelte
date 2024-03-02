@@ -15,8 +15,3 @@
     {/if}
 {/await}
 
-<style>
-    h3.empty {
-        margin-top: 8rem;
-    }
-</style>
