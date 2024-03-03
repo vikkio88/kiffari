@@ -20,10 +20,9 @@
   let groupedTasks = groupTasksByStatus(Boolean(project) ? project.tasks : []);
   function onTaskUpdate({ detail }) {
     const { prevStatus, task } = detail;
-    //TODO: Update task status here
     groupedTasks[task.status].unshift(task);
     groupedTasks[prevStatus] = groupedTasks[prevStatus].filter(
-      (t) => t.id != task.id
+      (t) => t.id != task.id,
     );
 
     accordionsState[prevStatus] = false;
@@ -52,7 +51,7 @@
         if (resp.status === 400) {
           //TODO: notify error
           groupedTasks[status] = groupedTasks[status].filter((t) =>
-            Boolean(t.id)
+            Boolean(t.id),
           );
           groupedTasks = groupedTasks;
           return null;
@@ -64,7 +63,7 @@
         if (!Boolean(newTask)) return;
 
         groupedTasks[status] = groupedTasks[status].filter((t) =>
-          Boolean(t.id)
+          Boolean(t.id),
         );
         groupedTasks[status].unshift(newTask);
 
@@ -74,19 +73,26 @@
 </script>
 
 <div class="board">
-  <h2>{project.name}</h2>
-  <p>{project.description}</p>
+  <div class="details">
+    <h2>{project.name}</h2>
+    <p>{project.description}</p>
 
-  {#if Array.isArray(project.links)}
-    <div class="links">
-      <strong>🔗 Links</strong>
-      {#each project.links as link}
-        <div class="link">
-          <a href={link.href} target="_blank">{link.label}</a>
-        </div>
-      {/each}
+    {#if Array.isArray(project.links)}
+      <div class="links">
+        <strong>🔗 Links</strong>
+        {#each project.links as link}
+          <div class="link">
+            <a href={link.href} target="_blank">{link.label}</a>
+          </div>
+        {/each}
+      </div>
+    {/if}
+
+    <div class="projectControls">
+      <button>Archived Tasks</button>
+      <button title="Edit">📝</button>
     </div>
-  {/if}
+  </div>
 
   <!-- Progress -->
   {#each Object.values(STATUS) as status}
@@ -114,12 +120,32 @@
 </div>
 
 <Controls>
-  <button class="big-control" on:click={() => navigate(`/projects/${project.id}/create-task`)}
+  <button
+    class="big-control"
+    on:click={() => navigate(`/projects/${project.id}/create-task`)}
     >Add Task 🎫</button
   >
 </Controls>
 
 <style>
+  .details {
+    border-radius: 10px;
+    padding: 2rem 0 0 0;
+  }
+  .projectControls {
+    visibility: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+  }
+  .details:hover {
+    background-color: #3a3a3a;
+  }
+
+  .details:hover .projectControls {
+    visibility: visible;
+  }
   h2 {
     margin: 0;
   }
