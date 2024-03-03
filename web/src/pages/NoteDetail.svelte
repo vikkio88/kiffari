@@ -7,21 +7,22 @@
   import { protectedRoute } from "../libs/routes";
   import {
     getNoteDetails,
-    deleteNote,
+    del,
     catchLogout,
-    archiveNote,
-    unArchiveNote,
+    archive,
+    unarchive,
   } from "../libs/api";
   import DateSeverity from "../components/shared/DateSeverity.svelte";
   import Header from "../components/shared/Header.svelte";
   import { getDate } from "../libs/dates";
+  import DashedHead from "../components/shared/DashedHead.svelte";
   protectedRoute();
 
   export let id = "";
   let notePromise = getNoteDetails(id);
 
   async function onDelete() {
-    const resp = await deleteNote(id);
+    const resp = await del("notes", id);
     if (resp.status === 401) {
       catchLogout();
     }
@@ -32,10 +33,14 @@
   }
 
   async function onArchiveToggle(isArchived) {
-    const resp = await (isArchived ? unArchiveNote(id) : archiveNote(id));
+    const resp = await (isArchived
+      ? unarchive("notes", id)
+      : archive("notes", id));
     if (resp.ok) {
       window.location.reload();
     }
+
+    //TODO: add catchlogout
   }
 
   function onDownload(title, body, tags) {
@@ -60,7 +65,7 @@
 {#await notePromise then note}
   <div class="note">
     {#if note.archived}
-      <h3 class="archived">Archived</h3>
+      <DashedHead>Archived</DashedHead>
     {/if}
     <h2>{note.title}</h2>
     <div class="dates">
@@ -112,11 +117,6 @@
   .note {
     border-radius: 10px;
     padding: 0 2rem;
-  }
-
-  h3.archived {
-    color: #a3a3a3;
-    border-bottom: dashed 1px #a3a3a3;
   }
 
   .note h2 {

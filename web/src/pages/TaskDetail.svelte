@@ -4,27 +4,47 @@
   import Spinner from "../components/shared/Spinner.svelte";
   import Header from "../components/shared/Header.svelte";
   import { navigate } from "svelte-routing";
-  import { getTask } from "../libs/api";
+  import { archive, getTask, unarchive, del, catchLogout } from "../libs/api";
   import { getDate } from "../libs/dates";
   import { protectedRoute } from "../libs/routes";
   import { D_TASK_STATUS_LABELS } from "../const";
   import Controls from "../components/shared/Controls.svelte";
   import ConfirmButton from "../components/shared/ConfirmButton.svelte";
+  import DashedHead from "../components/shared/DashedHead.svelte";
   protectedRoute();
 
   export let id = "";
 
   let taskPromise = getTask(id);
 
-  function onArchiveToggle(archived) {
-    console.log(archived);
+  async function onArchiveToggle(isArchived) {
+    const resp = await (isArchived
+      ? unarchive("tasks", id)
+      : archive("tasks", id));
+    if (resp.ok) {
+      window.location.reload();
+    }
+
+    //TODO: catch logout
   }
-  function onDelete() {}
+  async function onDelete(projectId) {
+    const resp = await del("tasks", id);
+    if (resp.status === 401) {
+      catchLogout();
+    }
+
+    if (resp.ok) {
+      navigate(`/projects/${projectId}`, { replace: true });
+    }
+  }
 </script>
 
 {#await taskPromise}
   <Spinner />
 {:then task}
+  {#if task.archived}
+    <DashedHead>Archived</DashedHead>
+  {/if}
   <div class="topBar">
     <button on:click={() => navigate(`/projects/${task.project_id}`)}>
       🔙
@@ -68,7 +88,11 @@
         🔄
       {/if}
     </ConfirmButton>
-    <ConfirmButton title="Delete" confirmLabel="Delete?" onConfirmed={onDelete}>
+    <ConfirmButton
+      title="Delete"
+      confirmLabel="Delete?"
+      onConfirmed={() => onDelete(task.project_id)}
+    >
       🗑️
     </ConfirmButton>
   </Controls>

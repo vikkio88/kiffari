@@ -83,4 +83,27 @@ func ProjectRoutes(r gin.IRouter, d *db.Db) {
 		task, ok := d.GetTaskById(id)
 		SuccessOr404(c, task, ok)
 	})
+
+	r.POST("/tasks/:id/archive", func(c *gin.Context) {
+		id := c.Params.ByName("id")
+		ok := d.SetArchivedTask(id, true)
+		SuccessOr400(c, gin.H{"result": id}, ok)
+	})
+
+	r.DELETE("/tasks/:id/archive", func(c *gin.Context) {
+		id := c.Params.ByName("id")
+		ok := d.SetArchivedTask(id, false)
+		SuccessOr400(c, gin.H{"result": id}, ok)
+	})
+
+	r.DELETE("/tasks/:id", func(c *gin.Context) {
+		id := c.Params.ByName("id")
+		ok := d.DeleteTask(id)
+		if ok {
+			c.JSON(http.StatusOK, gin.H{"result": true})
+			return
+		}
+
+		c.JSON(http.StatusBadRequest, gin.H{"error": "cannot delete"})
+	})
 }
