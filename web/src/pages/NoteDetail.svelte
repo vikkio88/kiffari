@@ -40,7 +40,9 @@
       window.location.reload();
     }
 
-    //TODO: add catchlogout
+    if (resp.status === 401) {
+      catchLogout();
+    }
   }
 
   function onDownload(title, body, tags) {

@@ -25,7 +25,9 @@
       window.location.reload();
     }
 
-    //TODO: catch logout
+    if (resp.status === 401) {
+      catchLogout();
+    }
   }
   async function onDelete(projectId) {
     const resp = await del("tasks", id);
