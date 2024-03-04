@@ -18,7 +18,7 @@
   {:else}
     <div class="internal">
       {confirmLabel}
-      <button on:click|stopPropagation={() => (clicked = false)}> ❌ </button>
+      <button on:click|stopPropagation={() => (clicked = false)}>❌</button>
       <button on:click|stopPropagation={() => onConfirmed()}>👍</button>
     </div>
   {/if}

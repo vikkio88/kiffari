@@ -7,6 +7,7 @@
   import Adder from "./task/Adder.svelte";
   import { addTask, catchLogout, moveTask } from "../libs/api";
   import { navigate } from "svelte-routing";
+  import ProjectEditor from "./ProjectEditor.svelte";
   export let project = {};
 
   const defaultAccordion = {
@@ -18,11 +19,12 @@
 
   let accordionsState = { ...defaultAccordion };
   let groupedTasks = groupTasksByStatus(Boolean(project) ? project.tasks : []);
+  let editingProject = false;
   function onTaskUpdate({ detail }) {
     const { prevStatus, task } = detail;
     groupedTasks[task.status].unshift(task);
     groupedTasks[prevStatus] = groupedTasks[prevStatus].filter(
-      (t) => t.id != task.id,
+      (t) => t.id != task.id
     );
 
     accordionsState[prevStatus] = false;
@@ -51,7 +53,7 @@
         if (resp.status === 400) {
           //TODO: notify error
           groupedTasks[status] = groupedTasks[status].filter((t) =>
-            Boolean(t.id),
+            Boolean(t.id)
           );
           groupedTasks = groupedTasks;
           return null;
@@ -63,7 +65,7 @@
         if (!Boolean(newTask)) return;
 
         groupedTasks[status] = groupedTasks[status].filter((t) =>
-          Boolean(t.id),
+          Boolean(t.id)
         );
         groupedTasks[status].unshift(newTask);
 
@@ -74,23 +76,39 @@
 
 <div class="board">
   <div class="details">
-    <h2>{project.name}</h2>
-    <p>{project.description}</p>
+    {#if !editingProject}
+      <h2>{project.name}</h2>
+      <p>{project.description}</p>
 
-    {#if Array.isArray(project.links)}
-      <div class="links">
-        <strong>🔗 Links</strong>
-        {#each project.links as link}
-          <div class="link">
-            <a href={link.href} target="_blank">{link.label}</a>
-          </div>
-        {/each}
-      </div>
+      {#if Array.isArray(project.links)}
+        <div class="links">
+          <strong>🔗 Links</strong>
+          {#each project.links as link}
+            <div class="link">
+              <a href={link.href} target="_blank">{link.label}</a>
+            </div>
+          {/each}
+        </div>
+      {/if}
+    {:else}
+      <ProjectEditor
+        name={project.name}
+        description={project.description}
+        links={project.links}
+      />
     {/if}
 
     <div class="projectControls">
-      <button>Archived Tasks</button>
-      <button title="Edit">📝</button>
+      {#if !editingProject}
+        <button>Archived Tasks</button>
+        <button title="Edit" on:click={() => (editingProject = true)}>
+          📝
+        </button>
+      {:else}
+        <button title="Edit" on:click={() => (editingProject = false)}>
+          ❌ 
+        </button>
+      {/if}
     </div>
   </div>
 
@@ -137,7 +155,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
   }
   .details:hover {
     background-color: #3a3a3a;
