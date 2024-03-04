@@ -100,5 +100,5 @@ type Link struct {
 }
 
 type ProjectConfig struct {
-	WipLimit int `json:"wip_limit" binding:"required"`
+	WipLimit int `json:"wip_limit"`
 }

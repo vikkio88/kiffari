@@ -15,13 +15,13 @@ func (d *Db) CreateProject(p ProjectCreate) (ProjectDto, bool) {
 	return pc.Dto(), trx.RowsAffected == 1
 }
 
-func (d *Db) UpdateProject(p ProjectUpdate) (string, bool) {
+func (d *Db) UpdateProject(p ProjectUpdate) (ProjectDto, bool) {
 	pu := p.Project()
 	trx := d.g.Omit("created_at").Save(&pu)
 	if trx.RowsAffected != 1 {
-		return "", false
+		return ProjectDto{}, false
 	}
-	return p.Id, true
+	return pu.Dto(), true
 }
 
 func (d *Db) GetAllProjects() []ProjectDto {

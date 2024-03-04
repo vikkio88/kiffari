@@ -2,17 +2,33 @@
   import { onMount } from "svelte";
 
   let input;
+  export let id = null;
   export let name = null;
   export let description = null;
+  export let config = { wip_limit: 0 };
   export let links = [];
+
+  export let onSave = (projectDetails) => {
+    console.log(projectDetails);
+  };
+
+  function onSaveInternal() {
+    onSave({ id, name, description, links, config });
+  }
 
   onMount(() => {
     input.focus();
   });
 </script>
 
-<div class="editor">
-  <input bind:this={input} type="text" required bind:value={name} placeholder="New Project title..." />
+<form class="editor" on:submit|stopPropagation|preventDefault={onSaveInternal}>
+  <input
+    bind:this={input}
+    type="text"
+    required
+    bind:value={name}
+    placeholder="New Project title..."
+  />
   <textarea cols="20" rows="4" required bind:value={description} />
 
   {#if Array.isArray(links) && links.length > 0}
@@ -25,7 +41,8 @@
       {/each}
     </div>
   {/if}
-</div>
+  <button>Save</button>
+</form>
 
 <style>
   .editor {
@@ -37,7 +54,7 @@
 
   .editor input {
     padding: 1em;
-    font-size: 18px;
+    font-size: 16px;
     border-radius: 10px;
   }
 

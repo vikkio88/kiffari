@@ -5,7 +5,13 @@
   import { D_TASK_STATUS as STATUS, D_TASK_STATUS_LABELS } from "../const";
   import { groupTasksByStatus } from "../libs/helpers/tasks";
   import Adder from "./task/Adder.svelte";
-  import { addTask, catchLogout, moveTask } from "../libs/api";
+  import {
+    addTask,
+    catchLogout,
+    moveTask,
+    updateProject,
+    updateTask,
+  } from "../libs/api";
   import { navigate } from "svelte-routing";
   import ProjectEditor from "./ProjectEditor.svelte";
   export let project = {};
@@ -20,11 +26,12 @@
   let accordionsState = { ...defaultAccordion };
   let groupedTasks = groupTasksByStatus(Boolean(project) ? project.tasks : []);
   let editingProject = false;
+
   function onTaskUpdate({ detail }) {
     const { prevStatus, task } = detail;
     groupedTasks[task.status].unshift(task);
     groupedTasks[prevStatus] = groupedTasks[prevStatus].filter(
-      (t) => t.id != task.id
+      (t) => t.id != task.id,
     );
 
     accordionsState[prevStatus] = false;
@@ -53,7 +60,7 @@
         if (resp.status === 400) {
           //TODO: notify error
           groupedTasks[status] = groupedTasks[status].filter((t) =>
-            Boolean(t.id)
+            Boolean(t.id),
           );
           groupedTasks = groupedTasks;
           return null;
@@ -65,12 +72,20 @@
         if (!Boolean(newTask)) return;
 
         groupedTasks[status] = groupedTasks[status].filter((t) =>
-          Boolean(t.id)
+          Boolean(t.id),
         );
         groupedTasks[status].unshift(newTask);
 
         groupedTasks = groupedTasks;
       });
+  }
+
+  async function onProjectSave(newProject) {
+    editingProject = false;
+    const updatedProject = await updateProject(newProject.id, newProject);
+    project = { ...project, ...updatedProject };
+
+    //TODO: handle errors in case?
   }
 </script>
 
@@ -92,9 +107,11 @@
       {/if}
     {:else}
       <ProjectEditor
+        id={project.id}
         name={project.name}
         description={project.description}
         links={project.links}
+        onSave={onProjectSave}
       />
     {/if}
 
@@ -106,7 +123,7 @@
         </button>
       {:else}
         <button title="Edit" on:click={() => (editingProject = false)}>
-          ❌ 
+          ❌
         </button>
       {/if}
     </div>

@@ -71,8 +71,8 @@ func ProjectRoutes(r gin.IRouter, d *db.Db) {
 		err := c.Bind(&updateProject)
 		if err == nil {
 			updateProject.Id = c.Params.ByName("id")
-			id, ok := d.UpdateProject(updateProject)
-			SuccessOr400(c, gin.H{"result": id}, ok)
+			p, ok := d.UpdateProject(updateProject)
+			SuccessOr400(c, p, ok)
 			return
 		}
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
