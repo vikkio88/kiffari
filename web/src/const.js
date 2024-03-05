@@ -16,9 +16,32 @@ export const D_TASK_STATUS_LABELS = {
     [D_TASK_STATUS.BACKLOG]: "Backlog 🗃️",
 };
 
+export const D_TASK_STATUS_EMOJIS = {
+    [D_TASK_STATUS.DONE]: "✅",
+    [D_TASK_STATUS.IN_PROGRESS]: "🔨",
+    [D_TASK_STATUS.TODO]: "📋",
+    [D_TASK_STATUS.BACKLOG]: "🗃️",
+};
+
 export const D_TASK_WORKFLOW = {
     [D_TASK_STATUS.DONE]: { from: D_TASK_STATUS.IN_PROGRESS, to: null },
     [D_TASK_STATUS.IN_PROGRESS]: { from: D_TASK_STATUS.TODO, to: D_TASK_STATUS.DONE },
     [D_TASK_STATUS.TODO]: { from: D_TASK_STATUS.BACKLOG, to: D_TASK_STATUS.IN_PROGRESS },
     [D_TASK_STATUS.BACKLOG]: { from: null, to: D_TASK_STATUS.TODO },
+};
+
+export const D_TASK_CATEGORIES = {
+    FEATURE: "feature",
+    BUG: "bug",
+    DOC: "doc",
+    SPIKE: "spike",
+    CLEANUP: "cleanup",
+};
+
+export const D_TASK_CATEGORY_LABELS = {
+    [D_TASK_CATEGORIES.FEATURE]: "💡",
+    [D_TASK_CATEGORIES.BUG]: "🐞",
+    [D_TASK_CATEGORIES.DOC]: "📄",
+    [D_TASK_CATEGORIES.SPIKE]: "⚡",
+    [D_TASK_CATEGORIES.CLEANUP]: "🧹",
 };
