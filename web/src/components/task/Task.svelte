@@ -1,6 +1,11 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  import { D_TASK_STATUS_LABELS, D_TASK_WORKFLOW as WF } from "../../const";
+  import {
+    D_TASK_STATUS_LABELS,
+    D_TASK_WORKFLOW as WF,
+    D_TASK_CATEGORY_LABELS as CATEGORY_LABELS,
+  } from "../../const";
+
   import { navigate } from "svelte-routing";
   const d = createEventDispatcher();
   export let task = null;
@@ -20,18 +25,21 @@
     </button>
   </div>
   <div class="mainInfo">
-    <h2>{task.title}</h2>
     <div class="info">
+      <div title={task.category}>
+        {CATEGORY_LABELS[task.category]}
+      </div>
       {#if Array.isArray(task.links) && task.links.length > 0}
-        <div class="crs-pointer" title="Has linked Tasks">🔗</div>
+        <div title="Has linked Tasks">🔗</div>
       {/if}
       {#if Boolean(task.flag)}
-        <div class="crs-pointer" title={`FLAGGED: ${task.flag}`}>🚩</div>
+        <div title={`FLAGGED: ${task.flag}`}>🚩</div>
       {/if}
       {#if Boolean(task.description)}
-        <div class="crs-pointer" title="Description">📄</div>
+        <div title="Description">📄</div>
       {/if}
     </div>
+    <h2>{task.title}</h2>
   </div>
   <div class="controls">
     {#if task.status && WF[task.status].to}
@@ -70,7 +78,7 @@
   .mainInfo {
     flex: 1 1 auto;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   }
@@ -82,6 +90,12 @@
     align-items: center;
     justify-content: center;
     gap: 0.4rem;
+    font-size: 0.8rem;
+  }
+
+  .info > div {
+    cursor: help;
+    padding: 0.5rem 0.5rem;
   }
 
   .controls {

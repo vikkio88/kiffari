@@ -4,7 +4,10 @@
   import TagSearch from "../TagSearch.svelte";
   import Controls from "../shared/Controls.svelte";
   import Status from "./Status.svelte";
-  import { D_TASK_STATUS } from "../../const";
+  import {
+    D_TASK_STATUS as STATUS,
+    D_TASK_CATEGORIES as CATEGORIES,
+  } from "../../const";
   import Flag from "./Flag.svelte";
 
   export let projectId = null;
@@ -13,8 +16,9 @@
   export let text = "";
   export let flag = null;
 
-  export let status = D_TASK_STATUS.BACKLOG;
+  export let status = STATUS.BACKLOG;
   export let tags = [];
+  export let category = CATEGORIES.FEATURE;
 
   let showPreview = false;
 
@@ -45,7 +49,8 @@
     onSave(projectId, {
       title,
       description: text,
-      status: status,
+      status,
+      category,
       tags,
       flag,
     });
