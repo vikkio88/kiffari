@@ -11,6 +11,7 @@
   export let onSave = (projectDetails) => {
     console.log(projectDetails);
   };
+  export let onClose = null;
 
   function onSaveInternal() {
     onSave({ id, name, description, links, config });
@@ -19,29 +20,50 @@
   onMount(() => {
     input.focus();
   });
+
+  // TODO: add links editor and config editor
 </script>
 
-<form class="editor" on:submit|stopPropagation|preventDefault={onSaveInternal}>
-  <input
-    bind:this={input}
-    type="text"
-    required
-    bind:value={name}
-    placeholder="New Project title..."
-  />
-  <textarea cols="20" rows="4" required bind:value={description} />
+<form on:submit|stopPropagation|preventDefault={onSaveInternal}>
+  <div class="editor">
+    <input
+      bind:this={input}
+      type="text"
+      required
+      bind:value={name}
+      placeholder="New Project title..."
+    />
+    <textarea
+      placeholder="A small project description..."
+      cols="20"
+      rows="4"
+      required
+      bind:value={description}
+    />
 
-  {#if Array.isArray(links) && links.length > 0}
-    <div class="links">
-      <strong>🔗 Links</strong>
-      {#each links as link}
-        <div class="link">
-          <a href={link.href} target="_blank">{link.label}</a>
-        </div>
-      {/each}
-    </div>
-  {/if}
-  <button>Save</button>
+    {#if Array.isArray(links) && links.length > 0}
+      <div class="links">
+        <strong>🔗 Links</strong>
+        {#each links as link}
+          <div class="link">
+            <a href={link.href} target="_blank">{link.label}</a>
+          </div>
+        {/each}
+      </div>
+    {/if}
+  </div>
+  <div class="ctrls">
+    {#if Boolean(onClose)}
+      <button
+        class="smaller"
+        title="Edit"
+        on:click|preventDefault|stopPropagation={onClose}
+      >
+        ❌
+      </button>
+    {/if}
+    <button>Save</button>
+  </div>
 </form>
 
 <style>
@@ -50,6 +72,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 0.5rem;
   }
 
   .editor input {
@@ -62,5 +85,12 @@
     font-size: 16px;
     padding: 1em;
     border-radius: 10px;
+  }
+
+  .ctrls {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 0 1rem 1rem 0;
   }
 </style>

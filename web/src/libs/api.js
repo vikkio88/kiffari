@@ -133,6 +133,16 @@ export function getProject(id) {
   return fetch(`${KATO_API_URL}/projects/${id}`, { ...makeHeaders() }).then(parseOrThrow).catch(catchLogout);
 }
 
+export function createProject(project) {
+  return fetch(`
+  ${KATO_API_URL}/projects`,
+    {
+      method: "POST", ...makeHeaders(),
+      body: JSON.stringify(project)
+    }
+  );
+}
+
 export function updateProject(id, project) {
   return fetch(`
   ${KATO_API_URL}/projects/${id}`,

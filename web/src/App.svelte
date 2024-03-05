@@ -20,6 +20,7 @@
   import KiffariDash from "./pages/KiffariDash.svelte";
   import EditTask from "./pages/EditTask.svelte";
   import CreateTask from "./pages/CreateTask.svelte";
+  import CreateProject from "./pages/CreateProject.svelte";
 
   let url = "";
   let configPromise = getConfig()
@@ -57,6 +58,7 @@
       {#if config.kiffari}
         <Route path="/" component={Main} />
         <Route path="/kiffari" component={KiffariDash} />
+        <Route path="/create-project" component={CreateProject} />
         <Route path="/projects/:id" let:params>
           <ProjectDetails id={params.id} />
         </Route>

@@ -2,16 +2,14 @@
   import Task from "./task/Task.svelte";
   import Accordion from "./shared/Accordion.svelte";
   import Controls from "./shared/Controls.svelte";
-  import { D_TASK_STATUS as STATUS, D_TASK_STATUS_LABELS } from "../const";
+  import {
+    D_TASK_STATUS as STATUS,
+    D_TASK_STATUS_LABELS,
+    D_TASK_CATEGORIES as CATEGORIES,
+  } from "../const";
   import { groupTasksByStatus } from "../libs/helpers/tasks";
   import Adder from "./task/Adder.svelte";
-  import {
-    addTask,
-    catchLogout,
-    moveTask,
-    updateProject,
-    updateTask,
-  } from "../libs/api";
+  import { addTask, catchLogout, moveTask, updateProject } from "../libs/api";
   import { navigate } from "svelte-routing";
   import ProjectEditor from "./ProjectEditor.svelte";
   export let project = {};
@@ -31,7 +29,7 @@
     const { prevStatus, task } = detail;
     groupedTasks[task.status].unshift(task);
     groupedTasks[prevStatus] = groupedTasks[prevStatus].filter(
-      (t) => t.id != task.id,
+      (t) => t.id != task.id
     );
 
     accordionsState[prevStatus] = false;
@@ -43,7 +41,7 @@
   }
 
   function onAdd(task, status) {
-    task = { ...task, status, tags: [] };
+    task = { ...task, status, category: CATEGORIES.FEATURE, tags: [] };
     groupedTasks[task.status].unshift(task);
     groupedTasks = groupedTasks;
     addTask(project.id, task)
@@ -60,7 +58,7 @@
         if (resp.status === 400) {
           //TODO: notify error
           groupedTasks[status] = groupedTasks[status].filter((t) =>
-            Boolean(t.id),
+            Boolean(t.id)
           );
           groupedTasks = groupedTasks;
           return null;
@@ -72,7 +70,7 @@
         if (!Boolean(newTask)) return;
 
         groupedTasks[status] = groupedTasks[status].filter((t) =>
-          Boolean(t.id),
+          Boolean(t.id)
         );
         groupedTasks[status].unshift(newTask);
 
@@ -95,7 +93,7 @@
       <h2>{project.name}</h2>
       <p>{project.description}</p>
 
-      {#if Array.isArray(project.links)}
+      {#if Array.isArray(project.links) && project.links.length > 0}
         <div class="links">
           <strong>🔗 Links</strong>
           {#each project.links as link}
@@ -112,6 +110,7 @@
         description={project.description}
         links={project.links}
         onSave={onProjectSave}
+        onClose={() => (editingProject = false)}
       />
     {/if}
 
@@ -120,10 +119,6 @@
         <button>Archived Tasks</button>
         <button title="Edit" on:click={() => (editingProject = true)}>
           📝
-        </button>
-      {:else}
-        <button title="Edit" on:click={() => (editingProject = false)}>
-          ❌
         </button>
       {/if}
     </div>
