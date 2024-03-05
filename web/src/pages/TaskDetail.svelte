@@ -7,7 +7,11 @@
   import { archive, getTask, unarchive, del, catchLogout } from "../libs/api";
   import { getDate } from "../libs/dates";
   import { protectedRoute } from "../libs/routes";
-  import { D_TASK_STATUS_LABELS } from "../const";
+  import {
+    D_TASK_STATUS_LABELS as STATUS_LABELS,
+    D_TASK_CATEGORY_LABELS as CATEGORY_LABELS,
+    D_TASK_STATUS_EMOJIS as STATUS_EMOJIS,
+  } from "../const";
   import Controls from "../components/shared/Controls.svelte";
   import ConfirmButton from "../components/shared/ConfirmButton.svelte";
   import DashedHead from "../components/shared/DashedHead.svelte";
@@ -52,7 +56,12 @@
       🔙
     </button>
     <div class="status">
-      <span class="chip">{D_TASK_STATUS_LABELS[task.status]}</span>
+      <span class="chip" title={STATUS_LABELS[task.status]}
+        >{STATUS_EMOJIS[task.status]}</span
+      >
+      <span class="chip" title={task.category}
+        >{CATEGORY_LABELS[task.category]}</span
+      >
       {#if Boolean(task.flag)}
         <span class="chip">{task.flag} 🚩</span>
       {/if}
@@ -124,7 +133,8 @@
   .chip {
     border: solid 2px #333;
     border-radius: 10px;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2rem;
     margin: 0 0.5rem;
+    cursor: help;
   }
 </style>

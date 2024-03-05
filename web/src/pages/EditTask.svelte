@@ -44,6 +44,7 @@
       tags={task.tags}
       flag={task.flag}
       status={task.status}
+      category={task.category}
       onSave={onUpdate}
     />
   {/await}
