@@ -19,17 +19,29 @@ const (
 	BACKLOG     Status = "backlog"
 )
 
+type Category string
+
+const (
+	FEATURE Category = "feature"
+	BUG     Category = "bug"
+	DOC     Category = "doc"
+	SPIKE   Category = "spike"
+	CLEANUP Category = "cleanup"
+)
+
 type Task struct {
-	Id          string  `gorm:"primarykey" json:"id"`
-	Title       string  `json:"title"`
-	Description string  `json:"description"`
-	Status      Status  `json:"status" binding:"required,oneof=done in_progress todo backlog"`
-	Flag        *string `json:"flag"`
-	Archived    bool    `json:"archived"`
+	Id          string   `gorm:"primarykey" json:"id"`
+	Title       string   `json:"title"`
+	Description string   `json:"description"`
+	Status      Status   `json:"status" binding:"required,oneof=done in_progress todo backlog"`
+	Category    Category `json:"category" binding:"required,oneof=feature bug doc spike cleanup"`
+	Flag        *string  `json:"flag"`
+	Archived    bool     `json:"archived"`
 
 	Tags []*Tag `gorm:"many2many:task_tags;constraint:OnDelete:CASCADE" json:"tags,omitempty"`
 
 	//LINKS
+	// https://gorm.io/docs/has_many.html#Self-Referential-Has-Many
 
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -39,11 +51,12 @@ type Task struct {
 }
 
 type TaskCreate struct {
-	Title       string  `json:"title" binding:"required"`
-	Description string  `json:"description"`
-	Status      Status  `json:"status" binding:"required,oneof=done in_progress todo backlog"`
-	Flag        *string `json:"flag"`
-	Tags        []*Tag  `json:"tags" binding:"required"`
+	Title       string   `json:"title" binding:"required"`
+	Description string   `json:"description"`
+	Status      Status   `json:"status" binding:"required,oneof=done in_progress todo backlog"`
+	Category    Category `json:"category" binding:"required,oneof=feature bug doc spike cleanup"`
+	Flag        *string  `json:"flag"`
+	Tags        []*Tag   `json:"tags" binding:"required"`
 }
 
 func (t *TaskCreate) Task(projectId string) Task {
@@ -58,6 +71,7 @@ func (t *TaskCreate) Task(projectId string) Task {
 		Title:       t.Title,
 		Description: t.Description,
 		Status:      t.Status,
+		Category:    t.Category,
 		Flag:        t.Flag,
 		Tags:        t.Tags,
 		ProjectId:   projectId,
@@ -82,6 +96,7 @@ func (t *TaskUpdate) Task(projectId string) Task {
 		Title:       t.Title,
 		Description: t.Description,
 		Status:      t.Status,
+		Category:    t.Category,
 		Flag:        t.Flag,
 		Tags:        t.Tags,
 		ProjectId:   projectId,

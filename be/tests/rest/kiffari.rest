@@ -1,5 +1,5 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDk1OTMzMjJ9.K-NOGLWvI6oKoRJSjdYRb9O0zoRk-uV0bb0uSEJlTUk
-@projectId = 01HR0EAGTXC26A3PYBN4G2Y0RX
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDk2NTAxMzN9.K9R1OmJIKJ3lStEdhVKGRWdY-wYorY9O1wjtt2KGvxk
+@projectId = 01HQJD00K7HVKP3MFQQWFG4X68
 @taskId = 01HQTH10ZVCZQDKTBQD070REZB
 
 ###
@@ -46,9 +46,10 @@ content-type: application/json
 Authorization: {{ token }}
 
 {
-    "title":"Some Other Task",
+    "title":"SomeXXX Other Task",
     "description": "Some stuff and things",
     "status": "in_progress",
+    "category": "feature",
     "tags":[ {"label": "blumbazorg"}]
 }
 
@@ -62,6 +63,7 @@ Authorization: {{ token }}
       "title": "Some Updated Task",
       "description": "Some stuff and things",
       "status": "backlog",
+      "category": "feature",
       "tags": [
         {
           "id": "01HQKJFEMFFA8SJ99XCC42NR59",
