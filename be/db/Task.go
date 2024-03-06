@@ -35,6 +35,7 @@ type Task struct {
 	Description string   `json:"description"`
 	Status      Status   `json:"status" binding:"required,oneof=done in_progress todo backlog"`
 	Category    Category `json:"category" binding:"required,oneof=feature bug doc spike cleanup"`
+	Priority    int      `json:"priority"`
 	Flag        *string  `json:"flag"`
 	Archived    bool     `json:"archived"`
 
@@ -47,7 +48,7 @@ type Task struct {
 	UpdatedAt time.Time `json:"updated_at"`
 
 	ProjectId string  `json:"project_id"`
-	Project   Project `json:"-"`
+	Project   Project `json:"project,omitempty"`
 }
 
 type TaskCreate struct {
@@ -55,6 +56,7 @@ type TaskCreate struct {
 	Description string   `json:"description"`
 	Status      Status   `json:"status" binding:"required,oneof=done in_progress todo backlog"`
 	Category    Category `json:"category" binding:"required,oneof=feature bug doc spike cleanup"`
+	Priority    int      `json:"priority"`
 	Flag        *string  `json:"flag"`
 	Tags        []*Tag   `json:"tags" binding:"required"`
 }
@@ -72,6 +74,7 @@ func (t *TaskCreate) Task(projectId string) Task {
 		Description: t.Description,
 		Status:      t.Status,
 		Category:    t.Category,
+		Priority:    t.Priority,
 		Flag:        t.Flag,
 		Tags:        t.Tags,
 		ProjectId:   projectId,
@@ -97,6 +100,7 @@ func (t *TaskUpdate) Task(projectId string) Task {
 		Description: t.Description,
 		Status:      t.Status,
 		Category:    t.Category,
+		Priority:    t.Priority,
 		Flag:        t.Flag,
 		Tags:        t.Tags,
 		ProjectId:   projectId,
