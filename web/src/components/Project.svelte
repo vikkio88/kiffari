@@ -9,9 +9,16 @@
   } from "../const";
   import { groupTasksByStatus } from "../libs/helpers/tasks";
   import Adder from "./task/Adder.svelte";
-  import { addTask, catchLogout, moveTask, updateProject } from "../libs/api";
+  import {
+    addTask,
+    catchLogout,
+    del,
+    moveTask,
+    updateProject,
+  } from "../libs/api";
   import { navigate } from "svelte-routing";
   import ProjectEditor from "./ProjectEditor.svelte";
+  import ConfirmButton from "./shared/ConfirmButton.svelte";
   export let project = {};
 
   const defaultAccordion = {
@@ -29,7 +36,7 @@
     const { prevStatus, task } = detail;
     groupedTasks[task.status].unshift(task);
     groupedTasks[prevStatus] = groupedTasks[prevStatus].filter(
-      (t) => t.id != task.id
+      (t) => t.id != task.id,
     );
 
     accordionsState[prevStatus] = false;
@@ -58,7 +65,7 @@
         if (resp.status === 400) {
           //TODO: notify error
           groupedTasks[status] = groupedTasks[status].filter((t) =>
-            Boolean(t.id)
+            Boolean(t.id),
           );
           groupedTasks = groupedTasks;
           return null;
@@ -70,7 +77,7 @@
         if (!Boolean(newTask)) return;
 
         groupedTasks[status] = groupedTasks[status].filter((t) =>
-          Boolean(t.id)
+          Boolean(t.id),
         );
         groupedTasks[status].unshift(newTask);
 
@@ -84,6 +91,16 @@
     project = { ...project, ...updatedProject };
 
     //TODO: handle errors in case?
+  }
+
+  async function onDelete() {
+    const res = await del("projects", project.id);
+    if (res.ok) {
+      navigate("/kiffari");
+      return;
+    }
+
+    //TODO: handle error
   }
 </script>
 
@@ -116,10 +133,21 @@
 
     <div class="projectControls">
       {#if !editingProject}
-        <button
-          on:click={() => navigate(`/projects/${project.id}/archived-tasks`)}
-          >Archived Tasks</button
-        >
+        <div>
+          <ConfirmButton
+            title="Delete"
+            confirmLabel="Delete?"
+            onConfirmed={onDelete}
+          >
+            🗑️
+          </ConfirmButton>
+          <button
+            title="Archived Tasks"
+            on:click={() => navigate(`/projects/${project.id}/archived-tasks`)}
+          >
+            Tasks 🗄️
+          </button>
+        </div>
         <button title="Edit" on:click={() => (editingProject = true)}>
           📝
         </button>

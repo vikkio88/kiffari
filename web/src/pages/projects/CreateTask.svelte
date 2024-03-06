@@ -45,7 +45,7 @@
     {error}
     onDismiss={() => {
       error = null;
-      navigate(`/projects`);
+      navigate(`/kiffari`);
     }}
   />
 {/if}

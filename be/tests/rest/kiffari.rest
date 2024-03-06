@@ -1,5 +1,15 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDk3MzIzOTF9.XT9rjIS4UJ0e9Dockq-iV05RHLm1acmvLD2jYqX3s1o
-@projectId = 01HQJD00K7HVKP3MFQQWFG4X68
+# @name login
+POST http://localhost:5111/api/login
+content-type: application/json
+
+{
+    "passkey": "password"
+}
+
+###
+
+@token = {{login.response.body.token}}
+@projectId = 01HRAR67T9HHS3GQZ1HS2QZ054
 @taskId = 01HQTH10ZVCZQDKTBQD070REZB
 
 ###
@@ -8,6 +18,10 @@ Authorization: {{ token }}
 
 ###
 GET http://localhost:5111/api/projects/{{projectId}}
+Authorization: {{ token }}
+
+###
+DELETE  http://localhost:5111/api/projects/{{projectId}}
 Authorization: {{ token }}
 
 ### Project byu Id with Archived Tasks

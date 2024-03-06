@@ -85,6 +85,17 @@ func ProjectRoutes(r gin.IRouter, d *db.Db) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	})
 
+	r.DELETE("/projects/:id", func(c *gin.Context) {
+		id := c.Params.ByName("id")
+		ok := d.DeleteProject(id)
+		if ok {
+			c.JSON(http.StatusOK, gin.H{"result": true})
+			return
+		}
+
+		c.JSON(http.StatusBadRequest, gin.H{"error": "cannot delete"})
+	})
+
 	r.GET("/tasks/:id", func(c *gin.Context) {
 		id := c.Params.ByName("id")
 		task, ok := d.GetTaskById(id)

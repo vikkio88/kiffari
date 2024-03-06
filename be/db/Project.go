@@ -28,7 +28,7 @@ type Project struct {
 	CreatedAt   time.Time `json:"-"`
 	UpdatedAt   time.Time `json:"-"`
 
-	Tasks []Task `json:"-"`
+	Tasks []Task `gorm:"constraint:OnDelete:CASCADE" json:"-"`
 }
 
 type ProjectDto struct {

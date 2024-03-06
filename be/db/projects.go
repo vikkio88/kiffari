@@ -39,6 +39,12 @@ func (d *Db) UpdateProject(p ProjectUpdate) (ProjectDto, bool) {
 	return pu.Dto(), true
 }
 
+func (d *Db) DeleteProject(id string) bool {
+	trx := d.g.Where("id", id).Delete(&Project{})
+
+	return trx.RowsAffected > 0
+}
+
 func (d *Db) GetAllProjects() []ProjectDto {
 	var ps []Project
 
