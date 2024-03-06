@@ -30,7 +30,6 @@
 
 <style>
   div {
-    padding: 1rem 2rem;
     display: flex;
     flex-direction: row;
     align-items: center;
