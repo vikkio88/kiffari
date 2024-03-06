@@ -76,7 +76,7 @@
           {/if}
           <TagsList
             tags={tags.filter(
-              (t) => !selectedTags.some((st) => st.id === t.id)
+              (t) => !selectedTags.some((st) => st.id === t.id),
             )}
             onTagClick={(tag) => () => {
               onTagSelected(tag);
