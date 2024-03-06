@@ -9,7 +9,7 @@ import (
 func (d *Db) GetTaskById(id string) (Task, bool) {
 	var t Task
 
-	trx := d.g.Model(&Task{}).Preload("Tags").Find(&t, "Id = ?", id)
+	trx := d.g.Model(&Task{}).Preload("Tags").Preload("Project").Find(&t, "Id = ?", id)
 
 	return t, trx.RowsAffected == 1
 }
