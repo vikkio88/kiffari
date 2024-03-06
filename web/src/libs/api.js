@@ -133,6 +133,10 @@ export function getProject(id) {
   return fetch(`${KATO_API_URL}/projects/${id}`, { ...makeHeaders() }).then(parseOrThrow).catch(catchLogout);
 }
 
+export function getProjectWithArchivedTasks(id) {
+  return fetch(`${KATO_API_URL}/projects/${id}?archived=true`, { ...makeHeaders() }).then(parseOrThrow).catch(catchLogout);
+}
+
 export function createProject(project) {
   return fetch(`
   ${KATO_API_URL}/projects`,
