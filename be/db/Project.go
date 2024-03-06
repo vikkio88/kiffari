@@ -20,15 +20,15 @@ const project = {
 */
 
 type Project struct {
-	Id          string `gorm:"primarykey"`
-	Name        string
-	Description string
-	Links       string
-	Config      string
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
+	Id          string    `gorm:"primarykey" json:"id"`
+	Name        string    `json:"name"`
+	Description string    `json:"-"`
+	Links       string    `json:"-"`
+	Config      string    `json:"-"`
+	CreatedAt   time.Time `json:"-"`
+	UpdatedAt   time.Time `json:"-"`
 
-	Tasks []Task
+	Tasks []Task `json:"-"`
 }
 
 type ProjectDto struct {
