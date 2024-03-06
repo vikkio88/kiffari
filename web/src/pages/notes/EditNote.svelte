@@ -1,8 +1,8 @@
 <script>
   import { navigate } from "svelte-routing";
-  import NoteEditor from "../components/NoteEditor.svelte";
-  import { catchLogout, getNoteDetails, updateNote } from "../libs/api";
-  import { protectedRoute } from "../libs/routes";
+  import NoteEditor from "../../components/NoteEditor.svelte";
+  import { catchLogout, getNoteDetails, updateNote } from "../../libs/api";
+  import { protectedRoute } from "../../libs/routes";
   protectedRoute();
 
   export let id = "";

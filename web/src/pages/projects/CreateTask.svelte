@@ -1,10 +1,10 @@
 <script>
   import { navigate } from "svelte-routing";
-  import { addTask, catchLogout } from "../libs/api";
-  import TaskEditor from "../components/task/TaskEditor.svelte";
-  import ErrorToast from "../components/shared/ErrorToast.svelte";
-  import Spinner from "../components/shared/Spinner.svelte";
-  import { protectedRoute } from "../libs/routes";
+  import { addTask, catchLogout } from "../../libs/api";
+  import TaskEditor from "../../components/task/TaskEditor.svelte";
+  import ErrorToast from "../../components/shared/ErrorToast.svelte";
+  import Spinner from "../../components/shared/Spinner.svelte";
+  import { protectedRoute } from "../../libs/routes";
   protectedRoute();
 
   export let projectId = "";

@@ -1,7 +1,7 @@
 <script>
-    import NoteList from "../components/NoteList.svelte";
-    import { getArchivedNotes } from "../libs/api";
-    import { protectedRoute } from "../libs/routes";
+    import NoteList from "../../components/NoteList.svelte";
+    import { getArchivedNotes } from "../../libs/api";
+    import { protectedRoute } from "../../libs/routes";
     protectedRoute();
     let notePromise = getArchivedNotes();
 </script>

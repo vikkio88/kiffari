@@ -1,21 +1,21 @@
 <script>
-  import TagsList from "../components/TagsList.svelte";
-  import Controls from "../components/shared/Controls.svelte";
+  import TagsList from "../../components/TagsList.svelte";
+  import Controls from "../../components/shared/Controls.svelte";
   import { navigate } from "svelte-routing";
-  import ConfirmButton from "../components/shared/ConfirmButton.svelte";
-  import BodyRenderer from "../components/BodyRenderer.svelte";
-  import { protectedRoute } from "../libs/routes";
+  import ConfirmButton from "../../components/shared/ConfirmButton.svelte";
+  import BodyRenderer from "../../components/BodyRenderer.svelte";
+  import { protectedRoute } from "../../libs/routes";
   import {
     getNoteDetails,
     del,
     catchLogout,
     archive,
     unarchive,
-  } from "../libs/api";
-  import DateSeverity from "../components/shared/DateSeverity.svelte";
-  import Header from "../components/shared/Header.svelte";
-  import { getDate } from "../libs/dates";
-  import DashedHead from "../components/shared/DashedHead.svelte";
+  } from "../../libs/api";
+  import DateSeverity from "../../components/shared/DateSeverity.svelte";
+  import Header from "../../components/shared/Header.svelte";
+  import { getDate } from "../../libs/dates";
+  import DashedHead from "../../components/shared/DashedHead.svelte";
   protectedRoute();
 
   export let id = "";

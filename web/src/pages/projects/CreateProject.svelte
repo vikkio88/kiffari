@@ -1,9 +1,9 @@
 <script>
   import { navigate } from "svelte-routing";
-  import ProjectEditor from "../components/ProjectEditor.svelte";
-  import ErrorToast from "../components/shared/ErrorToast.svelte";
-  import Spinner from "../components/shared/Spinner.svelte";
-  import { catchLogout, createProject } from "../libs/api";
+  import ProjectEditor from "../../components/ProjectEditor.svelte";
+  import ErrorToast from "../../components/shared/ErrorToast.svelte";
+  import Spinner from "../../components/shared/Spinner.svelte";
+  import { catchLogout, createProject } from "../../libs/api";
 
   let error = null;
   let postPromise = null;

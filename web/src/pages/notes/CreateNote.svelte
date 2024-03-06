@@ -1,10 +1,10 @@
 <script>
   import { navigate } from "svelte-routing";
-  import NoteEditor from "../components/NoteEditor.svelte";
-  import { protectedRoute } from "../libs/routes";
-  import { catchLogout, createNote } from "../libs/api";
-  import ErrorToast from "../components/shared/ErrorToast.svelte";
-  import Spinner from "../components/shared/Spinner.svelte";
+  import NoteEditor from "../../components/NoteEditor.svelte";
+  import { protectedRoute } from "../../libs/routes";
+  import { catchLogout, createNote } from "../../libs/api";
+  import ErrorToast from "../../components/shared/ErrorToast.svelte";
+  import Spinner from "../../components/shared/Spinner.svelte";
   protectedRoute();
 
   let error = null;

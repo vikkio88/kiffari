@@ -1,10 +1,10 @@
 <script>
   import { navigate } from "svelte-routing";
-  import Spinner from "../components/shared/Spinner.svelte";
-  import TaskEditor from "../components/task/TaskEditor.svelte";
-  import ErrorToast from "../components/shared/ErrorToast.svelte";
-  import { catchLogout, getTask, updateTask } from "../libs/api";
-  import { protectedRoute } from "../libs/routes";
+  import Spinner from "../../components/shared/Spinner.svelte";
+  import TaskEditor from "../../components/task/TaskEditor.svelte";
+  import ErrorToast from "../../components/shared/ErrorToast.svelte";
+  import { catchLogout, getTask, updateTask } from "../../libs/api";
+  import { protectedRoute } from "../../libs/routes";
   protectedRoute();
 
   export let id = "";
@@ -39,11 +39,12 @@
   {:then task}
     <TaskEditor
       projectId={task.project_id}
-      title={task.title}
       text={task.description}
+      title={task.title}
       tags={task.tags}
       flag={task.flag}
       status={task.status}
+      priority={task.priority}
       category={task.category}
       onSave={onUpdate}
     />
