@@ -29,6 +29,9 @@
       <div title={task.category}>
         {CATEGORY_LABELS[task.category]}
       </div>
+      {#if Boolean(task.priority)}
+        <div title={`Priority: ${task.priority}`}>🔥</div>
+      {/if}
       {#if Array.isArray(task.links) && task.links.length > 0}
         <div title="Has linked Tasks">🔗</div>
       {/if}
@@ -41,24 +44,26 @@
     </div>
     <h2>{task.title}</h2>
   </div>
-  <div class="controls">
-    {#if task.status && WF[task.status].to}
-      <button
-        on:click={() => statusChange(WF[task.status].to)}
-        title={`Move to "${D_TASK_STATUS_LABELS[WF[task.status].to]}"`}
-      >
-        ⬆️
-      </button>
-    {/if}
-    {#if task.status && WF[task.status].from}
-      <button
-        title={`Move to "${D_TASK_STATUS_LABELS[WF[task.status].from]}"`}
-        on:click={() => statusChange(WF[task.status].from)}
-      >
-        ⬇️
-      </button>
-    {/if}
-  </div>
+  {#if !task.archived}
+    <div class="controls">
+      {#if task.status && WF[task.status].to}
+        <button
+          on:click={() => statusChange(WF[task.status].to)}
+          title={`Move to "${D_TASK_STATUS_LABELS[WF[task.status].to]}"`}
+        >
+          ⬆️
+        </button>
+      {/if}
+      {#if task.status && WF[task.status].from}
+        <button
+          title={`Move to "${D_TASK_STATUS_LABELS[WF[task.status].from]}"`}
+          on:click={() => statusChange(WF[task.status].from)}
+        >
+          ⬇️
+        </button>
+      {/if}
+    </div>
+  {/if}
 </div>
 
 <style>

@@ -7,8 +7,10 @@
   import {
     D_TASK_STATUS as STATUS,
     D_TASK_CATEGORIES as CATEGORIES,
+    D_TASK_CATEGORY_LABELS as CATEGORY_LABELS,
   } from "../../const";
   import Flag from "./Flag.svelte";
+  import Select from "../shared/Select.svelte";
 
   export let projectId = null;
 
@@ -16,6 +18,7 @@
   export let text = "";
   export let flag = null;
 
+  export let priority = 0;
   export let status = STATUS.BACKLOG;
   export let tags = [];
   export let category = CATEGORIES.FEATURE;
@@ -51,19 +54,15 @@
       description: text,
       status,
       category,
+      priority,
       tags,
       flag,
     });
   }
-
-  let showAdditionalInfo = false;
-  function toggleAdditionalInfo() {
-    showAdditionalInfo = !showAdditionalInfo;
-  }
 </script>
 
 <div class="editor">
-  <form on:submit|preventDefault={onSaveInternal}>
+  <form on:submit|preventDefault|stopPropagation={onSaveInternal}>
     <div class="controls">
       <button
         on:click|stopPropagation|preventDefault={() =>
@@ -112,20 +111,20 @@
       {/if}
     </div>
     <div class="additionalInfo">
-      <button
-        class="toggler"
-        on:click|stopPropagation|preventDefault={toggleAdditionalInfo}
-      >
-        {#if !showAdditionalInfo}
-          More ➕
-        {:else}
-          ◀️
-        {/if}
-      </button>
-      {#if showAdditionalInfo}
-        <Status bind:status />
-        <Flag bind:flag />
-      {/if}
+      <Select bind:selected={category} options={Object.values(CATEGORIES).map(c => ({value: c, label: `${c.toUpperCase()} ${CATEGORY_LABELS[c]}`}))} />
+      <Status bind:status />
+      <div>
+        <label for="priority">Priority</label>
+        <input
+          name="priority"
+          size="2"
+          type="number"
+          min="0"
+          step="1"
+          bind:value={priority}
+        />
+      </div>
+      <Flag bind:flag />
     </div>
     <TagSearch
       on:updatedSelection={onTagsSelection}
@@ -168,14 +167,21 @@
   }
 
   .additionalInfo {
+    margin-top: 1rem;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: flex-start;
   }
 
   .controls {
     display: flex;
     flex-direction: row;
+  }
+
+  input[type="number"] {
+    padding: 1em;
+    font-size: 12px;
+    border-radius: 10px;
   }
 </style>
