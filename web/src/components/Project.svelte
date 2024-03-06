@@ -116,7 +116,10 @@
 
     <div class="projectControls">
       {#if !editingProject}
-        <button>Archived Tasks</button>
+        <button
+          on:click={() => navigate(`/projects/${project.id}/archived-tasks`)}
+          >Archived Tasks</button
+        >
         <button title="Edit" on:click={() => (editingProject = true)}>
           📝
         </button>
