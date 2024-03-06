@@ -14,6 +14,13 @@ func ProjectRoutes(r gin.IRouter, d *db.Db) {
 
 	r.GET("/projects/:id", func(c *gin.Context) {
 		id := c.Params.ByName("id")
+
+		if isParamTrue(c, "archived") {
+			p, ok := d.GetProjectWithArchivedTasksById(id)
+			SuccessOr404(c, p, ok)
+			return
+		}
+
 		p, ok := d.GetProjectById(id)
 		SuccessOr404(c, p, ok)
 	})

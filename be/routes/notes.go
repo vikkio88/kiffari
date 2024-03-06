@@ -9,20 +9,17 @@ import (
 
 func NoteRoutes(r gin.IRouter, d *db.Db) {
 	r.GET("/notes", func(c *gin.Context) {
-		latest := c.Query("latest")
-		if latest == "true" {
+		if isParamTrue(c, "latest") {
 			c.JSON(http.StatusOK, d.GetLatest())
 			return
 		}
 
-		archived := c.Query("archived")
-		if archived == "true" {
+		if isParamTrue(c, "archived") {
 			c.JSON(http.StatusOK, d.GetArchivedNotes())
 			return
 		}
 
-		reminders := c.Query("reminders")
-		if reminders == "true" {
+		if isParamTrue(c, "reminders") {
 			c.JSON(http.StatusOK, d.GetReminderNotes())
 			return
 		}

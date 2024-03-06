@@ -1,9 +1,24 @@
 package db
 
+import "gorm.io/gorm"
+
 func (d *Db) GetProjectById(id string) (ProjectDto, bool) {
 	var p Project
 
-	trx := d.g.Model(&Project{}).Preload("Tasks", "archived == false").Preload("Tasks.Tags").Find(&p, "Id = ?", id)
+	trx := d.g.Model(&Project{}).Preload("Tasks", func(db *gorm.DB) *gorm.DB {
+		return db.Where("tasks.archived != true").Order("tasks.status DESC, tasks.priority DESC, tasks.updated_at DESC")
+	}).
+		Preload("Tasks.Tags").Find(&p, "Id = ?", id)
+
+	return p.Dto(), trx.RowsAffected == 1
+}
+
+func (d *Db) GetProjectWithArchivedTasksById(id string) (ProjectDto, bool) {
+	var p Project
+
+	trx := d.g.Model(&Project{}).Preload("Tasks", "archived == false").
+		Preload("Tasks", "archived = true").
+		Preload("Tasks.Tags").Find(&p, "Id = ?", id)
 
 	return p.Dto(), trx.RowsAffected == 1
 }

@@ -1,4 +1,4 @@
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDk2NTAxMzN9.K9R1OmJIKJ3lStEdhVKGRWdY-wYorY9O1wjtt2KGvxk
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDk3MzIzOTF9.XT9rjIS4UJ0e9Dockq-iV05RHLm1acmvLD2jYqX3s1o
 @projectId = 01HQJD00K7HVKP3MFQQWFG4X68
 @taskId = 01HQTH10ZVCZQDKTBQD070REZB
 
@@ -8,6 +8,10 @@ Authorization: {{ token }}
 
 ###
 GET http://localhost:5111/api/projects/{{projectId}}
+Authorization: {{ token }}
+
+### Project byu Id with Archived Tasks
+GET http://localhost:5111/api/projects/{{projectId}}?archived=true
 Authorization: {{ token }}
 
 ###
@@ -50,6 +54,7 @@ Authorization: {{ token }}
     "description": "Some stuff and things",
     "status": "in_progress",
     "category": "feature",
+    "priority": 0,
     "tags":[ {"label": "blumbazorg"}]
 }
 
@@ -64,6 +69,7 @@ Authorization: {{ token }}
       "description": "Some stuff and things",
       "status": "backlog",
       "category": "feature",
+      "priority": 0,
       "tags": [
         {
           "id": "01HQKJFEMFFA8SJ99XCC42NR59",
