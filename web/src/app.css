@@ -99,6 +99,7 @@ nav>a {
 button.big-control {
   padding: 1rem 2rem;
 }
+
 button.smaller {
   font-size: smaller;
   padding: .5rem .8rem;
@@ -133,6 +134,27 @@ button.smaller {
 
 
 /* UTILS */
+.hidden {
+  visibility: hidden;
+}
+
+.p-r {
+  position: relative;
+}
+
+.tip {
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 1rem;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 0;
+  margin-left: -10px;
+}
+
 .crs-pointer {
   cursor: pointer;
 }
