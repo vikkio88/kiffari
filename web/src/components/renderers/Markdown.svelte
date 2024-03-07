@@ -1,8 +1,9 @@
 <script>
   import SvelteMarkdown from "svelte-markdown";
+  import { hasCodeSnippets } from "../../libs/renderers/helpers";
 
   export let body = "";
-  let hasCode = /```[\s\S]*?```|`[^`\n]+`/.test(body);
+  let hasCode = hasCodeSnippets(body);
 
   function copyText(e) {
     navigator.clipboard.writeText(e.target.innerText);
