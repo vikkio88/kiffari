@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import LinksEditor from "./shared/LinksEditor.svelte";
 
   let input;
   export let id = null;
@@ -41,16 +42,7 @@
       bind:value={description}
     />
 
-    {#if Array.isArray(links) && links.length > 0}
-      <div class="links">
-        <strong>🔗 Links</strong>
-        {#each links as link}
-          <div class="link">
-            <a href={link.href} target="_blank">{link.label}</a>
-          </div>
-        {/each}
-      </div>
-    {/if}
+    <LinksEditor bind:links />
   </div>
   <div class="ctrls">
     {#if Boolean(onClose)}
@@ -62,7 +54,7 @@
         ❌
       </button>
     {/if}
-    <button>Save</button>
+    <button>Save 💾</button>
   </div>
 </form>
 
