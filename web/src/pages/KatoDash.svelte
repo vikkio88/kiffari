@@ -30,7 +30,7 @@
 
 <div class="wrapper">
   {#if Boolean(reminderNotesPromise)}
-    <div id="reminders" class="subwrapper hidden">
+    <div id="reminders" class="subwrapper">
       <h2>Reminders</h2>
       {#await reminderNotesPromise then reminderNotes}
         {#if reminderNotes.length > 0}
