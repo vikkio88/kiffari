@@ -15,6 +15,7 @@ const (
 	TrandingTagsLimit = 5
 	Version           = "DEV"
 	GinMode           = "debug"
+	BaseAddr          = "127.0.0.1"
 	Port              = "5111"
 	KiffariEnabled    = true
 )

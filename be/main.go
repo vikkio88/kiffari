@@ -59,7 +59,7 @@ func main() {
 		c.File("./static")
 	})
 
-	r.Run(fmt.Sprintf(":%s", conf.Port))
+	r.Run(fmt.Sprintf("%s:%s", conf.BaseAddr, conf.Port))
 }
 
 func corsConfig() cors.Config {

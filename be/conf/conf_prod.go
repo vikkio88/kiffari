@@ -16,6 +16,7 @@ const (
 	Version           = "PROD_VERSION"
 	GinMode           = "release"
 	KiffariEnabled    = false
+	BaseAddr          = ""
 )
 
 var Cors = []string{
