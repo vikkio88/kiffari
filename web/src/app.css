@@ -121,6 +121,9 @@ button.smaller {
   padding: .5rem .8rem;
 }
 
+.light-bg {
+  background-color: var(--light-gray);
+}
 
 /* UTILS */
 .hidden {

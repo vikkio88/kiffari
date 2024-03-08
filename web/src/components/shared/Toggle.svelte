@@ -1,53 +1,52 @@
 <script>
+  export let name = "toggle";
   export let checked = false;
+  export let onChange = () => {};
 </script>
 
-<input type="checkbox" style="--s:15px" bind:checked />
+<input {name} type="checkbox" id="switch" bind:checked on:change={onChange} />
+<label for="switch">Toggle</label>
 
 <style>
-  input {
-    --s: 50px;
-    height: calc(var(--s) + var(--s) / 5);
-    width: auto;
-    aspect-ratio: 2.25;
-    border-radius: var(--s);
-    margin: calc(var(--s) / 2);
-    display: grid;
+  input[type="checkbox"] {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+  }
+
+  label {
     cursor: pointer;
-    background-color: var(--danger-color);
-    box-sizing: content-box;
-    overflow: hidden;
-    transition: 0.3s 0.1s;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+    text-indent: -9999px;
+    width: 40px;
+    height: 25px;
+    background: var(--danger-color);
+    display: block;
+    border-radius: 100px;
+    position: relative;
   }
-  input:before {
+
+  label:after {
     content: "";
-    padding: calc(var(--s) / 10);
-    --_g: radial-gradient(
-      circle closest-side at calc(100% - var(--s) / 2) 50%,
-      #333 96%,
-      #3333
-    );
-    background:
-      var(--_g) 0 / var(--_p, var(--s)) 100% no-repeat content-box,
-      #fff;
-    mix-blend-mode: darken;
-    filter: blur(calc(var(--s) / 12)) contrast(10);
-    transition:
-      0.4s,
-      background-position 0.4s 0.1s,
-      padding
-        cubic-bezier(0, 1, 1, 2)
-        0.25s 0.1s;
+    position: absolute;
+    top: 2.5px;
+    left: 2.5px;
+    width: 18px;
+    height: 19px;
+    background: var(--light-gray);
+    border-radius: 90px;
+    transition: 0.3s;
   }
-  input:checked {
-    background-color: var(--success-color);
+
+  input:checked + label {
+    background: var(--success-color);
   }
-  input:checked:before {
-    padding: calc(var(--s) / 10 + 0.05px) calc(var(--s) / 10);
-    --_p: 100%;
-    --_i: 1;
+
+  input:checked + label:after {
+    left: calc(100% - 2px);
+    transform: translateX(-100%);
+  }
+
+  label:active:after {
+    width: 50px;
   }
 </style>
