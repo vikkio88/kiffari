@@ -2,7 +2,7 @@
   export let checked = false;
 </script>
 
-<input type="checkbox" style="--s:20px" bind:checked />
+<input type="checkbox" style="--s:15px" bind:checked />
 
 <style>
   input {
@@ -22,23 +22,26 @@
     -moz-appearance: none;
     appearance: none;
   }
-input:before {
-  content: "";
-  padding: calc(var(--s) / 10);
-  --_g: radial-gradient(
-    circle closest-side at calc(100% - var(--s) / 2) 50%,
-    #ccc 96%, /* Change #333 to #ccc for a lighter shade of gray */
-    #3333
-  );
-  background:
-    var(--_g) 0 / var(--_p, var(--s)) 100% no-repeat content-box,
-    #fff;
-  filter: blur(calc(var(--s) / 12)) contrast(10);
-  transition:
-    0.4s,
-    background-position 0.4s 0.1s,
-    padding cubic-bezier(0, 1, 1, 2) 0.25s 0.1s;
-}
+  input:before {
+    content: "";
+    padding: calc(var(--s) / 10);
+    --_g: radial-gradient(
+      circle closest-side at calc(100% - var(--s) / 2) 50%,
+      #333 96%,
+      #3333
+    );
+    background:
+      var(--_g) 0 / var(--_p, var(--s)) 100% no-repeat content-box,
+      #fff;
+    mix-blend-mode: darken;
+    filter: blur(calc(var(--s) / 12)) contrast(10);
+    transition:
+      0.4s,
+      background-position 0.4s 0.1s,
+      padding
+        cubic-bezier(0, 1, 1, 2)
+        0.25s 0.1s;
+  }
   input:checked {
     background-color: var(--success-color);
   }
