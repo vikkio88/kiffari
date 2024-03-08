@@ -109,19 +109,19 @@
   }
 
   .selectedTags > .tag {
-    border: solid 2px #333;
+    border: solid 2px var(--light-gray);
     border-radius: 10px;
     padding: 0.5rem 1rem;
     margin: 0 0.5rem;
   }
 
   .selectedTags > .tag:hover {
-    background-color: #333;
+    background-color: var(--light-gray);
     border-color: white;
   }
 
   .selectedTags > .NewTag {
-    border: dashed 2px #333;
+    border: dashed 2px var(--light-gray);
   }
   .selectedTags > .tag > button {
     font-size: 0.5rem;
@@ -143,7 +143,7 @@
 
   .hash {
     font-size: 1.1rem;
-    color: #646cff;
+    color: var(--link-color);
     margin-right: 0.2rem;
   }
 </style>

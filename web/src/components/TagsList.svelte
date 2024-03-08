@@ -17,27 +17,27 @@
 
 <style>
   .tag {
-    border: solid 2px #333;
-    border-radius: 10px;
+    border: solid 2px var(--light-gray);
+    border-radius: var(--default-borders-radius);
     padding: 0.5rem 1rem;
     margin: 0 0.5rem;
   }
 
   .hash {
     font-size: 1.2rem;
-    color: #646cff;
+    color: var(--link-color);
     margin-right: 0.3rem;
   }
 
   .big {
-    font-size: 18px;
-    padding: 1em;
+    font-size: var(--input-medium-font-size);
+    padding: var(--input-default-pad);
   }
 
   .tag:hover {
-    color: #646cff;
-    background-color: #333;
-    border-color: white;
+    color: var(--link-color);
+    background-color: var(--light-gray);
+    border-color: var(--border-color);
     cursor: pointer;
   }
 </style>

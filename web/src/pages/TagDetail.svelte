@@ -35,7 +35,7 @@
   }
 
   h1.hash {
-    color: #646cff;
+    color: var(--link-color);
     font-size: 3.2rem;
     margin-right: 0.3rem;
   }

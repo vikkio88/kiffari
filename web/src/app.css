@@ -1,11 +1,42 @@
 :root {
+  --main-bg-color: #242424;
+  --main-font-color: rgba(255, 255, 255, 0.87);
+  --link-color: #646cff;
+  --link-hover-color: #535bf2;
+  --button-bg-color: #1a1a1a;
+  --light-gray: #333;
+  --fade-gray: #454545;
+  --x-light-gray: #a3a3a3;
+  --dirty-white: #d3d3d3;
+  --border-color: #fff;
+  --div-item-hover-color: #3a3a3a;
+  /* A Blueish hue I used to use for hover on Accordions */
+  /* --div-accent-hover-color: #213547; */
+
+  --border-radius: 8px;
+  --input-border-radius: 10px;
+  --input-default-pad: 1rem;
+  --input-font-size: 16px;
+  --input-small-font-size: 12px;
+  --input-medium-font-size: 18px;
+
+  --thin-borders: 1px white solid;
+  --default-borders: 2px white solid;
+  --default-borders-radius: 10px;
+
+  --danger-color: #db3a34;
+  --warning-color: #ed9b40;
+  --success-color: #3bceac;
+
+
+
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: var(--main-font-color);
+  background-color: var(--main-bg-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,12 +46,12 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--link-color);
   text-decoration: inherit;
 }
 
 a:hover {
-  color: #535bf2;
+  color: var(--link-hover-color);
 }
 
 body {
@@ -48,39 +79,24 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--button-bg-color);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 
 button:hover {
-  border-color: #646cff;
+  border-color: var(--link-color);
 }
 
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
-  a:hover {
-    color: #747bff;
-  }
-
-  button {
-    background-color: #f9f9f9;
-  }
 }
 
 nav {
@@ -103,33 +119,6 @@ button.big-control {
 button.smaller {
   font-size: smaller;
   padding: .5rem .8rem;
-}
-
-/* Animations */
-.wobble {
-  animation: wobble 2s ease-in-out infinite;
-}
-
-@keyframes wobble {
-  0% {
-    transform: rotate(-1deg);
-  }
-
-  25% {
-    transform: rotate(1deg);
-  }
-
-  50% {
-    transform: rotate(2deg);
-  }
-
-  75% {
-    transform: rotate(-1deg);
-  }
-
-  100% {
-    transform: rotate(-2deg);
-  }
 }
 
 
@@ -157,6 +146,10 @@ button.smaller {
 
 .crs-pointer {
   cursor: pointer;
+}
+
+.g-1 {
+  gap: 1rem;
 }
 
 .frc {

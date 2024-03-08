@@ -31,14 +31,14 @@
 
 <style>
   .due-now {
-    color: #db3a34;
+    color: var(--danger-color);
   }
 
   .due-soon {
-    color: #ed9b40;
+    color: var(--warning-color);
   }
 
   .due-later {
-    color: #3bceac;
+    color: var(--success-color);
   }
 </style>

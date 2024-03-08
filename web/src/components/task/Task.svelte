@@ -73,7 +73,7 @@
   }
   .wrapper {
     padding: 1rem 2rem;
-    border: 2px white solid;
+    border: 2px var(--border-color) solid;
     border-radius: 10px;
     margin: 1rem 0 0 0;
     min-width: 80%;

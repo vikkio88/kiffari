@@ -90,21 +90,21 @@
   }
   .tagSearch {
     color: black;
-    padding: 1em;
+    padding: var(--input-default-pad);
   }
 
   .searchBar {
     min-width: 40%;
   }
   .tagSearch input {
-    padding: 1em;
-    font-size: 18px;
-    background-color: #d3d3d3;
+    padding: var(--input-default-pad);
+    font-size: var(--input-medium-font-size);
+    background-color: var(--dirty-white);
     color: black;
   }
 
   strong {
-    color: #a3a3a3;
+    color: var(--x-light-gray);
   }
 
   div.tabs {
@@ -119,7 +119,7 @@
   }
   div.tabs > button.active {
     background-color: black;
-    color: #646cff;
+    color: var(--link-color);
   }
   div.tabs > button.active:focus,
   div.tabs > button.active:focus-visible {

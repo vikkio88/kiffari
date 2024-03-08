@@ -16,8 +16,8 @@
 
 <style>
     .error {
-        background-color: #DB3A34;
-        border-radius: 10px;
+        background-color: var(--danger-color);
+        border-radius: var(--input-border-radius);
         position: absolute;
         bottom: 0;
         left: 0;

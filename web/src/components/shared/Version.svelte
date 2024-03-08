@@ -8,7 +8,7 @@
 
 <style>
   .version {
-    color: #454545;
+    color: var(--fade-gray);
   }
 
   .version {

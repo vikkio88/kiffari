@@ -24,11 +24,11 @@
     flex-direction: row;
     gap: 1rem;
     align-items: center;
-    border-bottom: solid 1px white;
+    border-bottom: var(--thin-borders);
   }
 
   .header:hover {
-    background-color: #213547;
+    background-color: var(--div-item-hover-color);
   }
 
   .accordionControls {

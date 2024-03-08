@@ -2,62 +2,49 @@
   export let checked = false;
 </script>
 
-<label class="switch">
-  <input type="checkbox" bind:checked />
-  <span class="slider"></span>
-</label>
+<input type="checkbox" style="--s:20px" bind:checked />
 
 <style>
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-  }
-
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  .slider {
-    position: absolute;
+  input {
+    --s: 50px;
+    height: calc(var(--s) + var(--s) / 5);
+    width: auto;
+    aspect-ratio: 2.25;
+    border-radius: var(--s);
+    margin: calc(var(--s) / 2);
+    display: grid;
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    border-radius: 34px;
+    background-color: var(--danger-color);
+    box-sizing: content-box;
+    overflow: hidden;
+    transition: 0.3s 0.1s;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
   }
-
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-    border-radius: 50%;
+input:before {
+  content: "";
+  padding: calc(var(--s) / 10);
+  --_g: radial-gradient(
+    circle closest-side at calc(100% - var(--s) / 2) 50%,
+    #ccc 96%, /* Change #333 to #ccc for a lighter shade of gray */
+    #3333
+  );
+  background:
+    var(--_g) 0 / var(--_p, var(--s)) 100% no-repeat content-box,
+    #fff;
+  filter: blur(calc(var(--s) / 12)) contrast(10);
+  transition:
+    0.4s,
+    background-position 0.4s 0.1s,
+    padding cubic-bezier(0, 1, 1, 2) 0.25s 0.1s;
+}
+  input:checked {
+    background-color: var(--success-color);
   }
-
-  input:checked + .slider {
-    background-color: #2196f3;
-  }
-
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196f3;
-  }
-
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+  input:checked:before {
+    padding: calc(var(--s) / 10 + 0.05px) calc(var(--s) / 10);
+    --_p: 100%;
+    --_i: 1;
   }
 </style>

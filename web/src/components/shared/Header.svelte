@@ -13,10 +13,10 @@
     padding: 0 1rem;
     display: inline-block;
     transform: translateY(-50%);
-    background-color: #242424;
-    color: #a3a3a3;
+    background-color: var(--main-bg-color);
+    color: var(--x-light-gray);
   }
   div {
-    border-top: 2px #a3a3a3 solid;
+    border-top: 2px var(--x-light-gray) solid;
   }
 </style>

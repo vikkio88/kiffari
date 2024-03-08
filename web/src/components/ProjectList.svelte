@@ -28,8 +28,8 @@
   }
 
   .project {
-    border: 2px white solid;
-    border-radius: 10px;
+    border: var(--default-borders);
+    border-radius: var(--default-borders-radius);
     padding: 1rem 2rem;
   }
 </style>

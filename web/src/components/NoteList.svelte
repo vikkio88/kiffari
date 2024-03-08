@@ -42,16 +42,16 @@
     grid-row: auto;
     gap: 1rem;
   }
-  
+
   .list.compact {
     display: grid;
     grid-template-columns: auto auto;
   }
 
   .note-item {
-    border: 2px white solid;
-    border-radius: 10px;
-    font-size: 16px;
+    border: var(--default-borders);
+    border-radius: var(--default-border-radius);
+    font-size: var(--input-font-size);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -67,7 +67,7 @@
     border: 2px white dashed;
   }
   .note-item:hover {
-    background-color: #3a3a3a;
+    background-color: var(--div-item-hover-color);
   }
 
   .note-item > h2 {

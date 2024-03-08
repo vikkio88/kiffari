@@ -127,11 +127,11 @@
 
   .note div.dates {
     font-size: smaller;
-    color: #a3a3a3;
+    color: var(--x-light-gray);
   }
 
   .body {
-    border-radius: 10px;
+    border-radius: var(--default-borders-radius);
     text-align: left;
     padding: 1.5rem;
     margin: 0.5rem 0;

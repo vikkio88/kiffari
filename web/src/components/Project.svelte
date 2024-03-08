@@ -36,7 +36,7 @@
     const { prevStatus, task } = detail;
     groupedTasks[task.status].unshift(task);
     groupedTasks[prevStatus] = groupedTasks[prevStatus].filter(
-      (t) => t.id != task.id,
+      (t) => t.id != task.id
     );
 
     accordionsState[prevStatus] = false;
@@ -65,7 +65,7 @@
         if (resp.status === 400) {
           //TODO: notify error
           groupedTasks[status] = groupedTasks[status].filter((t) =>
-            Boolean(t.id),
+            Boolean(t.id)
           );
           groupedTasks = groupedTasks;
           return null;
@@ -77,7 +77,7 @@
         if (!Boolean(newTask)) return;
 
         groupedTasks[status] = groupedTasks[status].filter((t) =>
-          Boolean(t.id),
+          Boolean(t.id)
         );
         groupedTasks[status].unshift(newTask);
 
@@ -184,13 +184,14 @@
   <button
     class="big-control"
     on:click={() => navigate(`/projects/${project.id}/create-task`)}
-    >Add Task 🎫</button
   >
+    Add Task 🎫
+  </button>
 </Controls>
 
 <style>
   .details {
-    border-radius: 10px;
+    border-radius: var(--default-border-radius);
     padding: 2rem 0 0 0;
   }
   .projectControls {
@@ -200,7 +201,7 @@
     justify-content: space-between;
   }
   .details:hover {
-    background-color: #3a3a3a;
+    background-color: var(--div-item-hover-color);
   }
 
   .details:hover .projectControls {

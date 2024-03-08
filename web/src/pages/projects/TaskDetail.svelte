@@ -121,7 +121,7 @@
 
 <style>
   .description {
-    border-radius: 10px;
+    border-radius: var(--default-border-radius);
     text-align: left;
     padding: 1.5rem;
     margin: 0.5rem 0;
@@ -129,11 +129,11 @@
 
   .date {
     font-size: smaller;
-    color: #a3a3a3;
+    color: var(--x-light-gray);
   }
 
   .topBar {
-    padding: 1rem;
+    padding: var(--input-default-pad);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -141,8 +141,8 @@
   }
 
   .chip {
-    border: solid 2px #333;
-    border-radius: 10px;
+    border: solid 2px var(--light-gray);
+    border-radius: var(--default-border-radius);
     padding: 0.5rem 2rem;
     margin: 0 0.5rem;
     cursor: help;

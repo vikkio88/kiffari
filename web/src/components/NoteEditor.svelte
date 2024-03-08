@@ -197,17 +197,17 @@
     flex-direction: column;
   }
   .title {
-    padding: 1em;
-    font-size: 18px;
-    border-radius: 10px;
+    padding: var(--input-default-pad);
+    font-size: var(--input-medium-font-size);
+    border-radius: var(--input-border-radius);
   }
   .editor {
     padding: 2em;
   }
   .note textarea {
-    font-size: 16px;
-    padding: 1em;
-    border-radius: 10px;
+    font-size: var(--input-font-size);
+    padding: var(--input-default-pad);
+    border-radius: var(--input-border-radius);
   }
 
   .preview {

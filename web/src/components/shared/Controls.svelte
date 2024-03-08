@@ -16,6 +16,6 @@
   .background {
     padding: 0.5rem 1rem;
     border-radius: 8px;
-    background-color: #242424;
+    background-color: var(--main-bg-color);
   }
 </style>

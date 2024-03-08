@@ -2,8 +2,8 @@
 
 <style>
   .spinner {
-    border: 3px solid #333; /* Light grey */
-    border-top: 3px solid white; /* Blue */
+    border: 3px solid var(--light-gray); /* Light grey */
+    border-top: 3px solid white;
     border-radius: 50%;
     width: 20px;
     height: 20px;

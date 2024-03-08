@@ -111,9 +111,15 @@
       {/if}
     </div>
     <div class="additionalInfo">
-      <Select bind:selected={category} options={Object.values(CATEGORIES).map(c => ({value: c, label: `${c.toUpperCase()} ${CATEGORY_LABELS[c]}`}))} />
+      <Select
+        bind:selected={category}
+        options={Object.values(CATEGORIES).map((c) => ({
+          value: c,
+          label: `${c.toUpperCase()} ${CATEGORY_LABELS[c]}`,
+        }))}
+      />
       <Status bind:status />
-      <div>
+      <div class="frc g-1">
         <label for="priority">Priority</label>
         <input
           name="priority"
@@ -143,17 +149,17 @@
     flex-direction: column;
   }
   .title {
-    padding: 1em;
-    font-size: 18px;
-    border-radius: 10px;
+    padding: var(--input-default-pad);
+    font-size: var(--input-medium-font-size);
+    border-radius: var(--input-border-radius);
   }
   .editor {
     padding: 2em;
   }
   .task textarea {
-    font-size: 16px;
-    padding: 1em;
-    border-radius: 10px;
+    font-size: var(--input-font-size);
+    padding: var(--input-default-pad);
+    border-radius: var(--input-border-radius);
   }
 
   .preview {
@@ -180,8 +186,8 @@
   }
 
   input[type="number"] {
-    padding: 1em;
-    font-size: 12px;
-    border-radius: 10px;
+    padding: var(--input-default-pad);
+    font-size: var(--input-small-font-size);
+    border-radius: var(--input-border-radius);
   }
 </style>

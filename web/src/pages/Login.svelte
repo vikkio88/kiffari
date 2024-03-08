@@ -84,15 +84,15 @@
     align-items: center;
   }
   .wrapper > input {
-    padding: 1em;
-    font-size: 16px;
-    border-radius: 10px;
+    padding: var(--input-default-pad);
+    font-size: var(--input-font-size);
+    border-radius: var(--default-borders-radius);
     margin-bottom: 1rem;
   }
 
   .wrapper > button {
-    font-size: 18px;
-    padding: 1rem;
+    font-size: var(--input-medium-font-size);
+    padding: var(--input-default-pad);
   }
 
   h1 {

@@ -2,7 +2,7 @@
 
 <style>
     .dashedHead {
-        color: #a3a3a3;
-        border-bottom: dashed 1px #a3a3a3;
+        color: var(--x-light-gray);
+        border-bottom: dashed 1px var(--x-light-gray);
     }
 </style>

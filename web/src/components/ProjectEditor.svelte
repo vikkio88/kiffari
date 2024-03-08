@@ -74,9 +74,9 @@
   }
 
   .editor textarea {
-    font-size: 16px;
-    padding: 1em;
-    border-radius: 10px;
+    font-size: var(--input-font-size);
+    padding: var(--input-default-pad);
+    border-radius: var(--input-border-radius);
   }
 
   .ctrls {
