@@ -1,57 +1,20 @@
 <script>
   import SvelteMarkdown from "svelte-markdown";
-  import { hasCodeSnippets } from "../../libs/renderers/helpers";
-
+  import CopyCode from "./shared/CopyCode.svelte";
   export let body = "";
-  let hasCode = hasCodeSnippets(body);
-
-  function copyText(e) {
-    navigator.clipboard.writeText(e.target.innerText);
-    const span = document.createElement("span");
-    span.classList.add("tip");
-    span.innerText = "📋 Copied!";
-    e.target.parentElement.appendChild(span);
-    setTimeout(() => {
-      e.target.parentElement.removeChild(span);
-    }, 800);
-  }
-
-  function handleCopyPaste(e) {
-    const { checked } = e.currentTarget;
-    const snippets = document.querySelectorAll("code");
-    if (checked) {
-      snippets.forEach((s) => {
-        s.parentElement.classList.add("p-r");
-        s.parentElement.classList.add("crs-pointer");
-        s.addEventListener("click", copyText);
-      });
-    } else {
-      snippets.forEach((s) => {
-        s.parentElement.classList.remove("p-r");
-        s.parentElement.classList.remove("crs-pointer");
-        s.removeEventListener("click", copyText);
-      });
-    }
-  }
+  CopyCode;
 </script>
 
 <div class="mdBody">
   <SvelteMarkdown source={body} />
 </div>
-<div class="tools hidden" class:hasCode>
-  <div>
-    <label for="copyPaste">Copy <i>Code</i> 📋</label>
-    <input name="copyPaste" type="checkbox" on:change={handleCopyPaste} />
-  </div>
+<div class="tools">
+  <CopyCode {body} />
 </div>
 
 <style>
   .mdBody {
     min-height: 30vh;
-  }
-
-  .hasCode {
-    visibility: visible;
   }
 
   .tools {
