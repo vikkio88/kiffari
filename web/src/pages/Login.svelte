@@ -61,7 +61,7 @@
       placeholder="Insert your Passkey..."
       bind:value
     />
-    <button>Login</button>
+    <button disabled={!Boolean(value) || value.length < 6}>Login</button>
   </form>
 {:else}
   <Spinner />
