@@ -19,6 +19,7 @@
   import { navigate } from "svelte-routing";
   import ProjectEditor from "./ProjectEditor.svelte";
   import ConfirmButton from "./shared/ConfirmButton.svelte";
+  import Progress from "./shared/Progress.svelte";
   export let project = {};
 
   const defaultAccordion = {
@@ -36,7 +37,7 @@
     const { prevStatus, task } = detail;
     groupedTasks[task.status].unshift(task);
     groupedTasks[prevStatus] = groupedTasks[prevStatus].filter(
-      (t) => t.id != task.id
+      (t) => t.id != task.id,
     );
 
     accordionsState[prevStatus] = false;
@@ -65,7 +66,7 @@
         if (resp.status === 400) {
           //TODO: notify error
           groupedTasks[status] = groupedTasks[status].filter((t) =>
-            Boolean(t.id)
+            Boolean(t.id),
           );
           groupedTasks = groupedTasks;
           return null;
@@ -77,7 +78,7 @@
         if (!Boolean(newTask)) return;
 
         groupedTasks[status] = groupedTasks[status].filter((t) =>
-          Boolean(t.id)
+          Boolean(t.id),
         );
         groupedTasks[status].unshift(newTask);
 
@@ -154,8 +155,6 @@
       {/if}
     </div>
   </div>
-
-  <!-- Progress -->
   {#each Object.values(STATUS) as status}
     <div class="groupWrapper">
       <!-- WIP LIMIT RULE -->
