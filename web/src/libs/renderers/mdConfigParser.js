@@ -1,3 +1,4 @@
+const PLUGIN_KEY = "plugin";
 /**
  * @param {String} body 
  * @returns {object} config
@@ -12,6 +13,10 @@ export function mdConfigParser(body) {
     for (const line of lines) {
         const matches = line.match(/\s*^(.+?):\s?(.+?)$/);
         if (Boolean(matches) && matches.length > 2) {
+            if (matches[1].toLowerCase() === PLUGIN_KEY) {
+                config[PLUGIN_KEY] = parseValue(matches[2].toLowerCase());
+                continue;
+            }
             config[matches[1]] = parseValue(matches[2]);
         }
     }

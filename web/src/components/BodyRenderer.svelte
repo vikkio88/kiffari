@@ -9,14 +9,14 @@
   let config = mdConfigParser(body);
 
   const pluginMapper = {
-    Code: Code,
-    Link: Link,
-    Youtube: Youtube,
+    code: Code,
+    link: Link,
+    youtube: Youtube,
     default: Markdown,
   };
 </script>
 
 <svelte:component
-  this={pluginMapper[config.Plugin] ?? pluginMapper.default}
+  this={pluginMapper[config.plugin] ?? pluginMapper.default}
   {body}
 />
