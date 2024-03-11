@@ -35,3 +35,31 @@ export function extractYTVideos(body) {
     }
     return ytVideos;
 }
+
+export function extractTodos(body) {
+    const cleanBody = removeComments(body);
+    const todos = [];
+    const lines = cleanBody.split("\n");
+    for (const line of lines) {
+        const match = line.match(/-\s*\[\s*(x?)\s*\]\s*(.+)?/);
+        if (!match) continue;
+        const [, doneStatus, rawLabel] = match;
+        const label = rawLabel.trim();
+        const done = doneStatus.trim().toLowerCase() === 'x';
+        todos.push({ label, done });
+    }
+
+    return todos;
+}
+
+export function exportTodos(todos) {
+    let todoLines = [];
+    for (const todo of todos) {
+        todoLines.push(`- [${todo.done ? "x" : ""}] ${todo.label}`);
+    }
+    return `<!--
+plugin: todo
+-->
+${todoLines.join("\n")}
+`;
+}

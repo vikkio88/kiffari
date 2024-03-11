@@ -75,7 +75,7 @@
       <DateSeverity date={note.due_date} />
     </div>
     <div class="body">
-      <BodyRenderer body={note.body} />
+      <BodyRenderer {note} />
     </div>
     {#if Array.isArray(note.tags) && note.tags.length > 0}
       <div class="tags">

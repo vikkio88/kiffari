@@ -1,8 +1,8 @@
 <script>
   import SvelteMarkdown from "svelte-markdown";
   import CopyCode from "./shared/CopyCode.svelte";
-  export let body = "";
-  CopyCode;
+  export let note = {};
+  const { body } = note;
 </script>
 
 <div class="mdBody">

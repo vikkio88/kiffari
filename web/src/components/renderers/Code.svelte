@@ -1,5 +1,6 @@
 <script>
-  export let body = "";
+  export let note = {};
+  const { body } = note;
 </script>
 
 <h3>Code View</h3>

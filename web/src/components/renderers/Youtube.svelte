@@ -1,7 +1,8 @@
 <script>
   import { extractYTVideos } from "../../libs/renderers/extractors";
 
-  export let body = "";
+  export let note = {};
+  const { body } = note;
   let videoSrcs = extractYTVideos(body);
 </script>
 

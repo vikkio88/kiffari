@@ -4,19 +4,21 @@
   import Markdown from "./renderers/Markdown.svelte";
   import Link from "./renderers/Link.svelte";
   import Youtube from "./renderers/Youtube.svelte";
+  import Todos from "./renderers/Todos.svelte";
 
-  export let body = "";
-  let config = mdConfigParser(body);
+  export let note = {};
+  let config = mdConfigParser(note?.body ?? {});
 
   const pluginMapper = {
     code: Code,
     link: Link,
     youtube: Youtube,
+    todo: Todos,
     default: Markdown,
   };
 </script>
 
 <svelte:component
   this={pluginMapper[config.plugin] ?? pluginMapper.default}
-  {body}
+  {note}
 />

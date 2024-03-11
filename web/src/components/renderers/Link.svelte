@@ -1,7 +1,8 @@
 <script>
   import { parseLinks } from "../../libs/renderers/extractors";
 
-  export let body = "";
+  export let note = {};
+  const { body } = note;
 
   const links = parseLinks(body);
 </script>

@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { extractYTVideos, parseLinks } from './extractors';
+import { exportTodos, extractTodos, extractYTVideos, parseLinks } from './extractors';
 
 
 test('should extract links correctly', () => {
@@ -52,5 +52,47 @@ https://example.com:8080/path/to/resource?query=param&foo=bar
   ];
 
   expect(extractYTVideos(input)).toEqual(expectedOutput);
+});
 
+test("should extract todos correctly", () => {
+  const input = `<!--
+Plugin: todo
+-->
+- []Maurizio
+  -   [ x]    Stuff
+  - [x] Things 
+-[]other things 
+-[ x ] other stuff things 
+`;
+  const expectedOutput = [
+    { label: "Maurizio", done: false },
+    { label: "Stuff", done: true },
+    { label: "Things", done: true },
+    { label: "other things", done: false },
+    { label: "other stuff things", done: true },
+  ];
+
+  expect(extractTodos(input)).toEqual(expectedOutput);
+});
+
+test("should export todos to md", () => {
+  const todos = [
+    { label: "Maurizio", done: false },
+    { label: "Stuff", done: true },
+    { label: "Things", done: true },
+    { label: "other things", done: false },
+    { label: "other stuff things", done: true },
+  ];
+
+  const expectedOutput = `<!--
+plugin: todo
+-->
+- [] Maurizio
+- [x] Stuff
+- [x] Things
+- [] other things
+- [x] other stuff things
+`;
+
+  expect(exportTodos(todos)).toEqual(expectedOutput);
 });
