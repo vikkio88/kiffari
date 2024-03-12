@@ -39,7 +39,6 @@
     persistNotes();
   }
 
-  //TODO: add plugin TODO button
   //TODO: maybe check if drag&drop or move
   //TODO: add button to convert to ticket if kiffari is enabled
 </script>
