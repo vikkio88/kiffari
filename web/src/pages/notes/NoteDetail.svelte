@@ -45,16 +45,17 @@
     }
   }
 
-  function onDownload(title, body, tags) {
+  async function onDownload() {
+    const { title, body, tags } = await getNoteDetails(id);
     let tagsString = "";
-    for (const tag of tags) {
+    for (const tag of tags ?? []) {
       tagsString += ` #${tag.label}`;
     }
     const element = document.createElement("a");
     element.setAttribute(
       "href",
       "data:text/markdown;charset=utf-8," +
-        encodeURIComponent(`# ${title}\n${body}\n\n${tagsString.trim()}`),
+        encodeURIComponent(`# ${title}\n${body}\n\n${tagsString.trim()}`)
     );
     element.download = `${title}.md`;
     element.style.display = "none";
@@ -89,7 +90,7 @@
   <Controls background>
     <button
       title="Export as MD"
-      on:click={() => onDownload(note.title, note.body, note.tags)}
+      on:click={() => onDownload()}
     >
       🔽
     </button>

@@ -169,6 +169,7 @@
             {:else}
               <h4>No tasks here...</h4>
             {/each}
+            <!-- use shared Adder -->
             <Adder
               on:taskSubmitted={({ detail: task }) => onAdd(task, status)}
             />

@@ -99,6 +99,13 @@
       >
         Plugin:Link 🔗
       </button>
+      <button
+        on:click|stopPropagation|preventDefault={() => {
+          text = `${generatePlugin("Todo")}${removeComments(text)}`;
+        }}
+      >
+        Plugin:Todo ✅
+      </button>
       <button on:click|stopPropagation|preventDefault={setupPlugin}>
         Plugin ⚙️
       </button>

@@ -21,6 +21,7 @@
   import Controls from "../../components/shared/Controls.svelte";
   import ConfirmButton from "../../components/shared/ConfirmButton.svelte";
   import DashedHead from "../../components/shared/DashedHead.svelte";
+  import Md from "../../components/shared/Md.svelte";
   protectedRoute();
 
   export let id = "";
@@ -82,7 +83,7 @@
     {getDate(task)}
   </div>
   <div class="description">
-    <Markdown body={task.description} />
+    <Md source={task.description} />
   </div>
   {#if Array.isArray(task.tags) && task.tags.length > 0}
     <div class="tags">

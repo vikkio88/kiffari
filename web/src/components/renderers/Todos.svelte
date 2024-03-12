@@ -1,43 +1,88 @@
 <script>
-    import { updateNote } from "../../libs/api";
-    import { exportTodos, extractTodos } from "../../libs/renderers/extractors";
+  import { updateNote } from "../../libs/api";
+  import { exportTodos, extractTodos } from "../../libs/renderers/extractors";
+  import Adder from "../shared/Adder.svelte";
+  import Md from "svelte-markdown";
 
-    export let note = {};
-    let { body } = note;
-    let todos = extractTodos(body);
+  export let note = {};
+  let { body } = note;
+  let todos = extractTodos(body);
 
-    function onChange() {
-        updateNote(note.id, {
-            id: note.id,
-            title: note.title,
-            tags: note.tags ?? [],
-            body: exportTodos(todos),
-        });
-        //TODO: check result/reconciliate
-    }
+  function onChange(index) {
+    const wasDone = todos[index].done;
+    const updated = todos.splice(index, 1);
+    wasDone
+      ? (todos = [...todos, ...updated])
+      : (todos = [...updated, ...todos]);
 
-    //TODO: add manual TODO
-    //TODO: add button to create todo on note creation
+    persistNotes();
+  }
+
+  function onAdd({ detail: label }) {
+    todos = [...todos, { label, done: false }];
+    persistNotes();
+  }
+
+  function persistNotes() {
+    updateNote(note.id, {
+      id: note.id,
+      title: note.title,
+      tags: note.tags ?? [],
+      body: exportTodos(todos),
+    });
+    //TODO: check result/reconciliate
+  }
+
+  function onDelete(index) {
+    todos.splice(index, 1);
+    todos = todos;
+    persistNotes();
+  }
+
+  //TODO: add plugin TODO button
+  //TODO: maybe check if drag&drop or move
+  //TODO: add button to convert to ticket if kiffari is enabled
 </script>
 
-{#each todos as todo}
+<div class="wrapper">
+  {#each todos as todo, i}
     <div class="todo">
-        -
-        <input type="checkbox" bind:checked={todo.done} on:change={onChange} />
-        {todo.label}
+      -
+      <input
+        type="checkbox"
+        bind:checked={todo.done}
+        on:change={() => onChange(i)}
+      />
+      <div class="label" class:done={todo.done}>
+        <Md source={todo.label} />
+      </div>
+      {#if todo.done}
+        <button class="del" on:click={() => onDelete(i)}>❌</button>
+      {/if}
     </div>
-{:else}
-    <div class="fcr">No Todos</div>
-{/each}
+  {:else}
+    <div class="frc">
+      <h3>No todos... 🤷</h3>
+    </div>
+  {/each}
+
+  <Adder on:added={onAdd} placeholder="The thing todo..." />
+</div>
 
 <style>
-    .todo {
-        font-size: 1.3rem;
-        padding: 0.5rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 1rem;
-    }
+  .wrapper {
+    min-height: 30vh;
+  }
+  .todo {
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  .done {
+    text-decoration: line-through;
+  }
 </style>
