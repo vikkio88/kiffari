@@ -1,10 +1,10 @@
 <script>
-  //TODO: reuse in project too
   import { tick, createEventDispatcher } from "svelte";
 
   const d = createEventDispatcher();
 
   export let placeholder = "Name/Title...";
+  export let rightAligned = false;
   let input;
   let clicked = false;
 
@@ -29,6 +29,7 @@
 <form
   class="addWrapper"
   class:centered={clicked}
+  class:rightAligned
   on:submit|preventDefault|stopPropagation={submit}
 >
   {#if !clicked}
@@ -56,6 +57,10 @@
     flex-direction: row;
     align-items: center;
     margin-top: 1rem;
+  }
+
+  .rightAligned {
+    align-items: flex-end;
   }
 
   .centered {

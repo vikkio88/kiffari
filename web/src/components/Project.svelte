@@ -8,7 +8,7 @@
     D_TASK_CATEGORIES as CATEGORIES,
   } from "../const";
   import { groupTasksByStatus } from "../libs/helpers/tasks";
-  import Adder from "./task/Adder.svelte";
+  import Adder from "./shared/Adder.svelte";
   import {
     addTask,
     catchLogout,
@@ -169,9 +169,10 @@
             {:else}
               <h4>No tasks here...</h4>
             {/each}
-            <!-- use shared Adder -->
             <Adder
-              on:taskSubmitted={({ detail: task }) => onAdd(task, status)}
+              placeholder="New Task title..."
+              on:added={({ detail: title }) => onAdd({ title }, status)}
+              rightAligned
             />
           </div>
         </Accordion>
