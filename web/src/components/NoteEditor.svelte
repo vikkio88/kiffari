@@ -6,6 +6,10 @@
   import { formatDTL } from "../libs/dates";
   import { addDays, format } from "date-fns";
   import { removeComments } from "../libs/renderers/cleanup";
+  import {
+    PLUGIN_SETUP_STRING,
+    generatePlugin,
+  } from "../libs/renderers/helpers";
 
   export const note = null;
 
@@ -19,9 +23,6 @@
   }
 
   let showPreview = false;
-
-  const PLUGIN_SETUP_STRING = "<!--\nPlugin: \n-->\n";
-  const generatePlugin = (name) => `<!--\nPlugin: ${name}\n-->\n`;
 
   async function handleKeydown(event) {
     /*
@@ -61,8 +62,7 @@
       due_date: Boolean(dueDateProxy) ? new Date(dueDateProxy) : null,
     });
   }
-
-  function setupPlugin(event) {
+  export function setupPlugin(event) {
     showPreview = false;
     if (!text.includes("<!--")) {
       text = `${PLUGIN_SETUP_STRING}${text}`;

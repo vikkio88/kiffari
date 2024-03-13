@@ -11,6 +11,8 @@
   } from "../../const";
   import Flag from "./Flag.svelte";
   import Select from "../shared/Select.svelte";
+  import { generatePlugin } from "../../libs/renderers/helpers";
+  import { removeComments } from "../../libs/renderers/cleanup";
 
   export let projectId = null;
 
@@ -73,6 +75,13 @@
         {:else}
           Markdown 😎
         {/if}
+      </button>
+      <button
+        on:click|stopPropagation|preventDefault={() => {
+          text = `${generatePlugin("Todo")}${removeComments(text)}`;
+        }}
+      >
+        Plugin:Todo ✅
       </button>
       <button
         on:click|stopPropagation|preventDefault={() => {

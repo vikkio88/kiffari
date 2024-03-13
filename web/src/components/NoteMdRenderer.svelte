@@ -4,7 +4,7 @@
   import Markdown from "./renderers/Markdown.svelte";
   import Link from "./renderers/Link.svelte";
   import Youtube from "./renderers/Youtube.svelte";
-  import Todos from "./renderers/Todos.svelte";
+  import Todos from "./renderers/NoteTodos.svelte";
 
   export let note = {};
   let config = mdConfigParser(note?.body ?? {});
