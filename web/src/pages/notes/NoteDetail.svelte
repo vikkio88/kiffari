@@ -3,7 +3,7 @@
   import Controls from "../../components/shared/Controls.svelte";
   import { navigate } from "svelte-routing";
   import ConfirmButton from "../../components/shared/ConfirmButton.svelte";
-  import BodyRenderer from "../../components/BodyRenderer.svelte";
+  import MdRenderer from "../../components/MdRenderer.svelte";
   import { protectedRoute } from "../../libs/routes";
   import {
     getNoteDetails,
@@ -76,7 +76,7 @@
       <DateSeverity date={note.due_date} />
     </div>
     <div class="body">
-      <BodyRenderer {note} />
+      <MdRenderer {note} />
     </div>
     {#if Array.isArray(note.tags) && note.tags.length > 0}
       <div class="tags">

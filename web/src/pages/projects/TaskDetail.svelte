@@ -1,6 +1,5 @@
 <script>
   import TagsList from "../../components/TagsList.svelte";
-  import Markdown from "../../components/renderers/Markdown.svelte";
   import Spinner from "../../components/shared/Spinner.svelte";
   import Header from "../../components/shared/Header.svelte";
   import { Link, navigate } from "svelte-routing";
@@ -83,6 +82,7 @@
     {getDate(task)}
   </div>
   <div class="description">
+    <!-- Maybe can use MdRenderer here too? so you can support plugins? -->
     <Md source={task.description} />
   </div>
   {#if Array.isArray(task.tags) && task.tags.length > 0}
