@@ -55,6 +55,7 @@
 
 {#if !loginPromise}
   <form class="wrapper" on:submit|preventDefault|stopPropagation={login}>
+    <input style="display: none;" type="text" />
     <input
       bind:this={passwordInput}
       type="password"
