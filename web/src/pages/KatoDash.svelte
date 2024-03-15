@@ -1,7 +1,9 @@
 <script>
+  import Adder from "../components/shared/Adder.svelte";
   import { navigate } from "svelte-routing";
   import {
     catchLogout,
+    createNote,
     getLatestNotes,
     getReminderNotes,
     parseOrThrow,
@@ -10,6 +12,7 @@
   import Controls from "../components/shared/Controls.svelte";
   import Footer from "../components/Footer.svelte";
   import { protectedRoute } from "../libs/routes";
+  import { nowString } from "../libs/dates";
   protectedRoute();
 
   let notePromise = getLatestNotes();
@@ -26,8 +29,27 @@
   function create() {
     navigate("/create-note");
   }
+
+  async function onCreate(bodyWrapper) {
+    const resp = await createNote({
+      title: nowString(),
+      tags: [],
+      ...bodyWrapper,
+    });
+    if (resp.ok) {
+      notePromise = getLatestNotes();
+      return;
+    }
+
+    //TODO: handle error
+  }
 </script>
 
+<Adder
+  centered
+  placeholder="Note body..."
+  on:added={({ detail: body }) => onCreate({ body })}
+/>
 <div class="wrapper">
   {#if Boolean(reminderNotesPromise)}
     <div id="reminders" class="subwrapper">

@@ -5,6 +5,7 @@
 
   export let placeholder = "Name/Title...";
   export let rightAligned = false;
+  export let centered = false;
   let input;
   let clicked = false;
 
@@ -28,7 +29,7 @@
 
 <form
   class="addWrapper"
-  class:centered={clicked}
+  class:centered={clicked || centered}
   class:rightAligned
   on:submit|preventDefault|stopPropagation={submit}
 >
