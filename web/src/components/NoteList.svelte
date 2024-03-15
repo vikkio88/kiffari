@@ -2,6 +2,7 @@
   import { navigate } from "svelte-routing";
   import DateSeverity from "./shared/DateSeverity.svelte";
   import { formatRelativeNow } from "../libs/dates";
+  import { previewMd } from "../libs/renderers/cleanup";
   export let notes = [];
   export let compact = false;
 </script>
@@ -27,8 +28,8 @@
             <span class="crs-pointer" title="Archived">🗄️</span>
           {/if}
         </div>
-        <h2>{note.title}</h2>
-
+        <h3>{note.title}</h3>
+        <p>{previewMd(note.body)}</p>
         <button on:click={() => navigate(`/notes/${note.id}`)}>➡️</button>
       </div>
     {/each}
@@ -50,7 +51,7 @@
 
   .note-item {
     border: var(--default-borders);
-    border-radius: var(--default-border-radius);
+    border-radius: var(--border-radius);
     font-size: var(--input-font-size);
     display: flex;
     flex-direction: row;
@@ -70,10 +71,12 @@
     background-color: var(--div-item-hover-color);
   }
 
-  .note-item > h2 {
+  .note-item > h3 {
     flex: 1;
     text-align: center;
     margin: auto;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .note-item > button {
