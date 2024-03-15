@@ -48,9 +48,9 @@
 </script>
 
 {#if $appConfig.kiffari}
-  <h1 class="" title="Kiffari & Kato">🎫 🪣</h1>
+  <h1 title="Kiffari & Kato">🎫 🪣</h1>
 {:else}
-  <h1 class="">Kato 🪣</h1>
+  <h1>Kato 🪣</h1>
 {/if}
 
 {#if !loginPromise}
