@@ -3,8 +3,8 @@
   import { tick } from "svelte";
   import TagSearch from "./TagSearch.svelte";
   import Controls from "./shared/Controls.svelte";
-  import { formatDTL } from "../libs/dates";
-  import { addDays, format } from "date-fns";
+  import { formatDTL, nowString } from "../libs/dates";
+  import { addDays, } from "date-fns";
   import { removeComments } from "../libs/renderers/cleanup";
   import {
     PLUGIN_SETUP_STRING,
@@ -13,7 +13,7 @@
 
   export const note = null;
 
-  export let title = `${format(new Date(), "E d MMM, HH:mm")}`;
+  export let title = nowString();
   export let text = "";
   export let tags = [];
   export let dueDate = null;

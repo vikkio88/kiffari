@@ -33,3 +33,10 @@ export function getDate({ created_at, updated_at }) {
 
     return new Date(created_at).toLocaleString();
 }
+
+/**
+ * @returns String
+ */
+export function nowString() {
+    return `${format(new Date(), "E d MMM, HH:mm")}`
+}
