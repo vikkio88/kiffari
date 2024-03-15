@@ -87,7 +87,7 @@
     margin: unset;
   }
 
-  h2 {
+  h3 {
     margin: 0 auto;
     text-align: center;
   }
