@@ -14,6 +14,7 @@
   } from "../../libs/api";
   import DateSeverity from "../../components/shared/DateSeverity.svelte";
   import Header from "../../components/shared/Header.svelte";
+  import Separator from "../../components/shared/Separator.svelte";
   import { getDate } from "../../libs/dates";
   import DashedHead from "../../components/shared/DashedHead.svelte";
   protectedRoute();
@@ -55,7 +56,7 @@
     element.setAttribute(
       "href",
       "data:text/markdown;charset=utf-8," +
-        encodeURIComponent(`# ${title}\n${body}\n\n${tagsString.trim()}`)
+        encodeURIComponent(`# ${title}\n${body}\n\n${tagsString.trim()}`),
     );
     element.download = `${title}.md`;
     element.style.display = "none";
@@ -85,15 +86,12 @@
           <TagsList tags={note.tags} />
         </div>
       </div>
+    {:else}
+      <Separator />
     {/if}
   </div>
   <Controls background>
-    <button
-      title="Export as MD"
-      on:click={() => onDownload()}
-    >
-      🔽
-    </button>
+    <button title="Export as MD" on:click={() => onDownload()}> 🔽 </button>
     {#if !note.archived}
       <button title="Edit" on:click={() => navigate(`/edit-note/${id}`)}>
         📝

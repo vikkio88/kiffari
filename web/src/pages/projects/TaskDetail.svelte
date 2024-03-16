@@ -22,6 +22,7 @@
   import DashedHead from "../../components/shared/DashedHead.svelte";
   import Md from "../../components/shared/Md.svelte";
   import TaskMdRenderer from "../../components/TaskMdRenderer.svelte";
+  import Separator from "../../components/shared/Separator.svelte";
   protectedRoute();
 
   export let id = "";
@@ -92,6 +93,8 @@
         <TagsList tags={task.tags} />
       </div>
     </div>
+  {:else}
+    <Separator />
   {/if}
   <Controls background>
     {#if !task.archived}
