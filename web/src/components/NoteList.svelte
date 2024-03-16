@@ -33,7 +33,7 @@
           <p>{previewMd(note.body)}</p>
           <div class="controls">
             <button
-              class="smaller edit"
+              class="smaller"
               on:click={() => navigate(`/edit-note/${note.id}`)}
             >
               📝
@@ -67,8 +67,9 @@
   }
 
   .list.compact {
-    display: grid;
-    grid-template-columns: auto auto;
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 0;
   }
 
   .note-item {
@@ -76,14 +77,6 @@
     border-radius: var(--border-radius);
     font-size: var(--input-font-size);
     padding: 1rem 1rem;
-  }
-
-  .controls {
-    visibility: hidden;
-  }
-
-  .note-item:hover .controls {
-    visibility: visible;
   }
 
   .compact {
