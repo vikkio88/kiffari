@@ -172,7 +172,7 @@
             <Adder
               placeholder="New Task title..."
               on:added={({ detail: title }) => onAdd({ title }, status)}
-              rightAligned
+              centered
             />
           </div>
         </Accordion>
