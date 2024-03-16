@@ -23,8 +23,9 @@
       <input
         type="text"
         required
+        pattern="/(.+)\s*(https?:\/\/\S+)/"
         bind:value={link.href}
-        placeholder="Link Url"
+        placeholder="http://some.website/"
       />
       <button type="button" class="smaller" on:click={() => remove(link)}>
         ❌
