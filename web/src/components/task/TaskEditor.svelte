@@ -64,92 +64,89 @@
 </script>
 
 <div class="editor">
-  <form on:submit|preventDefault|stopPropagation={onSaveInternal}>
-    <div class="controls">
-      <button
-        on:click|stopPropagation|preventDefault={() =>
-          (showPreview = !showPreview)}
-      >
-        {#if showPreview}
-          Code 🤓
-        {:else}
-          Markdown 😎
-        {/if}
-      </button>
-      <button
-        on:click|stopPropagation|preventDefault={() => {
-          text = `${generatePlugin("Todo")}${removeComments(text)}`;
-        }}
-      >
-        Plugin:Todo ✅
-      </button>
-      <button
-        on:click|stopPropagation|preventDefault={() => {
-          console.log("Link other Task");
-        }}
-      >
-        Link Task 🔗
-      </button>
-    </div>
-    <div class="task">
-      {#if !showPreview}
-        <div class="form">
-          <input
-            required
-            placeholder="New Task Title...."
-            class="title"
-            bind:value={title}
-            on:focus={(e) => {
-              e.currentTarget.select();
-            }}
-            type="text"
-          />
-          <textarea
-            placeholder="Here goes the task description if needed..."
-            bind:value={text}
-            rows="10"
-            cols="50"
-            on:keydown={handleKeydown}
-          />
-        </div>
+  <div class="controls">
+    <button on:click={() => (showPreview = !showPreview)}>
+      {#if showPreview}
+        Code 🤓
       {:else}
-        <div class="preview">
-          <h2>{title}</h2>
-          <SvelteMarkdown source={text} />
-        </div>
+        Markdown 😎
       {/if}
-    </div>
-    <div class="additionalInfo">
-      <Select
-        bind:selected={category}
-        options={Object.values(CATEGORIES).map((c) => ({
-          value: c,
-          label: `${c.toUpperCase()} ${CATEGORY_LABELS[c]}`,
-        }))}
-      />
-      <Status bind:status />
-      <div class="frc g-1">
-        <label for="priority">Priority</label>
+    </button>
+    <button
+      on:click={() => {
+        text = `${generatePlugin("Todo")}${removeComments(text)}`;
+      }}
+    >
+      Plugin:Todo ✅
+    </button>
+    <button
+      disabled
+      title="Coming soon!"
+      on:click={() => {
+        console.log("Link other Task");
+      }}
+    >
+      Link Task 🔗
+    </button>
+  </div>
+  <div class="task">
+    {#if !showPreview}
+      <div class="form">
         <input
-          name="priority"
-          size="2"
-          type="number"
-          min="0"
-          step="1"
-          bind:value={priority}
+          required
+          placeholder="New Task Title...."
+          class="title"
+          bind:value={title}
+          on:focus={(e) => {
+            e.currentTarget.select();
+          }}
+          type="text"
+        />
+        <textarea
+          placeholder="Here goes the task description if needed..."
+          bind:value={text}
+          rows="10"
+          cols="50"
+          on:keydown={handleKeydown}
         />
       </div>
-      <Flag bind:flag />
-    </div>
-    <TagSearch
-      on:updatedSelection={onTagsSelection}
-      selectedTags={tags}
-      suggestTrending
+    {:else}
+      <div class="preview">
+        <h2>{title}</h2>
+        <SvelteMarkdown source={text} />
+      </div>
+    {/if}
+  </div>
+  <div class="additionalInfo">
+    <Select
+      bind:selected={category}
+      options={Object.values(CATEGORIES).map((c) => ({
+        value: c,
+        label: `${c.toUpperCase()} ${CATEGORY_LABELS[c]}`,
+      }))}
     />
-    <Controls background>
-      <button type="submit">Save 💾</button>
-    </Controls>
-  </form>
+    <Status bind:status />
+    <div class="frc g-1">
+      <label for="priority">Priority</label>
+      <input
+        name="priority"
+        size="2"
+        type="number"
+        min="0"
+        step="1"
+        bind:value={priority}
+      />
+    </div>
+    <Flag bind:flag />
+  </div>
+  <TagSearch
+    on:updatedSelection={onTagsSelection}
+    selectedTags={tags}
+    suggestTrending
+  />
+  <Controls background>
+    <button on:click={onSaveInternal}>Save 💾</button>
+  </Controls>
 </div>
 
 <style>

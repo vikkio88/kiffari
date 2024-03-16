@@ -4,7 +4,7 @@
   import TagSearch from "./TagSearch.svelte";
   import Controls from "./shared/Controls.svelte";
   import { formatDTL, nowString } from "../libs/dates";
-  import { addDays, } from "date-fns";
+  import { addDays } from "date-fns";
   import { removeComments } from "../libs/renderers/cleanup";
   import {
     PLUGIN_SETUP_STRING,
@@ -80,122 +80,107 @@
 </script>
 
 <div class="editor">
-  <form on:submit|preventDefault={onSaveInternal}>
-    <div class="controls">
-      <button
-        on:click|stopPropagation|preventDefault={() =>
-          (showPreview = !showPreview)}
-      >
-        {#if showPreview}
-          Code 🤓
-        {:else}
-          Markdown 😎
-        {/if}
-      </button>
-      <button
-        on:click|stopPropagation|preventDefault={() => {
-          text = `${generatePlugin("Link")}${removeComments(text)}`;
-        }}
-      >
-        Plugin:Link 🔗
-      </button>
-      <button
-        on:click|stopPropagation|preventDefault={() => {
-          text = `${generatePlugin("Todo")}${removeComments(text)}`;
-        }}
-      >
-        Plugin:Todo ✅
-      </button>
-      <button on:click|stopPropagation|preventDefault={setupPlugin}>
-        Plugin ⚙️
-      </button>
-    </div>
-    <div class="note">
-      {#if !showPreview}
-        <div class="form">
-          <input
-            required
-            class="title"
-            bind:value={title}
-            on:focus={(e) => {
-              e.currentTarget.select();
-            }}
-            type="text"
-          />
-          <textarea
-            required
-            placeholder="A New Note body..."
-            bind:value={text}
-            rows="10"
-            cols="50"
-            on:keydown={handleKeydown}
-          />
-        </div>
+  <div class="controls">
+    <button on:click={() => (showPreview = !showPreview)}>
+      {#if showPreview}
+        Code 🤓
       {:else}
-        <div class="preview">
-          <h2>{title}</h2>
-          <SvelteMarkdown source={text} />
-        </div>
+        Markdown 😎
       {/if}
-    </div>
-    <div class="additionalInfo">
-      <button
-        class="toggler"
-        on:click|stopPropagation|preventDefault={toggleAdditionalInfo}
-      >
-        {#if !showAdditionalInfo}
-          More ➕
-        {:else}
-          ◀️
-        {/if}
-      </button>
-      {#if showAdditionalInfo}
-        <div class="dueDateWrapper">
-          <h3>Due Date</h3>
-          <div>
-            <input
-              name="dueDate"
-              type="datetime-local"
-              bind:value={dueDateProxy}
-              min={new Date().toISOString()}
-            />
-            {#if Boolean(dueDateProxy)}
-              <button
-                on:click|stopPropagation|preventDefault={clearDueDate}
-                class="removeDue"
-              >
-                ❌
-              </button>
-            {/if}
-          </div>
-          <div class="presets">
-            <button
-              on:click|stopPropagation|preventDefault={() => {
-                dueDateProxy = formatDTL(addDays(new Date(), 1));
-              }}
-            >
-              Tomorrow
-            </button>
-            <button
-              on:click|stopPropagation|preventDefault={() => {
-                dueDateProxy = formatDTL(addDays(new Date(), 7));
-              }}
-            >
-              Next Week
-            </button>
-          </div>
-        </div>
+    </button>
+    <button
+      on:click={() => {
+        text = `${generatePlugin("Link")}${removeComments(text)}`;
+      }}
+    >
+      Plugin:Link 🔗
+    </button>
+    <button
+      on:click={() => {
+        text = `${generatePlugin("Todo")}${removeComments(text)}`;
+      }}
+    >
+      Plugin:Todo ✅
+    </button>
+    <button on:click={setupPlugin}> Plugin ⚙️ </button>
+  </div>
+  <div class="note">
+    {#if !showPreview}
+      <div class="form">
+        <input
+          required
+          class="title"
+          bind:value={title}
+          on:focus={(e) => {
+            e.currentTarget.select();
+          }}
+          type="text"
+        />
+        <textarea
+          required
+          placeholder="A New Note body..."
+          bind:value={text}
+          rows="10"
+          cols="50"
+          on:keydown={handleKeydown}
+        />
+      </div>
+    {:else}
+      <div class="preview">
+        <h2>{title}</h2>
+        <SvelteMarkdown source={text} />
+      </div>
+    {/if}
+  </div>
+  <div class="additionalInfo">
+    <button class="toggler" on:click={toggleAdditionalInfo}>
+      {#if !showAdditionalInfo}
+        More ➕
+      {:else}
+        ◀️
       {/if}
-    </div>
-    <TagSearch
-      on:updatedSelection={onTagsSelection}
-      selectedTags={tags}
-      suggestTrending
-    />
-    <Controls background>
-      <button type="submit">Save 💾</button>
-    </Controls>
-  </form>
+    </button>
+    {#if showAdditionalInfo}
+      <div class="dueDateWrapper">
+        <h3>Due Date</h3>
+        <div>
+          <input
+            name="dueDate"
+            type="datetime-local"
+            bind:value={dueDateProxy}
+            min={new Date().toISOString()}
+          />
+          {#if Boolean(dueDateProxy)}
+            <button on:click={clearDueDate} class="removeDue"> ❌ </button>
+          {/if}
+        </div>
+        <div class="presets">
+          <button
+            on:click={() => {
+              dueDateProxy = formatDTL(addDays(new Date(), 1));
+            }}
+          >
+            Tomorrow
+          </button>
+          <button
+            on:click={() => {
+              dueDateProxy = formatDTL(addDays(new Date(), 7));
+            }}
+          >
+            Next Week
+          </button>
+        </div>
+      </div>
+    {/if}
+  </div>
+  <TagSearch
+    on:updatedSelection={onTagsSelection}
+    selectedTags={tags}
+    suggestTrending
+  />
+  <Controls background>
+    <button on:click={onSaveInternal}>Save 💾</button>
+  </Controls>
 </div>
 
 <style>
