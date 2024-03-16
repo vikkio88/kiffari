@@ -18,7 +18,7 @@
             <DateSeverity date={note.due_date} />
             <div
               title={`last updated: ${new Date(
-                note.updated_at
+                note.updated_at,
               ).toLocaleString()}`}
             >
               {formatRelativeNow(note.updated_at)}
@@ -29,8 +29,30 @@
           {/if}
         </div>
         <h3>{note.title}</h3>
-        <p>{previewMd(note.body)}</p>
-        <button on:click={() => navigate(`/notes/${note.id}`)}>➡️</button>
+        {#if compact}
+          <p>{previewMd(note.body)}</p>
+          <div class="controls">
+            <button
+              class="smaller edit"
+              on:click={() => navigate(`/edit-note/${note.id}`)}
+            >
+              📝
+            </button>
+            <button
+              class="smaller"
+              on:click={() => navigate(`/notes/${note.id}`)}
+            >
+              ➡️
+            </button>
+          </div>
+        {:else}
+          <button
+            class="smaller"
+            on:click={() => navigate(`/notes/${note.id}`)}
+          >
+            ➡️
+          </button>
+        {/if}
       </div>
     {/each}
   </div>
@@ -53,11 +75,15 @@
     border: var(--default-borders);
     border-radius: var(--border-radius);
     font-size: var(--input-font-size);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
+  }
+
+  .controls {
+    visibility: hidden;
+  }
+
+  .note-item:hover .controls {
+    visibility: visible;
   }
 
   .compact {
@@ -79,12 +105,18 @@
     margin-bottom: 0;
   }
 
-  .note-item > button {
+  .controls > button {
     margin-left: auto;
   }
 
-  .compact > button {
+  .compact > .controls > button {
     margin: unset;
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
   }
 
   h3 {
@@ -94,6 +126,8 @@
 
   .info {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
   }
 

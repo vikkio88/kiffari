@@ -77,7 +77,7 @@
     {#if activeTab === TABS.TAGS}
       <TagsList big tags={results} />
     {:else}
-      <NoteList notes={results} />
+      <NoteList compact notes={results} />
     {/if}
   {/await}
 {:else}
