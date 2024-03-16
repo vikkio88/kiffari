@@ -17,6 +17,10 @@ GET http://localhost:5111/api/projects
 Authorization: {{ token }}
 
 ###
+GET http://localhost:5111/api/projects?q=maybe
+Authorization: {{ token }}
+
+###
 GET http://localhost:5111/api/projects/{{projectId}}
 Authorization: {{ token }}
 

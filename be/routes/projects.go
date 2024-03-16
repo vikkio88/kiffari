@@ -9,7 +9,13 @@ import (
 
 func ProjectRoutes(r gin.IRouter, d *db.Db) {
 	r.GET("/projects", func(c *gin.Context) {
-		c.JSON(http.StatusOK, d.GetAllProjects())
+		filterValue := c.Query("q")
+		if filterValue == "" {
+			c.JSON(http.StatusOK, d.GetAllProjects())
+			return
+		}
+
+		c.JSON(http.StatusOK, d.FilterProjects(filterValue))
 	})
 
 	r.GET("/projects/:id", func(c *gin.Context) {

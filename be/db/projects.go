@@ -1,6 +1,10 @@
 package db
 
-import "gorm.io/gorm"
+import (
+	"fmt"
+
+	"gorm.io/gorm"
+)
 
 func (d *Db) GetProjectById(id string) (ProjectDto, bool) {
 	var p Project
@@ -49,6 +53,21 @@ func (d *Db) GetAllProjects() []ProjectDto {
 	var ps []Project
 
 	d.g.Model(&Project{}).Order("updated_at DESC").Find(&ps)
+
+	dtos := make([]ProjectDto, len(ps))
+	for i, p := range ps {
+		dtos[i] = p.Dto()
+	}
+
+	return dtos
+}
+
+func (d *Db) FilterProjects(text string) []ProjectDto {
+	var ps []Project
+	searchValue := fmt.Sprintf("%%%s%%", text)
+	d.g.Model(&Project{}).
+		Where("description LIKE ? OR name LIKE ?", searchValue, searchValue).
+		Order("updated_at DESC, created_at DESC").Find(&ps)
 
 	dtos := make([]ProjectDto, len(ps))
 	for i, p := range ps {
