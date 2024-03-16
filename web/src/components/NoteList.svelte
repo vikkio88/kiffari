@@ -69,7 +69,9 @@
   .list.compact {
     display: flex;
     flex-direction: row;
-    flex: 1 1 0;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
   }
 
   .note-item {
