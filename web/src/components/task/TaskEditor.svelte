@@ -189,6 +189,7 @@
   .controls {
     display: flex;
     flex-direction: row;
+    overflow: auto;
   }
 
   input[type="number"] {

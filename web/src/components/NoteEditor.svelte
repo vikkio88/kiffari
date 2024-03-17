@@ -251,5 +251,6 @@
   .controls {
     display: flex;
     flex-direction: row;
+    overflow: auto;
   }
 </style>
