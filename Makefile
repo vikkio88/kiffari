@@ -17,4 +17,4 @@ build-all: clean build-fe build-be
 	mkdir bin/
 	mv be/bin.tar.gz ./bin/
 clean:
-	rm -rf bin be/bin be/tmp be/testing.db web/dist web/.env.production.bak bin.tar.gz
+	rm -rf bin be/bin be/tmp web/dist web/.env.production.bak bin.tar.gz
