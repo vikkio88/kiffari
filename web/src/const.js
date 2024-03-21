@@ -45,3 +45,13 @@ export const D_TASK_CATEGORY_LABELS = {
     [D_TASK_CATEGORIES.SPIKE]: "⚡",
     [D_TASK_CATEGORIES.CLEANUP]: "🧹",
 };
+
+
+export const MARKDOWN_PLUGINS = {
+    CODE: "code",
+    LINK: "link",
+    YOUTUBE: "youtube",
+    TODO: "todo",
+
+    NONE: "none"
+};
