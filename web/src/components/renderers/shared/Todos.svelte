@@ -72,6 +72,10 @@
         gap: 1rem;
     }
 
+    .label {
+        overflow: auto;
+    }
+
     .done {
         text-decoration: line-through;
     }
