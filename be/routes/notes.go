@@ -19,6 +19,11 @@ func NoteRoutes(r gin.IRouter, d *db.Db) {
 			return
 		}
 
+		if isParamTrue(c, "pinned") {
+			c.JSON(http.StatusOK, d.GetPinnedNotes())
+			return
+		}
+
 		if isParamTrue(c, "reminders") {
 			c.JSON(http.StatusOK, d.GetReminderNotes())
 			return
@@ -73,6 +78,18 @@ func NoteRoutes(r gin.IRouter, d *db.Db) {
 	r.DELETE("/notes/:id/archive", func(c *gin.Context) {
 		id := c.Params.ByName("id")
 		ok := d.SetArchivedNote(id, false)
+		SuccessOr400(c, gin.H{"result": id}, ok)
+	})
+
+	r.POST("/notes/:id/pin", func(c *gin.Context) {
+		id := c.Params.ByName("id")
+		ok := d.SetPinnedNote(id, true)
+		SuccessOr400(c, gin.H{"result": id}, ok)
+	})
+
+	r.DELETE("/notes/:id/pin", func(c *gin.Context) {
+		id := c.Params.ByName("id")
+		ok := d.SetPinnedNote(id, false)
 		SuccessOr400(c, gin.H{"result": id}, ok)
 	})
 

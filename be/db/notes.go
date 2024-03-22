@@ -11,6 +11,15 @@ func (d *Db) CreateNote(value NoteCreate) (Note, bool) {
 	return n, trx.RowsAffected == 1
 }
 
+func (d *Db) GetPinnedNotes() []NoteItem {
+	var notes []NoteItem
+
+	d.g.Model(&Note{}).Order("updated_at DESC, created_at DESC").
+		Where("due_date IS NULL AND pinned = ?", true).Find(&notes)
+
+	return notes
+}
+
 func (d *Db) GetLatest() []NoteItem {
 	var notes []NoteItem
 
@@ -81,6 +90,13 @@ func (d *Db) UpdateNote(n NoteUpdate) (string, bool) {
 
 func (d *Db) SetArchivedNote(id string, archived bool) bool {
 	trx := d.g.Model(&Note{}).Where("id", id).Update("archived", archived)
+	//TODO: if archived = true unpin also
+
+	return trx.RowsAffected == 1
+}
+
+func (d *Db) SetPinnedNote(id string, pinned bool) bool {
+	trx := d.g.Model(&Note{}).Where("id", id).Update("pinned", pinned)
 
 	return trx.RowsAffected == 1
 }
