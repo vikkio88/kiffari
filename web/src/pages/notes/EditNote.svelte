@@ -16,7 +16,7 @@
     if (resp.status == 401) {
       catchLogout();
     }
-    
+
     if (resp.status == 200) {
       navigate(`/notes/${id}`, { replace: true });
     }
@@ -28,6 +28,7 @@
     title={note.title}
     text={note.body}
     tags={note.tags}
+    pinned={note.pinned}
     dueDate={Boolean(note.due_date) ? new Date(note.due_date) : null}
     {onSave}
   />
