@@ -144,6 +144,7 @@
       {/if}
     </button>
     {#if showAdditionalInfo}
+      <!-- TODO: Add Pinned here -->
       <div class="dueDateWrapper">
         <h3>Due Date</h3>
         <div>
