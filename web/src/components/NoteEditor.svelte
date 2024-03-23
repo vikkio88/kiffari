@@ -17,6 +17,8 @@
   export let text = "";
   export let tags = [];
   export let dueDate = null;
+  // TODO: wireup to update?
+  export let pinned = false;
   let dueDateProxy = Boolean(dueDate) ? formatDTL(dueDate) : null;
   function clearDueDate() {
     dueDateProxy = null;
@@ -59,6 +61,7 @@
       title,
       body: text,
       tags,
+      pinned,
       due_date: Boolean(dueDateProxy) ? new Date(dueDateProxy) : null,
     });
   }

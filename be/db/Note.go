@@ -33,7 +33,6 @@ type NoteUpdate struct {
 	NoteCreate
 	Id       string `json:"id" binding:"required"`
 	Archived bool   `json:"archived"`
-	Pinned   bool   `json:"pinned"`
 }
 
 func (n NoteUpdate) Note() Note {
@@ -50,6 +49,7 @@ func (n NoteUpdate) Note() Note {
 		Body:     n.Body,
 		DueDate:  n.DueDate,
 		Archived: n.Archived,
+		Pinned:   n.Pinned,
 		Tags:     n.Tags,
 	}
 
@@ -59,6 +59,7 @@ type NoteCreate struct {
 	Title   string     `json:"title" binding:"required"`
 	Body    string     `json:"body" binding:"required"`
 	DueDate *time.Time `json:"due_date" binding:"omitempty,dateInTheFuture" time_format:"2006-01-02T15:04:05Z07:00"`
+	Pinned  bool       `json:"pinned"`
 	Tags    []*Tag     `json:"tags" binding:"required"`
 }
 
@@ -75,6 +76,7 @@ func (n NoteCreate) Note() Note {
 		Title:   n.Title,
 		Body:    n.Body,
 		DueDate: n.DueDate,
+		Pinned:  n.Pinned,
 		Tags:    n.Tags,
 	}
 

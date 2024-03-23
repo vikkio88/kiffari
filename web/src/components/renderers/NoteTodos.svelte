@@ -11,6 +11,7 @@
       id: note.id,
       title: note.title,
       tags: note.tags ?? [],
+      pinned: note.pinned,
       body: exportTodos(todos),
     });
     //TODO: check result/reconciliate
