@@ -33,7 +33,7 @@ DELETE http://localhost:5111/api/tags/{{tagId}}
 Authorization: {{ token }}
 
 ###
-GET http://localhost:5111/api/tags/}
+GET http://localhost:5111/api/tags
 Authorization: {{ token }}
 
 ### Trending tags
@@ -52,19 +52,14 @@ Authorization: {{ token }}
 }
 
 ###
+GET http://localhost:5111/api/notes-dash
+Authorization: {{ token }}
+
+###
 GET http://localhost:5111/api/notes?q=lorem
 Authorization: {{ token }}
 
 ###
-GET http://localhost:5111/api/notes?latest=true
-Authorization: {{ token }}
-
-###
-GET http://localhost:5111/api/notes?pinned=true
-Authorization: {{ token }}
-
-###
-
 GET http://localhost:5111/api/notes/{{noteId}}}
 Authorization: {{ token }}
 

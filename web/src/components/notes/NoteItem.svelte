@@ -4,15 +4,38 @@
     import { formatRelativeNow } from "../../libs/dates";
     import { previewMd } from "../../libs/renderers/cleanup";
     import { getConfigFromPlugin } from "./noteItemPluginConfig";
+    import { catchLogout, pinNote, unpinNote } from "../../libs/api";
 
     export let note = {};
     export let compact = false;
+    export let pinned = note?.pinned || false;
 
     const config = getConfigFromPlugin(note?.body ?? "");
+    async function onPinToggle() {
+        const toggle = pinned ? unpinNote : pinNote;
+        const resp = await toggle(note.id);
+        if (resp.status == 401) {
+            catchLogout();
+            return;
+        }
+
+        window.location.reload();
+    }
 </script>
 
 <div class="note-item" class:archived={note.archived} class:compact>
-    <div class="info">
+    {#if !note.archived && !Boolean(note.due_date)}
+        <div class="top">
+            <button
+                class="smaller"
+                on:click={onPinToggle}
+                title={`${pinned ? "Un-Pin" : "Pin"}`}
+            >
+                {pinned ? "📍" : "📌"}
+            </button>
+        </div>
+    {/if}
+    <div class="info padded">
         {#if config.info.dates}
             <div class="dates">
                 <DateSeverity date={note.due_date} />
@@ -29,14 +52,16 @@
             <span class="crs-pointer" title="Archived">🗄️</span>
         {/if}
     </div>
-    <h3>{note.title}</h3>
     {#if compact}
-        {#if config.info.preview}
-            <p>{previewMd(note.body)}</p>
-        {/if}
-        {#if config.icon}
-            <p title={config.title}>{config.icon}</p>
-        {/if}
+        <div class="padded">
+            <h3>{note.title}</h3>
+            {#if config.info.preview}
+                <p>{previewMd(note.body)}</p>
+            {/if}
+            {#if config.icon}
+                <p title={config.title}>{config.icon}</p>
+            {/if}
+        </div>
         <div class="controls">
             {#if config.info.editBtn}
                 <button
@@ -56,6 +81,7 @@
             {/if}
         </div>
     {:else}
+        <h3>{note.title}</h3>
         <button class="smaller" on:click={() => navigate(`/notes/${note.id}`)}>
             ➡️
         </button>
@@ -67,11 +93,16 @@
         border: var(--default-borders);
         border-radius: var(--border-radius);
         font-size: var(--input-font-size);
-        padding: 1rem 1rem;
+        padding: 1rem;
+    }
+
+    .top {
+        margin-bottom: 0.5rem;
     }
 
     .compact {
         flex-direction: column;
+        padding: 0;
     }
 
     .archived {
@@ -87,6 +118,9 @@
         margin: auto;
         margin-top: 0;
         margin-bottom: 0;
+    }
+    .padded {
+        padding: 1rem;
     }
 
     .controls > button {

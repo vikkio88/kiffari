@@ -2,6 +2,8 @@ import { expect, test } from 'vitest';
 import { del, get, login, logout, post, put } from '../utils/api';
 import { randomString } from '../utils/strings';
 
+const rubbishTags = [];
+
 
 test("Config", async () => {
     const resp = await get("config");
@@ -41,7 +43,7 @@ test("notes / tags", async () => {
     // CREATE
     const newNote = {
         title: "Some Title", body: "Some Body", tags: [
-            { label: randomString() }
+            { label: `TESTING_${randomString()}` }
         ]
     };
     resp = await post("notes", newNote);
@@ -66,7 +68,7 @@ test("notes / tags", async () => {
         body: fullNote.body,
         tags: [
             ...fullNote.tags,
-            { label: randomString() }
+            { label: `TESTING_${randomString()}` }
         ],
         // UPDATE NEEDS ARCHIVED TOO
         archived: false,
@@ -81,7 +83,7 @@ test("notes / tags", async () => {
     expect(result.tags.length).toBe(2);
 
     // Archive
-    resp = await get("notes?archived=true")
+    resp = await get("notes?archived=true");
     expect(resp.ok).toBe(true);
     let archived = await resp.json();
     expect(archived.length).toBe(0);
@@ -89,7 +91,7 @@ test("notes / tags", async () => {
     resp = await post(`notes/${fullNote.id}/archive`);
     expect(resp.ok).toBe(true);
     //Get only archived
-    resp = await get("notes?archived=true")
+    resp = await get("notes?archived=true");
     expect(resp.ok).toBe(true);
     archived = await resp.json();
     expect(archived.length).toBe(1);
@@ -97,22 +99,44 @@ test("notes / tags", async () => {
     resp = await del(`notes/${fullNote.id}/archive`);
     expect(resp.ok).toBe(true);
     //Get only archived
-    resp = await get("notes?archived=true")
+    resp = await get("notes?archived=true");
     expect(resp.ok).toBe(true);
     archived = await resp.json();
     expect(archived.length).toBe(0);
-    
+
+    // Pin/Unpin
+    resp = await post(`notes/${fullNote.id}/pin`);
+    expect(resp.ok).toBe(true);
+    resp = await get(`notes/${result.id}`);
+    result = await resp.json();
+    expect(result.pinned).toBe(true);
+
+    resp = await del(`notes/${fullNote.id}/pin`);
+    expect(resp.ok).toBe(true);
+    resp = await get(`notes/${result.id}`);
+    result = await resp.json();
+    expect(result.pinned).toBe(false);
+
+    // Dash
+    resp = await get('dash/notes');
+    expect(resp.ok).toBe(true);
+    result = await resp.json();
+    expect(Array.isArray(result.latest)).toBe(true);
+    expect(Array.isArray(result.pinned)).toBe(true);
+    expect(Array.isArray(result.reminders)).toBe(true);
+
+
     // DELETE
-    resp = await del(`notes/${result.id}`);
+    resp = await del(`notes/${fullNote.id}`);
     expect(resp.ok).toBe(true);
 
     // Get Again to check
-    resp = await get(`notes/${result.id}`);
+    resp = await get(`notes/${fullNote.id}`);
     expect(resp.ok).not.toBe(true);
     expect(resp.status).toBe(404);
 
-    // remove all tags
-    resp = await get(`tags`);
+    // remove all testing tags
+    resp = await get(`tags?q=TESTING`);
     expect(resp.ok).toBe(true);
 
     const tags = await resp.json();

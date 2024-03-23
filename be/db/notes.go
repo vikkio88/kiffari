@@ -24,7 +24,7 @@ func (d *Db) GetLatest() []NoteItem {
 	var notes []NoteItem
 
 	d.g.Model(&Note{}).Order("updated_at DESC, created_at DESC").
-		Where("due_date IS NULL AND archived = ?", false).
+		Where("due_date IS NULL AND archived = ? AND pinned = ?", false, false).
 		Limit(conf.LatestNotesLimit).Find(&notes)
 
 	return notes

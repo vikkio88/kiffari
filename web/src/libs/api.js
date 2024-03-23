@@ -51,13 +51,10 @@ export function createNote(note) {
   });
 }
 
-export function getLatestNotes() {
-  return fetch(`${KATO_API_URL}/notes?latest=true`, makeHeaders()).then(parseOrThrow).catch(catchLogout);
+export function getDashNotes() {
+  return fetch(`${KATO_API_URL}/dash/notes`, makeHeaders()).then(parseOrThrow).catch(catchLogout);
 }
 
-export function getReminderNotes() {
-  return fetch(`${KATO_API_URL}/notes?reminders=true`, makeHeaders());
-}
 
 export function getArchivedNotes() {
   return fetch(`${KATO_API_URL}/notes?archived=true`, makeHeaders()).then(parseOrThrow).catch(catchLogout);
@@ -84,6 +81,20 @@ export function archive(resource = "notes", id) {
 
 export function unarchive(resource = "notes", id) {
   return fetch(`${KATO_API_URL}/${resource}/${id}/archive`, {
+    method: "DELETE",
+    ...makeHeaders(),
+  });
+}
+
+export function pinNote(id) {
+  return fetch(`${KATO_API_URL}/notes/${id}/pin`, {
+    method: "POST",
+    ...makeHeaders(),
+  });
+}
+
+export function unpinNote(id) {
+  return fetch(`${KATO_API_URL}/notes/${id}/pin`, {
     method: "DELETE",
     ...makeHeaders(),
   });

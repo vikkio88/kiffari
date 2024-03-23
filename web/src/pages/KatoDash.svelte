@@ -1,30 +1,16 @@
 <script>
   import Adder from "../components/shared/Adder.svelte";
   import { navigate } from "svelte-routing";
-  import {
-    catchLogout,
-    createNote,
-    getLatestNotes,
-    getReminderNotes,
-    parseOrThrow,
-  } from "../libs/api";
+  import { createNote, getDashNotes } from "../libs/api";
   import NoteList from "../components/NoteList.svelte";
   import Controls from "../components/shared/Controls.svelte";
   import Footer from "../components/Footer.svelte";
   import { protectedRoute } from "../libs/routes";
   import { nowString } from "../libs/dates";
+  import Spinner from "../components/shared/Spinner.svelte";
   protectedRoute();
 
-  let notePromise = getLatestNotes();
-  let reminderNotesPromise = getReminderNotes()
-    .then(parseOrThrow)
-    .then((reminders) => {
-      if (reminders.length > 0) {
-        return reminders;
-      }
-      reminderNotesPromise = null;
-    })
-    .catch(catchLogout);
+  let dashNotesPromise = getDashNotes();
 
   function create() {
     navigate("/create-note");
@@ -37,7 +23,7 @@
       ...bodyWrapper,
     });
     if (resp.ok) {
-      notePromise = getLatestNotes();
+      dashNotesPromise = getDashNotes();
       return;
     }
 
@@ -51,23 +37,31 @@
   on:added={({ detail: body }) => onCreate({ body })}
 />
 <div class="wrapper">
-  {#if Boolean(reminderNotesPromise)}
-    <div id="reminders" class="subwrapper">
-      <h2>Reminders</h2>
-      {#await reminderNotesPromise then reminderNotes}
-        {#if reminderNotes.length > 0}
-          <NoteList notes={reminderNotes} compact />
-        {/if}
-      {/await}
+  {#await dashNotesPromise}
+    <div class="frc">
+      <Spinner />
     </div>
-  {/if}
+  {:then notes}
+    {#if Array.isArray(notes.pinned) && notes.pinned.length > 0}
+      <div class="subwrapper">
+        <h2>📍 Notes</h2>
+        <NoteList notes={notes.pinned} compact />
+      </div>
+    {/if}
 
-  <div class="subwrapper">
-    <h2>Latest Notes</h2>
-    {#await notePromise then notes}
-      <NoteList {notes} compact />
-    {/await}
-  </div>
+    {#if Array.isArray(notes.reminders) && notes.reminders.length > 0}
+      <div class="subwrapper">
+        <h2>⏰ Notes</h2>
+        <NoteList notes={notes.reminders} compact />
+      </div>
+    {/if}
+    {#if Array.isArray(notes.latest) && notes.latest.length > 0}
+      <div class="subwrapper">
+        <h2>🆕 Notes</h2>
+        <NoteList notes={notes.latest} compact />
+      </div>
+    {/if}
+  {/await}
 </div>
 
 <Footer />
