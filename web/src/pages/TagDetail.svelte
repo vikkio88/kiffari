@@ -1,5 +1,5 @@
 <script>
-  import NoteList from "../components/NoteList.svelte";
+  import NoteList from "../components/notes/NoteList.svelte";
   import Header from "../components/shared/Header.svelte";
   import { getTagDetails, parseOrThrow, catchLogout } from "../libs/api";
   import { protectedRoute } from "../libs/routes";

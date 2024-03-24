@@ -37,9 +37,7 @@
 </script>
 
 {#await configPromise}
-  <div class="frc">
-    <Spinner />
-  </div>
+  <Spinner />
 {:then config}
   <Router {url}>
     <Nav />

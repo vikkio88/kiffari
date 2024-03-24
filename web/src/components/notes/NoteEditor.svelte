@@ -1,15 +1,15 @@
 <script>
   import SvelteMarkdown from "svelte-markdown";
   import { tick } from "svelte";
-  import TagSearch from "./TagSearch.svelte";
-  import Controls from "./shared/Controls.svelte";
-  import { formatDTL, nowString } from "../libs/dates";
+  import TagSearch from "../TagSearch.svelte";
+  import Controls from "../shared/Controls.svelte";
+  import { formatDTL, nowString } from "../../libs/dates";
   import { addDays } from "date-fns";
-  import { removeComments } from "../libs/renderers/cleanup";
+  import { removeComments } from "../../libs/renderers/cleanup";
   import {
     PLUGIN_SETUP_STRING,
     generatePlugin,
-  } from "../libs/renderers/helpers";
+  } from "../../libs/renderers/helpers";
 
   export const note = null;
 

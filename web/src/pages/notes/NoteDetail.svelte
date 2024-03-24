@@ -3,7 +3,7 @@
   import Controls from "../../components/shared/Controls.svelte";
   import { navigate } from "svelte-routing";
   import ConfirmButton from "../../components/shared/ConfirmButton.svelte";
-  import MdRenderer from "../../components/NoteMdRenderer.svelte";
+  import MdRenderer from "../../components/notes/NoteMdRenderer.svelte";
   import { protectedRoute } from "../../libs/routes";
   import {
     getNoteDetails,

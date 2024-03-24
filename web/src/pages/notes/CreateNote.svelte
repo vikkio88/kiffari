@@ -1,6 +1,6 @@
 <script>
   import { navigate } from "svelte-routing";
-  import NoteEditor from "../../components/NoteEditor.svelte";
+  import NoteEditor from "../../components/notes/NoteEditor.svelte";
   import { protectedRoute } from "../../libs/routes";
   import { catchLogout, createNote } from "../../libs/api";
   import ErrorToast from "../../components/shared/ErrorToast.svelte";

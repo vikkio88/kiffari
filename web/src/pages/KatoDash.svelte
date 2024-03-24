@@ -2,7 +2,7 @@
   import Adder from "../components/shared/Adder.svelte";
   import { navigate } from "svelte-routing";
   import { createNote, getDashNotes } from "../libs/api";
-  import NoteList from "../components/NoteList.svelte";
+  import NoteList from "../components/notes/NoteList.svelte";
   import Controls from "../components/shared/Controls.svelte";
   import Footer from "../components/Footer.svelte";
   import { protectedRoute } from "../libs/routes";
@@ -38,9 +38,7 @@
 />
 <div class="wrapper">
   {#await dashNotesPromise}
-    <div class="frc">
-      <Spinner />
-    </div>
+    <Spinner />
   {:then notes}
     {#if Array.isArray(notes.pinned) && notes.pinned.length > 0}
       <div class="subwrapper">

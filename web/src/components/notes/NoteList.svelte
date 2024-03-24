@@ -1,6 +1,6 @@
 <script>
-  import NoteItem from "./notes/NoteItem.svelte";
-  import NoteRow from "./notes/NoteRow.svelte";
+  import NoteItem from "./NoteItem.svelte";
+  import NoteRow from "./NoteRow.svelte";
 
   export let notes = [];
   export let compact = false;

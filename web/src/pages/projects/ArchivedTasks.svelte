@@ -2,7 +2,6 @@
   import { Link } from "svelte-routing";
   import { getProjectWithArchivedTasks } from "../../libs/api";
   import { protectedRoute } from "../../libs/routes";
-  import { id } from "date-fns/locale";
   import Spinner from "../../components/shared/Spinner.svelte";
   import Task from "../../components/task/Task.svelte";
 

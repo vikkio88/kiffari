@@ -1,5 +1,5 @@
 <script>
-    import NoteList from "../../components/NoteList.svelte";
+    import NoteList from "../../components/notes/NoteList.svelte";
     import { getArchivedNotes } from "../../libs/api";
     import { protectedRoute } from "../../libs/routes";
     protectedRoute();

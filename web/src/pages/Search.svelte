@@ -3,7 +3,7 @@
   import Spinner from "../components/shared/Spinner.svelte";
   import { protectedRoute } from "../libs/routes";
   import { filterTags, filterNotes } from "../libs/api";
-  import NoteList from "../components/NoteList.svelte";
+  import NoteList from "../components/notes/NoteList.svelte";
   protectedRoute();
 
   const TABS = {
@@ -67,9 +67,7 @@
 
 {#if searchPromise}
   {#await searchPromise}
-    <div class="frc">
-      <Spinner />
-    </div>
+    <Spinner />
   {:then results}
     {#if activeTab === TABS.TAGS}
       <TagsList big tags={results} />

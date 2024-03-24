@@ -20,8 +20,7 @@
   import Controls from "../../components/shared/Controls.svelte";
   import ConfirmButton from "../../components/shared/ConfirmButton.svelte";
   import DashedHead from "../../components/shared/DashedHead.svelte";
-  import Md from "../../components/shared/Md.svelte";
-  import TaskMdRenderer from "../../components/TaskMdRenderer.svelte";
+  import TaskMdRenderer from "../../components/task/TaskMdRenderer.svelte";
   import Separator from "../../components/shared/Separator.svelte";
   protectedRoute();
 
