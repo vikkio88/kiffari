@@ -1,5 +1,6 @@
 <script>
   export let title = "";
+  export let classes = ""
   export let confirmLabel = "Confirm?";
   export let onConfirmed = () => console.log("Confirmed");
   let clicked = false;
@@ -12,7 +13,7 @@
   }
 </script>
 
-<button {title} on:click={handleClick}>
+<button {title} class={classes} on:click={handleClick}>
   {#if !clicked}
     <slot />
   {:else}
