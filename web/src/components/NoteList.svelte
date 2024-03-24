@@ -1,5 +1,6 @@
 <script>
   import NoteItem from "./notes/NoteItem.svelte";
+  import NoteRow from "./notes/NoteRow.svelte";
 
   export let notes = [];
   export let compact = false;
@@ -10,7 +11,11 @@
 {:else}
   <div class="list" class:compact>
     {#each notes as note}
-      <NoteItem {note} {compact} />
+      {#if compact}
+        <NoteItem {note} />
+      {:else}
+        <NoteRow {note} />
+      {/if}
     {/each}
   </div>
 {/if}

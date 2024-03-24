@@ -2,10 +2,7 @@
   import TagsList from "../components/TagsList.svelte";
   import Spinner from "../components/shared/Spinner.svelte";
   import { protectedRoute } from "../libs/routes";
-  import {
-    filterTags,
-    filterNotes,
-  } from "../libs/api";
+  import { filterTags, filterNotes } from "../libs/api";
   import NoteList from "../components/NoteList.svelte";
   protectedRoute();
 
@@ -37,7 +34,7 @@
     }, 500);
   };
 
-  let activeTab = TABS.TAGS;
+  let activeTab = TABS.NOTES;
   function setActiveTab(tab) {
     results = [];
     searchPromise = null;
@@ -50,12 +47,12 @@
 <h2>Search</h2>
 <div class="tabs">
   <button
-    class:active={activeTab === TABS.TAGS}
-    on:click={() => setActiveTab(TABS.TAGS)}>Tags</button
-  >
-  <button
     class:active={activeTab === TABS.NOTES}
     on:click={() => setActiveTab(TABS.NOTES)}>Notes</button
+  >
+  <button
+    class:active={activeTab === TABS.TAGS}
+    on:click={() => setActiveTab(TABS.TAGS)}>Tags</button
   >
 </div>
 <div class="tagSearch">
@@ -77,7 +74,7 @@
     {#if activeTab === TABS.TAGS}
       <TagsList big tags={results} />
     {:else}
-      <NoteList compact notes={results} />
+      <NoteList notes={results} />
     {/if}
   {/await}
 {:else}
