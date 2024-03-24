@@ -2,28 +2,21 @@
     import { navigate } from "svelte-routing";
     import DateSeverity from "../shared/DateSeverity.svelte";
     import { formatRelativeNow } from "../../libs/dates";
-    import { previewMd } from "../../libs/renderers/cleanup";
-    import { getConfigFromPlugin } from "./noteItemPluginConfig";
-
     export let note = {};
-
-    const config = getConfigFromPlugin(note?.body ?? "");
 </script>
 
 <div class="note-item" class:archived={note.archived}>
     <div class="info padded">
-        {#if config.info.dates}
-            <div class="dates">
-                <DateSeverity date={note.due_date} />
-                <div
-                    title={`last updated: ${new Date(
-                        note.updated_at,
-                    ).toLocaleString()}`}
-                >
-                    {formatRelativeNow(note.updated_at)}
-                </div>
+        <div class="dates">
+            <DateSeverity date={note.due_date} />
+            <div
+                title={`last updated: ${new Date(
+                    note.updated_at,
+                ).toLocaleString()}`}
+            >
+                {formatRelativeNow(note.updated_at)}
             </div>
-        {/if}
+        </div>
         {#if note.archived}
             <span class="crs-pointer" title="Archived">🗄️</span>
         {/if}
