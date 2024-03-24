@@ -7,8 +7,10 @@ const defaultNoteItemConfig = {
         dates: true,
         viewBtn: true,
         editBtn: true,
+        doneBtn: false,
     },
     icon: null,
+    title: null,
 };
 
 const pluginConfigMapper = {
@@ -19,6 +21,8 @@ const pluginConfigMapper = {
             dates: true,
             viewBtn: true,
             editBtn: false,
+            doneBtn: false,
+
         },
         icon: "🔗",
         title: "Links",
@@ -29,6 +33,7 @@ const pluginConfigMapper = {
             dates: true,
             viewBtn: true,
             editBtn: false,
+            doneBtn: false,
         },
         icon: "📺",
         title: "Youtube Video",
@@ -39,6 +44,7 @@ const pluginConfigMapper = {
             dates: true,
             viewBtn: true,
             editBtn: false,
+            doneBtn: false,
         },
         icon: "✅",
         title: "Todos",
@@ -47,8 +53,15 @@ const pluginConfigMapper = {
     [PLUGINS.NONE]: defaultNoteItemConfig,
 };
 
-export function getConfigFromPlugin(body) {
+export function getNoteItemConfig({ body = "", due_date = null } = {}) {
     const mdConfig = mdConfigParser(body);
 
-    return pluginConfigMapper[mdConfig.plugin] ?? pluginConfigMapper[PLUGINS.NONE];
+    const base = { ...(pluginConfigMapper[mdConfig.plugin] ?? pluginConfigMapper[PLUGINS.NONE]) };
+
+    if (Boolean(due_date)) {
+        base.info.editBtn = false;
+        base.info.doneBtn = true;
+    }
+
+    return base;
 }

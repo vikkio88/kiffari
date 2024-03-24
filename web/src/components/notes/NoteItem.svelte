@@ -3,16 +3,27 @@
     import DateSeverity from "../shared/DateSeverity.svelte";
     import { formatRelativeNow } from "../../libs/dates";
     import { previewMd } from "../../libs/renderers/cleanup";
-    import { getConfigFromPlugin } from "./noteItemPluginConfig";
-    import { catchLogout, pinNote, unpinNote } from "../../libs/api";
+    import { getNoteItemConfig } from "./noteItemPluginConfig";
+    import { catchLogout, del, pinNote, unpinNote } from "../../libs/api";
+    import ConfirmButton from "../shared/ConfirmButton.svelte";
 
     export let note = {};
     export let pinned = note?.pinned || false;
 
-    const config = getConfigFromPlugin(note?.body ?? "");
+    const config = getNoteItemConfig(note);
     async function onPinToggle() {
         const toggle = pinned ? unpinNote : pinNote;
         const resp = await toggle(note.id);
+        if (resp.status == 401) {
+            catchLogout();
+            return;
+        }
+
+        window.location.reload();
+    }
+
+    async function onDelete() {
+        const resp = await del("notes", note.id);
         if (resp.status == 401) {
             catchLogout();
             return;
@@ -68,6 +79,16 @@
             >
                 📝
             </button>
+        {/if}
+        {#if config.info.doneBtn}
+            <ConfirmButton
+                classes="smaller"
+                title="Mark as Done"
+                confirmLabel=""
+                onConfirmed={onDelete}
+            >
+                ✅
+            </ConfirmButton>
         {/if}
         {#if config.info.viewBtn}
             <button
