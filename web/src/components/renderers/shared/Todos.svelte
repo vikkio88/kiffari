@@ -32,12 +32,26 @@
         todos = todos;
         updateEvent();
     }
+
+    function bringTop(index) {
+        todos.unshift(todos.splice(index, 1)[0]);
+        todos = todos;
+        updateEvent();
+    }
 </script>
 
 <div class="wrapper">
     {#each todos as todo, i}
         <div class="todo">
-            -
+            <div class="position">
+                <button
+                    title="Bring to the top"
+                    disabled={i == 0 || todo.done}
+                    on:click={() => bringTop(i)}
+                >
+                    ⬆️
+                </button>
+            </div>
             <input
                 type="checkbox"
                 bind:checked={todo.done}
@@ -63,6 +77,10 @@
     .wrapper {
         min-height: 30vh;
     }
+
+    input[type="checkbox"] {
+        transform: scale(2);
+    }
     .todo {
         font-size: 1.3rem;
         display: flex;
@@ -76,7 +94,25 @@
         overflow: auto;
     }
 
+    .position {
+        font-size: 0.6rem;
+        visibility: hidden;
+    }
+
+    .todo:hover .position {
+        visibility: visible;
+    }
+
     .done {
         text-decoration: line-through;
+    }
+
+    .del {
+        margin-left: 1.5rem;
+        visibility: hidden;
+    }
+
+    .todo:hover .del {
+        visibility: visible;
     }
 </style>
