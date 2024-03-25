@@ -2,8 +2,7 @@ import { expect, test } from 'vitest';
 import { del, get, login, logout, post, put } from '../utils/api';
 import { randomString } from '../utils/strings';
 
-const rubbishTags = [];
-
+const TESTING_PREFIX = "TESTING_";
 
 test("Config", async () => {
     const resp = await get("config");
@@ -43,7 +42,7 @@ test("notes / tags", async () => {
     // CREATE
     const newNote = {
         title: "Some Title", body: "Some Body", tags: [
-            { label: `TESTING_${randomString()}` }
+            { label: `${TESTING_PREFIX}${randomString()}` }
         ]
     };
     resp = await post("notes", newNote);
@@ -68,7 +67,7 @@ test("notes / tags", async () => {
         body: fullNote.body,
         tags: [
             ...fullNote.tags,
-            { label: `TESTING_${randomString()}` }
+            { label: `${TESTING_PREFIX}${randomString()}` }
         ],
         // UPDATE NEEDS ARCHIVED TOO
         archived: false,
@@ -146,4 +145,84 @@ test("notes / tags", async () => {
         resp = await del(`tags/${t.id}`);
         expect(resp.ok).toBe(true);
     }
+});
+
+test("projects / tasks", async () => {
+    await login();
+    // Create a Project
+    const fakeName = `${TESTING_PREFIX}${randomString}`;
+    let resp = await post("projects", {
+        "name": fakeName,
+        "description": "Some onion rings maybe, I am not sure",
+        "config": { "wip_limit": 4 }
+    });
+    expect(resp.status).toBe(200);
+    let data = await resp.json();
+    let createdProjectId = "";
+    expect(data.id).not.toBe(null);
+    createdProjectId = data.id;
+    expect(data.name).toBe(fakeName);
+    // List all projects
+    resp = await get("projects");
+    expect(resp.status).toBe(200);
+    data = await resp.json();
+    expect(data.length).toBeGreaterThanOrEqual(1);
+    // Get one Project
+    resp = await get(`projects/${createdProjectId}`);
+    expect(resp.status).toBe(200);
+    data = await resp.json();
+    expect(data.id).toBe(createdProjectId);
+    expect(data.name).toBe(fakeName);
+    // Update a Project
+    const updatedName = "Updated Project Name";
+    resp = await put(`projects/${createdProjectId}`, {
+        id: createdProjectId,
+        "name": updatedName,
+        "description": "Some onion rings maybe, I am not sure",
+        "config": { "wip_limit": 4 }
+    });
+    expect(resp.status).toBe(200);
+    data = await resp.json();
+    expect(data.name).toBe(updatedName);
+    // Add Tasks
+    const taskTitle = "New Task";
+    resp = await post(`projects/${createdProjectId}/task`, {
+        "title": taskTitle,
+        "description": "Task description",
+        "status": "todo",
+        "category": "feature",
+        "priority": 1,
+        "tags": []
+    });
+    expect(resp.status).toBe(200);
+    data = await resp.json();
+    expect(data.title).toBe(taskTitle);
+    expect(data.status).toBe("todo");
+    expect(data.category).toBe("feature");
+    expect(data.priority).toBe(1);
+    // Add another Task before deleting the project
+    const anotherTaskTitle = "Another Task";
+    resp = await post(`projects/${createdProjectId}/task`, {
+        "title": anotherTaskTitle,
+        "description": "Another Task description",
+        "status": "todo",
+        "category": "bug",
+        "priority": 2,
+        "tags": []
+    });
+    expect(resp.status).toBe(200);
+    data = await resp.json();
+    const anotherTaskId = data.id;
+    expect(data.title).toBe(anotherTaskTitle);
+    expect(data.status).toBe("todo");
+    expect(data.category).toBe("bug");
+    expect(data.priority).toBe(2);
+    // Delete Projects
+    resp = await del(`projects/${createdProjectId}`);
+    expect(resp.status).toBe(200);
+    resp = await get(`project/${createdProjectId}`);
+    expect(resp.status).toBe(404); // Project and associated tasks should be deleted
+    // Check if the second task is deleted
+    resp = await get(`tasks/${anotherTaskId}`);
+    expect(resp.status).toBe(404); // Task should not be found
 });
