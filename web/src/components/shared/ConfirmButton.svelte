@@ -1,5 +1,6 @@
 <script>
   export let title = "";
+  export let cancellingTitle = "Cancel";
   export let classes = ""
   export let confirmLabel = "Confirm?";
   export let onConfirmed = () => console.log("Confirmed");
@@ -19,8 +20,8 @@
   {:else}
     <div class="internal">
       {confirmLabel}
-      <button on:click|stopPropagation={() => (clicked = false)}>❌</button>
-      <button on:click|stopPropagation={() => onConfirmed()}>👍</button>
+      <button title={cancellingTitle} on:click|stopPropagation={() => (clicked = false)}>❌</button>
+      <button {title} on:click|stopPropagation={() => onConfirmed()}>👍</button>
     </div>
   {/if}
 </button>
