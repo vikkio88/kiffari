@@ -7,18 +7,6 @@ import (
 	"github.com/oklog/ulid/v2"
 )
 
-/*
-const project = {
-    id: "somePrjectId",
-    name: "Kiffari",
-    description: "A Kanban-ish approach to managing side projects.",
-    links: [
-      { label: "Source", href: "https://github.com" },
-      { label: "Website", href: "https://github.com" },
-    ],
-  };
-*/
-
 type Project struct {
 	Id          string    `gorm:"primarykey" json:"id"`
 	Name        string    `json:"name"`
