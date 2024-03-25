@@ -1,43 +1,38 @@
 <script>
-  import Task from "./task/Task.svelte";
-  import Accordion from "./shared/Accordion.svelte";
-  import Controls from "./shared/Controls.svelte";
+  import Task from "../task/Task.svelte";
+  import Accordion from "../shared/Accordion.svelte";
+  import Controls from "../shared/Controls.svelte";
   import {
     D_TASK_STATUS as STATUS,
     D_TASK_STATUS_LABELS,
     D_TASK_CATEGORIES as CATEGORIES,
-  } from "../const";
-  import { groupTasksByStatus } from "../libs/helpers/tasks";
-  import Adder from "./shared/Adder.svelte";
+  } from "../../const";
+  import { groupTasksByStatus } from "../../libs/helpers/tasks";
+  import Adder from "../shared/Adder.svelte";
   import {
     addTask,
     catchLogout,
     del,
     moveTask,
     updateProject,
-  } from "../libs/api";
+  } from "../../libs/api";
   import { navigate } from "svelte-routing";
   import ProjectEditor from "./ProjectEditor.svelte";
-  import ConfirmButton from "./shared/ConfirmButton.svelte";
-  import Progress from "./shared/Progress.svelte";
+  import ConfirmButton from "../shared/ConfirmButton.svelte";
+  import Progress from "../shared/Progress.svelte";
+  import { getAccordionStatus } from "./utils";
   export let project = {};
 
-  const defaultAccordion = {
-    [STATUS.DONE]: false,
-    [STATUS.IN_PROGRESS]: true,
-    [STATUS.TODO]: false,
-    [STATUS.BACKLOG]: false,
-  };
-
-  let accordionsState = { ...defaultAccordion };
   let groupedTasks = groupTasksByStatus(Boolean(project) ? project.tasks : []);
+
+  let accordionsState = getAccordionStatus(groupedTasks);
   let editingProject = false;
 
   function onTaskUpdate({ detail }) {
     const { prevStatus, task } = detail;
     groupedTasks[task.status].unshift(task);
     groupedTasks[prevStatus] = groupedTasks[prevStatus].filter(
-      (t) => t.id != task.id,
+      (t) => t.id != task.id
     );
 
     accordionsState[prevStatus] = false;
@@ -66,7 +61,7 @@
         if (resp.status === 400) {
           //TODO: notify error
           groupedTasks[status] = groupedTasks[status].filter((t) =>
-            Boolean(t.id),
+            Boolean(t.id)
           );
           groupedTasks = groupedTasks;
           return null;
@@ -78,7 +73,7 @@
         if (!Boolean(newTask)) return;
 
         groupedTasks[status] = groupedTasks[status].filter((t) =>
-          Boolean(t.id),
+          Boolean(t.id)
         );
         groupedTasks[status].unshift(newTask);
 
