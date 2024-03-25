@@ -3,7 +3,7 @@
     import DateSeverity from "../shared/DateSeverity.svelte";
     import { formatRelativeNow } from "../../libs/dates";
     import { previewMd } from "../../libs/renderers/cleanup";
-    import { getNoteItemConfig } from "./noteItemPluginConfig";
+    import { getNoteItemConfig } from "./utils";
     import { catchLogout, del, pinNote, unpinNote } from "../../libs/api";
     import ConfirmButton from "../shared/ConfirmButton.svelte";
 

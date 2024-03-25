@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import LinksEditor from "./shared/LinksEditor.svelte";
+  import LinksEditor from "../shared/LinksEditor.svelte";
 
   let input;
   export let id = null;
