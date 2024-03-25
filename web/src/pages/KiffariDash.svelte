@@ -1,6 +1,6 @@
 <script>
   import { navigate } from "svelte-routing";
-  import ProjectList from "../components/ProjectList.svelte";
+  import ProjectList from "../components/projects/ProjectList.svelte";
   import Controls from "../components/shared/Controls.svelte";
   import Spinner from "../components/shared/Spinner.svelte";
   import { getProjects } from "../libs/api";

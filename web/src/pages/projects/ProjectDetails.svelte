@@ -1,5 +1,5 @@
 <script>
-  import Project from "../../components/Project.svelte";
+  import Project from "../../components/projects/Project.svelte";
   import Spinner from "../../components/shared/Spinner.svelte";
   import { getProject } from "../../libs/api";
   import { protectedRoute } from "../../libs/routes";
