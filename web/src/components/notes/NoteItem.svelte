@@ -46,7 +46,7 @@
         </div>
     {/if}
     <div class="info padded">
-        {#if config.info.dates}
+        {#if config.dates}
             <div class="dates">
                 <DateSeverity date={note.due_date} />
                 <div
@@ -64,7 +64,7 @@
     </div>
     <div class="padded">
         <h3>{note.title}</h3>
-        {#if config.info.preview}
+        {#if config.preview}
             <p>{previewMd(note.body)}</p>
         {/if}
         {#if config.icon}
@@ -72,7 +72,7 @@
         {/if}
     </div>
     <div class="controls">
-        {#if config.info.editBtn}
+        {#if config.editBtn}
             <button
                 class="smaller"
                 on:click={() => navigate(`/edit-note/${note.id}`)}
@@ -80,7 +80,7 @@
                 📝
             </button>
         {/if}
-        {#if config.info.doneBtn}
+        {#if config.doneBtn}
             <ConfirmButton
                 classes="smaller"
                 title="Mark as Done"
@@ -90,7 +90,7 @@
                 ✅
             </ConfirmButton>
         {/if}
-        {#if config.info.viewBtn}
+        {#if config.viewBtn}
             <button
                 class="smaller"
                 on:click={() => navigate(`/notes/${note.id}`)}
