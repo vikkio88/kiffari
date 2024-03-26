@@ -74,6 +74,18 @@
           {#if !Boolean(searchValue)}
             <h3>Suggested tags:</h3>
           {/if}
+          <!-- In case we have matches but does not quite match the top -->
+          {#if Boolean(searchValue) && tags[0].label.toLowerCase() != searchValue.toLowerCase()}
+            <button
+              on:click={() => {
+                onTagSelected({ label: searchValue });
+                searchValue = "";
+                searchPromise = null;
+              }}
+            >
+              🆕 {searchValue}
+            </button>
+          {/if}
           <TagsList
             tags={tags.filter(
               (t) => !selectedTags.some((st) => st.id === t.id),
@@ -90,8 +102,10 @@
               onTagSelected({ label: searchValue });
               searchValue = "";
               searchPromise = null;
-            }}>🆕 {searchValue}</button
+            }}
           >
+            🆕 {searchValue}
+          </button>
         {/if}
       {/await}
     {/if}
