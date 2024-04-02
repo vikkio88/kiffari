@@ -20,7 +20,7 @@
   import ProjectEditor from "./ProjectEditor.svelte";
   import ConfirmButton from "../shared/ConfirmButton.svelte";
   import Progress from "../shared/Progress.svelte";
-  import { getAccordionStatus } from "./utils";
+  import { getAccordionStatus, toProgress } from "./utils";
   export let project = {};
 
   let groupedTasks = groupTasksByStatus(Boolean(project) ? project.tasks : []);
@@ -32,7 +32,7 @@
     const { prevStatus, task } = detail;
     groupedTasks[task.status].unshift(task);
     groupedTasks[prevStatus] = groupedTasks[prevStatus].filter(
-      (t) => t.id != task.id
+      (t) => t.id != task.id,
     );
 
     accordionsState[prevStatus] = false;
@@ -61,7 +61,7 @@
         if (resp.status === 400) {
           //TODO: notify error
           groupedTasks[status] = groupedTasks[status].filter((t) =>
-            Boolean(t.id)
+            Boolean(t.id),
           );
           groupedTasks = groupedTasks;
           return null;
@@ -73,7 +73,7 @@
         if (!Boolean(newTask)) return;
 
         groupedTasks[status] = groupedTasks[status].filter((t) =>
-          Boolean(t.id)
+          Boolean(t.id),
         );
         groupedTasks[status].unshift(newTask);
 
@@ -105,7 +105,7 @@
     {#if !editingProject}
       <h2>{project.name}</h2>
       <p>{project.description}</p>
-
+      <Progress {...toProgress(groupedTasks)} />
       {#if Array.isArray(project.links) && project.links.length > 0}
         <div class="links">
           <strong>🔗 Links</strong>

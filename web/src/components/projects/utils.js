@@ -19,3 +19,8 @@ export function getAccordionStatus(groupedTasks = {}) {
     status[STATUS.BACKLOG] = true;
     return status;
 }
+
+export function toProgress(groupedTasks = {}) {
+    const total = (groupedTasks[STATUS.TODO]?.length ?? 0) + (groupedTasks[STATUS.IN_PROGRESS]?.length ?? 0) + (groupedTasks[STATUS.DONE]?.length ?? 0);
+    return { total, value: (groupedTasks[STATUS.DONE]?.length ?? 0) };
+}
