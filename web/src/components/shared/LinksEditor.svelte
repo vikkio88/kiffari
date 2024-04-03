@@ -23,7 +23,7 @@
       <input
         type="text"
         required
-        pattern="/(.+)\s*(https?:\/\/\S+)/"
+        pattern="/(https?:\/\/\S+)/"
         bind:value={link.href}
         placeholder="http://some.website/"
       />
