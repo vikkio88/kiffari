@@ -90,3 +90,14 @@ type Link struct {
 type ProjectConfig struct {
 	WipLimit int `json:"wip_limit"`
 }
+
+type ProjectImport struct {
+	ProjectCreate
+	Tasks []Task `json:"tasks"`
+}
+
+func (p *ProjectImport) Project() Project {
+	np := p.ProjectCreate.Project()
+	//TODO: add/parse tasks
+	return np
+}

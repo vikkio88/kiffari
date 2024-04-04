@@ -1,6 +1,7 @@
 package db
 
 import (
+	"errors"
 	"fmt"
 
 	"gorm.io/gorm"
@@ -75,4 +76,16 @@ func (d *Db) FilterProjects(text string) []ProjectDto {
 	}
 
 	return dtos
+}
+
+func (d *Db) ImportProject(p ProjectImport) (ProjectDto, error) {
+	np := p.Project()
+	err := d.g.Transaction(func(tx *gorm.DB) error {
+		res := tx.Model(&Project{}).Create(&np)
+		if res.RowsAffected != 1 {
+			return errors.New("error importing project")
+		}
+		return nil
+	})
+	return np.Dto(), err
 }

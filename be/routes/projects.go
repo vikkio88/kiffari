@@ -130,4 +130,16 @@ func ProjectRoutes(r gin.IRouter, d *db.Db) {
 
 		c.JSON(http.StatusBadRequest, gin.H{"error": "cannot delete"})
 	})
+
+	r.POST("/import/projects", func(c *gin.Context) {
+		var pi db.ProjectImport
+		err := c.Bind(&pi)
+		if err == nil {
+			p, ne := d.ImportProject(pi)
+			SuccessOr400WithError(c, p, ne)
+			return
+		}
+
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	})
 }

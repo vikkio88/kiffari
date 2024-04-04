@@ -104,3 +104,16 @@ Authorization: {{ token }}
 {
  "status": "in_progress"     
 }
+
+
+### Import Project
+POST http://localhost:5111/api/import/projects
+content-type: application/json
+Authorization: {{ token }}
+
+{
+    "id": "{{projectId}}",
+    "name":"Kiffari",
+    "description": "Some stuff and things",
+    "links": [{"href": "http://google.com", "label":"google"}]
+}
