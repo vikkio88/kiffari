@@ -63,3 +63,31 @@ plugin: todo
 ${todoLines.join("\n")}
 `;
 }
+
+export function extractTrackers(body) {
+    const cleanBody = removeComments(body);
+    const regex = /\s?(\d+)\/(\d+):?(\d+)? ?(.+)?/;
+    const lines = cleanBody.split("\n");
+    const trackers = [];
+    for (const line of lines) {
+        const matches = line.match(regex);
+        if (!matches) continue;
+        const [_, value = 1, max, step = 1, label = null] = matches;
+        trackers.push({
+            label, range: { value: parseInt(`${value}`), max: parseInt(max), min: 0, step: parseInt(`${step}`) }
+        });
+    }
+
+    return trackers;
+}
+
+export function exportTrackers(trackers) {
+    let markdown = "";
+    for (const tracker of trackers) {
+        markdown += `${tracker.range.value}/${tracker.range.max}:${tracker.range.step} ${tracker.label}\n`;
+    }
+    return `<!--
+Plugin: tracker
+-->
+${markdown.trim()}`;
+}

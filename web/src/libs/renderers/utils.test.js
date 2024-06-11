@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { exportTodos, extractTodos, extractYTVideos, parseLinks } from './extractors';
+import { exportTodos, exportTrackers, extractTodos, extractTrackers, extractYTVideos, parseLinks } from './extractors';
 
 
 test('should extract links correctly', () => {
@@ -95,4 +95,34 @@ plugin: todo
 `;
 
   expect(exportTodos(todos)).toEqual(expectedOutput);
+});
+
+
+test("trackers extraction", () => {
+  const input = `<!--
+  Plugin: tracker
+  -->
+  20/21:2 label
+  1/10 label2
+  `;
+
+  expect(extractTrackers(input)).toEqual([
+    { label: "label", range: { min: 0, max: 21, step: 2, value: 20 } },
+    { label: "label2", range: { min: 0, max: 10, step: 1, value: 1 } },
+  ]);
+});
+
+test("trackers back to markdown", () => {
+  const trackers = [
+    { label: "label", range: { min: 0, max: 21, step: 2, value: 20 } },
+    { label: "label2", range: { min: 0, max: 10, step: 1, value: 1 } },
+  ];
+
+  const expectedMarkdown = 
+`<!--
+Plugin: tracker
+-->
+20/21:2 label
+1/10:1 label2`;
+  expect(exportTrackers(trackers)).toEqual(expectedMarkdown);
 });

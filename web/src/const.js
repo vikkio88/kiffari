@@ -52,6 +52,7 @@ export const MARKDOWN_PLUGINS = {
     LINK: "link",
     YOUTUBE: "youtube",
     TODO: "todo",
+    TRACKER: "tracker",
 
     NONE: "none"
 };

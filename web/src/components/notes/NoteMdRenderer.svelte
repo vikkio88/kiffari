@@ -5,6 +5,7 @@
   import Link from "../renderers/Link.svelte";
   import Youtube from "../renderers/Youtube.svelte";
   import Todos from "../renderers/NoteTodos.svelte";
+  import Tracker from "../renderers/Tracker.svelte";
   import { MARKDOWN_PLUGINS as PLUGINS } from "../../const";
 
   export let note = {};
@@ -15,6 +16,7 @@
     [PLUGINS.LINK]: Link,
     [PLUGINS.YOUTUBE]: Youtube,
     [PLUGINS.TODO]: Todos,
+    [PLUGINS.TRACKER]: Tracker,
     [PLUGINS.NONE]: Markdown,
   };
 </script>
