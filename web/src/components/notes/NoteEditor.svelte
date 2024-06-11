@@ -96,14 +96,21 @@
         text = `${generatePlugin("Link")}${removeComments(text)}`;
       }}
     >
-      Plugin:Link 🔗
+      Link 🔗
     </button>
     <button
       on:click={() => {
         text = `${generatePlugin("Todo")}${removeComments(text)}`;
       }}
     >
-      Plugin:Todo ✅
+      Todo ✅
+    </button>
+    <button
+      on:click={() => {
+        text = `${generatePlugin("Tracker")}${removeComments(text)}`;
+      }}
+    >
+      Tracker ⏲️
     </button>
     <button on:click={setupPlugin}> Plugin ⚙️ </button>
   </div>
