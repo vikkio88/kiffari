@@ -40,6 +40,15 @@ const pluginConfigMapper = {
         icon: "✅",
         title: "Todos",
     },
+    [PLUGINS.TRACKER]: {
+        preview: false,
+        dates: true,
+        viewBtn: true,
+        editBtn: false,
+        doneBtn: false,
+        icon: "⏲️",
+        title: "Tracker",
+    },
     [PLUGINS.NONE]: { ...defaultNoteItemConfig },
 };
 

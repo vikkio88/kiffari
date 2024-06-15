@@ -68,7 +68,7 @@
             <p>{previewMd(note.body)}</p>
         {/if}
         {#if config.icon}
-            <p title={config.title}>{config.icon}</p>
+            <p class="plugin" title={`Plugin: ${config.title}`}>{config.icon}</p>
         {/if}
     </div>
     <div class="controls">
@@ -157,5 +157,9 @@
     .dates {
         display: flex;
         flex-direction: column;
+    }
+
+    p.plugin {
+        background-color: var(--fade-gray);
     }
 </style>

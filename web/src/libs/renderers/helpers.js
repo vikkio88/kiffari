@@ -3,4 +3,4 @@ export function hasCodeSnippets(body) {
 }
 
 export const PLUGIN_SETUP_STRING = "<!--\nPlugin: \n-->\n";
-export const generatePlugin = (name) => `<!--\nPlugin: ${name}\n-->\n`;
+export const generatePlugin = (name, content = '') => `<!--\nPlugin: ${name}\n-->\n${content}`;

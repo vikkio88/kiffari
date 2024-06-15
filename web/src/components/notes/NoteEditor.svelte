@@ -107,7 +107,7 @@
     </button>
     <button
       on:click={() => {
-        text = `${generatePlugin("Tracker")}${removeComments(text)}`;
+        text = `${generatePlugin("Tracker", "1/10:1 Stuff")}${removeComments(text)}`;
       }}
     >
       Tracker ⏲️
