@@ -3,6 +3,7 @@
 
   const d = createEventDispatcher();
 
+  export let title = "Add";
   export let placeholder = "Name/Title...";
   export let rightAligned = false;
   export let centered = false;
@@ -34,7 +35,11 @@
   on:submit|preventDefault|stopPropagation={submit}
 >
   {#if !clicked}
-    <button class="smaller" on:click|preventDefault|stopPropagation={onAdd}>
+    <button
+      class="smaller"
+      on:click|preventDefault|stopPropagation={onAdd}
+      {title}
+    >
       ➕
     </button>
   {:else}
@@ -73,5 +78,6 @@
     padding: 1em;
     border-radius: 10px;
     width: 60%;
+    font-size: 1.3rem;
   }
 </style>
