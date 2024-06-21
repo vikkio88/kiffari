@@ -12,8 +12,10 @@
   function onTrackingChange(i, event) {
     const { value } = event.target;
     trackers[i].range.value = value;
-
     trackers = trackers;
+  }
+
+  function onTrackingChanged() {
     updateNote(note.id, {
       id: note.id,
       title: note.title,
@@ -25,7 +27,7 @@
 </script>
 
 <div class="trackerBody">
-    <h3 title="Tracker">⏲️</h3>
+  <h3 title="Tracker">⏲️</h3>
   {#each trackers as t, i}
     <h3>
       {t.label ||
@@ -40,7 +42,8 @@
       max={t.range.max}
       step={t.range.step}
       value={t.range.value}
-      on:change={(e) => onTrackingChange(i, e)}
+      on:input={(e) => onTrackingChange(i, e)}
+      on:change={onTrackingChanged}
     />
   {/each}
 </div>
