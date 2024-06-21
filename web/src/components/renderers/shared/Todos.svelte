@@ -22,8 +22,13 @@
         updateEvent();
     }
 
-    function onAdd({ detail: label }) {
+    function onPush({ detail: label }) {
         todos = [...todos, { label, done: false }];
+        updateEvent();
+    }
+
+    function onStack({ detail: label }) {
+        todos = [{ label, done: false }, ...todos];
         updateEvent();
     }
 
@@ -39,6 +44,10 @@
         updateEvent();
     }
 </script>
+
+{#if todos.length > 3}
+    <Adder on:added={onStack} placeholder="The thing todo..." />
+{/if}
 
 <div class="wrapper">
     {#each todos as todo, i}
@@ -70,7 +79,7 @@
         </div>
     {/each}
 
-    <Adder on:added={onAdd} placeholder="The thing todo..." />
+    <Adder on:added={onPush} placeholder="The thing todo..." />
 </div>
 
 <style>
