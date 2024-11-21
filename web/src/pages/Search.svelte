@@ -4,6 +4,7 @@
   import { protectedRoute } from "../libs/routes";
   import { filterTags, filterNotes } from "../libs/api";
   import NoteList from "../components/notes/NoteList.svelte";
+  import BtnGroup from "../components/shared/BtnGroup.svelte";
   protectedRoute();
 
   const TABS = {
@@ -45,7 +46,7 @@
 </script>
 
 <h2>Search</h2>
-<div class="tabs">
+<BtnGroup>
   <button
     class:active={activeTab === TABS.NOTES}
     on:click={() => setActiveTab(TABS.NOTES)}>Notes</button
@@ -54,7 +55,7 @@
     class:active={activeTab === TABS.TAGS}
     on:click={() => setActiveTab(TABS.TAGS)}>Tags</button
   >
-</div>
+</BtnGroup>
 <div class="tagSearch">
   <input
     bind:this={searchBar}
@@ -100,24 +101,5 @@
 
   strong {
     color: var(--x-light-gray);
-  }
-
-  div.tabs {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-  }
-
-  div.tabs > button {
-    border-radius: 0px;
-    margin: 0;
-  }
-  div.tabs > button.active {
-    background-color: black;
-    color: var(--link-color);
-  }
-  div.tabs > button.active:focus,
-  div.tabs > button.active:focus-visible {
-    outline: none;
   }
 </style>
