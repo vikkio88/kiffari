@@ -55,6 +55,10 @@ export function getDashNotes() {
   return fetch(`${KATO_API_URL}/dash/notes`, makeHeaders()).then(parseOrThrow).catch(catchLogout);
 }
 
+export function getAllNotes() {
+  return fetch(`${KATO_API_URL}/notes`, makeHeaders()).then(parseOrThrow).catch(catchLogout);
+}
+
 
 export function getArchivedNotes() {
   return fetch(`${KATO_API_URL}/notes?archived=true`, makeHeaders()).then(parseOrThrow).catch(catchLogout);
