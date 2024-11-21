@@ -1,3 +1,5 @@
+setup:
+	sh scripts/setup.sh
 watch:
 	sh scripts/run.sh
 watch-be:
