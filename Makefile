@@ -15,7 +15,7 @@ build-be:
 
 build-all: clean build-fe build-be
 	cd web && mv dist/ ../be/bin/static
-	cd be && tar -czvf bin.tar.gz bin/
+	cd be && tar --no-xattrs -czvf bin.tar.gz bin/
 	mkdir bin/
 	mv be/bin.tar.gz ./bin/
 clean:
