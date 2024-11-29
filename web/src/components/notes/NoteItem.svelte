@@ -7,6 +7,7 @@
     import { catchLogout, del, pinNote, unpinNote } from "../../libs/api";
     import ConfirmButton from "../shared/ConfirmButton.svelte";
 
+    export let allowPin = true;
     export let note = {};
     export let pinned = note?.pinned || false;
 
@@ -34,7 +35,7 @@
 </script>
 
 <div class="note-item" class:archived={note.archived}>
-    {#if !note.archived && !Boolean(note.due_date)}
+    {#if allowPin && !note.archived && !Boolean(note.due_date)}
         <div class="top">
             <button
                 class="smaller"

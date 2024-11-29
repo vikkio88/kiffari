@@ -2,7 +2,7 @@
   import Adder from "../components/shared/Adder.svelte";
   import { navigate } from "svelte-routing";
   import { createNote, getAllNotes, getDashNotes } from "../libs/api";
-  import NoteList from "../components/notes/NoteList.svelte";
+  import AllNotes from "../components/notes/AllNotes.svelte";
   import Controls from "../components/shared/Controls.svelte";
   import Footer from "../components/Footer.svelte";
   import { protectedRoute } from "../libs/routes";
@@ -67,7 +67,7 @@
       <DashNotes {notes} />
     {:else}
       <div class="subwrapper">
-        <NoteList {notes} />
+        <AllNotes {notes} />
       </div>
     {/if}
   {/await}
