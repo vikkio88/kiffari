@@ -1,5 +1,4 @@
 <script>
-  import SvelteMarkdown from "svelte-markdown";
   import CopyCode from "./shared/CopyCode.svelte";
   import Md from "../shared/Md.svelte";
   export let note = {};
